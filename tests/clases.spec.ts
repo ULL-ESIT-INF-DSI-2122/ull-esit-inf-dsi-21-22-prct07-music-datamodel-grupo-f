@@ -1,9 +1,9 @@
 import 'mocha';
 import { expect } from 'chai';
-import { cancion } from "../src/index"
+import { Cancion } from "./clases"
 
 describe('Tests canciones', () => {
     it('', () => {
-        let c: cancion;
+        let c: Cancion;
     })
 })
