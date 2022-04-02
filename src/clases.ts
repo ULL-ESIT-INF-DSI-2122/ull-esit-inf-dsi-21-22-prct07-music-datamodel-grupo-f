@@ -56,7 +56,9 @@ class Biblioteca_musical{
 
         if(!this.artistas_.find(x => x.nombre_ == a)){
             if(!this.grupos_.find(x => x.nombre_ == a)){
-                this.artistas_.push(); ////////////
+                this.artistas_.push(); 
+
+                ////
             }
         }
     }
