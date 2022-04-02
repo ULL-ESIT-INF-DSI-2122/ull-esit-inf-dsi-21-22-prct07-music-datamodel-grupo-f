@@ -1,5 +1,12 @@
 class Genero{
     constructor(public nombre_: string, public autor_: string[], public albumes_: string[], public canciones_: string[]){}
+
+    public find_autor(a: string): boolean{
+        if(typeof this.autor_.find(a1 => a1 == a) === "string")
+            return true;
+        else
+            return false;
+    }
 }
 
 class Album {
@@ -10,7 +17,7 @@ export class Cancion{
     constructor(public nCancion_: string, public nAutor_: string, public duracion_: number, public genero_: string[], public single_: boolean, public nReprod: number){}
 }
 
-class Autor {
+abstract class Autor {
     constructor(public nombre_: string, public añoCreacion: number, public generos_: string[], public albumes_: string[], public nOyentes_: number){}
 }
 
@@ -47,8 +54,34 @@ class Biblioteca_musical{
         this.playlists_ = [];
     }
 
-    set_genero(n: string){
+    set_genero(n: string): boolean{
         this.generos_.push(new Genero(n,[],[],[]));
+        return true;
+    }
+
+    update_genero(g: string, au?: Autor, al?: Album, c?: Cancion){
+        if(typeof au != "undefined")
+            this.generos_.find(g1 => g1.nombre_ == g)?.autor_;
+
+    }
+
+    set_artista(n: string, ac: number, no: number, g: string[]): boolean{
+        if(g.every(g1 => this.generos_.find(g2 => g1 == g2.nombre_))){
+            this.artistas_.push(new Artista(n,[],ac,g,[],no));
+            g.every(g1 => this.generos_.find(g2 => (g1 == g2.nombre_)? g2.autor_.push(n): false));
+            return true;
+        } else
+            return false;
+    }
+
+    set_grupo(n: string, ac: number, no: number, g: string[], a: string[]): boolean{
+        if(a.every(a1 => this.artistas_.find(g2 => a1 == g2.nombre_))){
+            this.grupos_.push(new Grupo(n,a,ac,g,[],no));
+            g.every(g1 => this.generos_.find(g2 => (g1 == g2.nombre_)? g2.autor_.push(n): false));
+            //////// a.every(a1 => )
+            return true;
+        } else
+            return false;
     }
 
     set_album(n: string, a: string, año: number, g: string[], c: string[]){
