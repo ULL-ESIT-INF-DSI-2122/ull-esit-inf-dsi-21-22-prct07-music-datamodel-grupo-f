@@ -1,4 +1,4 @@
-class Genero{
+export class Genero{
     constructor(public nombre_: string, public autor_: string[], public albumes_: string[], public canciones_: string[]){}
 
     public find_autor(a: string): boolean{
@@ -23,7 +23,7 @@ class Genero{
     }
 }
 
-class Album {
+export class Album {
     constructor(public nAlbum_: string, public nAutor_: string, public añoPubli_: number, public generos_: string[], public canciones_: string[]){}
 }
 
@@ -31,7 +31,7 @@ export class Cancion{
     constructor(public nCancion_: string, public nAutor_: string, public duracion_: number, public genero_: string[], public single_: boolean, public nReprod: number){}
 }
 
-abstract class Autor {
+export abstract class Autor {
     constructor(public nombre_: string, public generos_: string[], public albumes_: string[], public nOyentes_: number){}
 
     public find_gendre(name: string) {
@@ -49,13 +49,13 @@ abstract class Autor {
     }
 }
 
-class Grupo extends Autor {
+export class Grupo extends Autor {
     constructor(n: string, public artistas_: string[], public ac: number, g: string[], al: string[], no: number){
         super(n,g,al,no);
     }
 }
 
-class Artista extends Autor{
+export class Artista extends Autor{
     constructor(n: string, public grupos_: string[], g: string[], al: string[], public canciones_: string[], no: number){
         super(n, g, al, no);
     }
@@ -68,11 +68,11 @@ class Artista extends Autor{
     }
 }
 
-class Playlist{
+export class Playlist{
     constructor(public nombre_: string, public canciones_: string[], public duracion_: number, public generos_: string[]){}
 }
 
-class Biblioteca_musical{
+export class Biblioteca_musical{
     private generos_: Genero[];
     private albums_: Album[];
     private canciones_: Cancion[];

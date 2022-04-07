@@ -1,0 +1,14 @@
+{
+  "songs": [
+    {
+      "nCancion_": "a",
+      "nAutor_": "a",
+      "duracion_": 1,
+      "genero_": [
+        "a"
+      ],
+      "single_": true,
+      "nReprod": 1
+    }
+  ]
+}
