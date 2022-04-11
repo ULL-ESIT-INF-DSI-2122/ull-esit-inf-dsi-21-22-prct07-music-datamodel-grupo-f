@@ -18,6 +18,10 @@ enum Commands {
 enum CommandsPlaylist {
     AddSong = "Add song to a playlist",
     RemoveSong = "Remove song from a playlist",
+    DurationSort = "Sort by duration",
+    AlphabeticalSongNameSort = "Sort by song name",
+    AlphabeticalAuthorNameSort = "Sort by author name",
+    NumberOfReproductionSort = "Sort by number of reproductions",
     Quit = "Quit",
 }
 
@@ -89,6 +93,18 @@ export class Gestor {
                 case CommandsPlaylist.RemoveSong:
                     await this.promptRemoveSong(playlistName);
                     break;
+                case CommandsPlaylist.DurationSort:
+                    await this.promptDurationSort(playlistName);
+                    break;
+                case CommandsPlaylist.AlphabeticalSongNameSort:
+                    await this.promptAlphabeticalSongNameSort(playlistName);
+                    break;
+                case CommandsPlaylist.AlphabeticalAuthorNameSort:
+                    await this.promptAlphabeticalAuthorNameSort(playlistName);
+                    break;
+                case CommandsPlaylist.NumberOfReproductionSort:
+                    await this.promptNumberOfReproductionSort(playlistName);
+                    break;
                 case CommandsPlaylist.Quit:
                     break;
             }
@@ -134,6 +150,43 @@ export class Gestor {
     
         this.database.removeSongFromPlaylist(playlistName, nameSong["nameSong"]);
         this.database.updateDurationPlaylist(playlistName);
+    }
+
+    /**
+     * Ordena la playlist por duración
+     * @param playlistName Nombre de la playlist que se va ordenar
+     */
+    async promptDurationSort(playlistName: string): Promise<void> {
+        console.clear();
+        this.database.durationSort(playlistName);
+    }
+
+    /**
+     * Ordena la playlist alfabéticamente por el nombre de la canción
+     * @param playlistName Nombre de la playlist que se va ordenar
+     */
+    async promptAlphabeticalSongNameSort(playlistName: string): Promise<void> {
+        console.clear();
+        this.database.alphabeticalSongNameSort(playlistName);
+    }
+
+
+    /**
+     * Ordena la playlist alfabéticamente por el nombre del autor de la canción
+     * @param playlistName Nombre de la playlist que se va ordenar
+     */
+    async promptAlphabeticalAuthorNameSort(playlistName: string): Promise<void> {
+        console.clear();
+        this.database.alphabeticalAuthorNameSort(playlistName);
+    }
+
+    /**
+     * Ordena la playlist alfabéticamente por el número de reproducciones
+     * @param playlistName Nombre de la playlist que se va ordenar
+     */
+    async promptNumberOfReproductionSort(playlistName: string): Promise<void> {
+        console.clear();
+        this.database.numberOfReproductionSort(playlistName);
     }
 
     /**
