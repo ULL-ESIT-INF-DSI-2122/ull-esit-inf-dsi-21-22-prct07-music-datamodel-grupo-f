@@ -159,7 +159,9 @@ class DataBase {
         var _a, _b;
         let indexOfPlaylist = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         let durationOfPlaylist = (_a = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _a === void 0 ? void 0 : _a.duration;
-        console.log("[" + playlistName + "]    Duration:" + durationOfPlaylist);
+        let horas = Math.floor(durationOfPlaylist);
+        let minutos = Math.floor((durationOfPlaylist - horas) * 100);
+        console.log("[" + playlistName + "]    Duration: " + horas + " hours and " + minutos + " minutes");
         (_b = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _b === void 0 ? void 0 : _b.songs.forEach((song) => {
             console.log(song);
         });
@@ -170,29 +172,46 @@ class DataBase {
         this.db.write();
     }*/
     updateDurationPlaylist(playlistName) {
-        var _a;
         let indexOfSong;
         let songs = [];
         let indexOfPlaylist = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
-        let newduration = (_a = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _a === void 0 ? void 0 : _a.duration;
+        let newduration = 0;
+        let min = 0;
+        let sec = 0;
+        let hour = 0;
         this.db.get("playlists")
             .find({ name: playlistName })
             .value().songs
             .forEach((songName) => {
-            songs.push(songName);
+            var _a;
+            indexOfSong = this.findSong(songName);
+            newduration = (_a = this.db.get("songs")
+                .value().at(indexOfSong)) === null || _a === void 0 ? void 0 : _a.duration;
+            let auxarray = newduration;
+            min += Math.floor(newduration);
+            sec += parseFloat(((newduration - Math.floor(newduration)) * 100).toFixed(2));
         });
-        for (let song of songs) {
-            console.log(this.db.get("songs")
-                .find({ name: song }));
-        }
-        /*let durations: number;
-        this.db.get("playlists").value().songs.forEach((songName sting) => {
-            durations += this.db.get("songs").find({name: playlist})
-        })*/
+        console.log("Minutos:" + min + " Segundos:" + sec);
+        min += Math.floor(sec / 60);
+        console.log("Minutos:" + min + " Segundos:" + sec);
+        hour = Math.floor(min / 60);
+        min = Math.floor(min - 60 * hour);
+        console.log("Minutos:" + min + " Horas:" + hour);
+        newduration = hour + (min / 100);
+        console.log("Duration:" + newduration);
         this.db.get("playlists")
             .find({ name: playlistName })
             .assign({ duration: newduration })
             .write();
+    }
+    setGengre(genre) {
+        this.db.get("genres").push(genre).write();
+    }
+    setSong(song) {
+        this.db.get("songs").push(song).write();
+    }
+    setAlbum(album) {
+        this.db.get("albums").push(album).write();
     }
     setArtist(artist) {
         this.db.get("artists").push(artist).write();
@@ -200,11 +219,27 @@ class DataBase {
     setGroup(group) {
         this.db.get("groups").push(group).write();
     }
-    setGengre(genre) {
-        this.db.get("genres").push(genre).write();
+    alphabeticalSongNameSort(playlistName) {
+        var _a;
+        let indexOfPlaylist = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+        (_a = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _a === void 0 ? void 0 : _a.songs.sort((song1, song2) => {
+            return song1.normalize().localeCompare(song2.normalize());
+        });
+        this.db.write();
     }
-    setAlbum(album) {
+    alphabeticalAuthorNameSort(playlistName) {
+        var _a;
+        let indexOfPlaylist = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+        (_a = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _a === void 0 ? void 0 : _a.songs.sort((song1, song2) => {
+            let author1 = "";
+            let author2 = "";
+            return author1.normalize().localeCompare(author2.normalize());
+        });
+        this.db.write();
     }
+    durationSort(playlistName) {
+    }
+    numberOfReproductionSort(playlistName) { }
 }
 exports.DataBase = DataBase;
 //# sourceMappingURL=database.js.map

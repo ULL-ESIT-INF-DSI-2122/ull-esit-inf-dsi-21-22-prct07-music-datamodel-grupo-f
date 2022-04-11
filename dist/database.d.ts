@@ -1,4 +1,4 @@
-import { Genre, Album, Artist, Group, Playlist } from './classes';
+import { Genre, Album, Song, Artist, Group, Playlist } from './classes';
 export declare class DataBase {
     private db;
     constructor();
@@ -19,8 +19,13 @@ export declare class DataBase {
     viewPlaylists(): void;
     viewPlaylist(playlistName: string): void;
     updateDurationPlaylist(playlistName: string): void;
+    setGengre(genre: Genre): void;
+    setSong(song: Song): void;
+    setAlbum(album: Album): void;
     setArtist(artist: Artist): void;
     setGroup(group: Group): void;
-    setGengre(genre: Genre): void;
-    setAlbum(album: Album): void;
+    alphabeticalSongNameSort(playlistName: string): void;
+    alphabeticalAuthorNameSort(playlistName: string): void;
+    durationSort(playlistName: string): void;
+    numberOfReproductionSort(playlistName: string): void;
 }

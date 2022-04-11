@@ -138,7 +138,7 @@
     }
   ],
   "albums": [],
-  "songsBD": [
+  "songs": [
     {
       "name": "Una noche en Medellín",
       "author": "Cris MJ",
@@ -504,20 +504,13 @@
     {
       "name": "Playlist N1",
       "songs": [
-        "Tu Con EL",
-        "Lluvia",
         "Volví",
         "Una noche en Medellín",
         "EL MAKINON",
-        "Tu Con El",
-        "La Vaca",
-        "Volví",
-        "Volví",
-        "Volví",
-        "Volví",
-        "Volví"
+        "Lluvia",
+        "La Morena"
       ],
-      "duration": 2000,
+      "duration": 182,
       "genres": [
         "Salsa"
       ]
@@ -526,6 +519,18 @@
       "name": "snfief",
       "songs": [],
       "duration": 0,
+      "genres": []
+    },
+    {
+      "name": "T1",
+      "songs": [
+        "Volví",
+        "La Morena",
+        "Las cuatro estaciones",
+        "Las cuatro estaciones",
+        "Las cuatro estaciones"
+      ],
+      "duration": 2.14,
       "genres": []
     }
   ],

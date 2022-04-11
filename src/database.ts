@@ -5,7 +5,7 @@ import FileSync from 'lowdb/adapters/FileSync';
 interface Schema {
     genres: Genre[],
     albums: Album[],
-    songsBD: Song[],
+    songs: Song[],
     artists: Artist[],
     groups: Group[],
     playlists: Playlist[],
@@ -38,8 +38,8 @@ export class DataBase {
     }
 
     private initSongs() {
-        if(!this.db.has("songsBD").value()) {
-            this.db.set("songsBD", []).write();
+        if(!this.db.has("songs").value()) {
+            this.db.set("songs", []).write();
         }
     }
 
@@ -183,8 +183,10 @@ export class DataBase {
     viewPlaylist(playlistName: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         let durationOfPlaylist: number = this.db.get("playlists").value().at(indexOfPlaylist)?.duration as number;
+        let horas = Math.floor(durationOfPlaylist);
+        let minutos = Math.floor((durationOfPlaylist - horas) * 100);
 
-        console.log("[" + playlistName +"]    Duration:" + durationOfPlaylist);
+        console.log("[" + playlistName +"]    Duration: " + horas + " hours and " + minutos + " minutes");
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.forEach((song: string) => {
             console.log(song);
         })
@@ -200,24 +202,27 @@ export class DataBase {
         let indexOfSong: number;
         let songs: string[] = [];
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
-        let newduration: number = this.db.get("playlists").value().at(indexOfPlaylist)?.duration as number;
-        
+        let newduration = 0;
+        let min = 0; 
+        let sec = 0; 
+        let hour = 0;
+
         this.db.get("playlists")
             .find({name: playlistName})
             .value().songs
             .forEach((songName: string) => {
-                songs.push(songName);
+                indexOfSong = this.findSong(songName);
+                newduration = (this.db.get("songs")
+                .value().at(indexOfSong)?.duration as number);
+                let auxarray = newduration
+                min += Math.floor(newduration);
+                sec += parseFloat(((newduration - Math.floor(newduration)) * 100).toFixed(2));
         });
 
-        for (let song of songs) {
-            console.log(this.db.get("songsBD")
-                .find({name: song}));
-        }            
-
-        /*let durations: number;
-        this.db.get("playlists").value().songs.forEach((songName sting) => {
-            durations += this.db.get("songs").find({name: playlist})
-        })*/
+        min += Math.floor(sec/60);
+        hour = Math.floor(min/60);
+        min = Math.floor(min - 60*hour);
+        newduration = hour + (min/100);
 
         this.db.get("playlists")
             .find({name: playlistName})
@@ -230,7 +235,7 @@ export class DataBase {
     }
 
     setSong(song: Song) {
-        //this.db.get("songs").push(song).write();
+        this.db.get("songs").push(song).write();
     }
 
     setAlbum(album: Album) {
@@ -244,4 +249,28 @@ export class DataBase {
     setGroup(group: Group) {
         this.db.get("groups").push(group).write();
     }
+    
+    alphabeticalSongNameSort(playlistName: string) {
+        let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+        this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
+            return song1.normalize().localeCompare(song2.normalize());
+        });
+        this.db.write();
+    }
+
+    alphabeticalAuthorNameSort(playlistName: string) {
+        let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+        this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
+            let author1: string = "";
+            let author2: string = "";
+            return author1.normalize().localeCompare(author2.normalize());
+        });
+        this.db.write();
+    }
+
+    durationSort(playlistName: string) {
+
+    }
+
+    numberOfReproductionSort(playlistName: string) {}
 }

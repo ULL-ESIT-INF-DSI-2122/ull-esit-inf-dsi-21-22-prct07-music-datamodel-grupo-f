@@ -115,6 +115,7 @@ function promptRemoveSong(playlistName) {
             message: "Enter name of the song:",
         });
         database.removeSongFromPlaylist(playlistName, nameSong["nameSong"]);
+        database.updateDurationPlaylist(playlistName);
     });
 }
 exports.promptRemoveSong = promptRemoveSong;

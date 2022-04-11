@@ -106,6 +106,7 @@ export async function promptRemoveSong(playlistName: string): Promise<void> {
     });
 
     database.removeSongFromPlaylist(playlistName, nameSong["nameSong"]);
+    database.updateDurationPlaylist(playlistName);
 }
 
 export async function promptSelectPlaylist(): Promise<void> {
