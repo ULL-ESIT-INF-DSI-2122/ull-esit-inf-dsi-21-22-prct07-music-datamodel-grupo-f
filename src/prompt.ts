@@ -1,8 +1,6 @@
 import inquirer, { Inquirer, PromptModule} from 'inquirer';
 import { Playlist, Song } from './classes';
-import { DataBase } from "./database";
-
-let database: DataBase = new DataBase();
+import { DataBase } from './database';
 
 enum Commands {
     SelectPlatlist = "Select playlist",
@@ -17,131 +15,135 @@ enum CommandsPlaylist {
     Quit = "Quit",
 }
 
-export async function promptUser(): Promise<void> {
-    let answers = {
-        command: Commands.SelectPlatlist,
+export class Gestor {
+    constructor(private database: DataBase) {}
+    
+    async promptUser(): Promise<void> {
+        let answers = {
+            command: Commands.SelectPlatlist,
+        }
+    
+        while(answers["command"] != Commands.Quit)
+        {
+            console.clear();
+            this.database.viewPlaylists();
+            answers = await inquirer.prompt({
+                type: "list",
+                name: "command",
+                message: "Choose option",
+                choices: Object.values(Commands)
+            });
+    
+            switch(answers["command"]) {
+                case Commands.SelectPlatlist:
+                    await this.promptSelectPlaylist();
+                    break;
+                case Commands.AddPlaylist:
+                    await this.promptAddPlaylist();
+                    break;
+                case Commands.RemovePlaylist:
+                    await this.promptRemovePlaylist();
+                    break;
+            }
+        }
     }
 
-    while(answers["command"] != Commands.Quit)
-    {
+    async promptUserPlaylist(playlistName: string): Promise<void> {
+        let answers = {
+            commandPlaylist: CommandsPlaylist.AddSong,
+        }
+    
+        while(answers["commandPlaylist"] != CommandsPlaylist.Quit) {
+            console.clear();
+            this.database.viewPlaylist(playlistName);
+            const answers = await inquirer.prompt({
+                type: "list",
+                name: "commandPlaylist",
+                message: "Choose option",
+                choices: Object.values(CommandsPlaylist)
+            });
+    
+            switch(answers["commandPlaylist"]) {
+                case CommandsPlaylist.AddSong:
+                    await this.promptAddSong(playlistName);
+                    break;
+                case CommandsPlaylist.RemoveSong:
+                    await this.promptRemoveSong(playlistName);
+                    break;
+                case CommandsPlaylist.Quit:
+                    break;
+            }
+    
+            if(answers["commandPlaylist"] === CommandsPlaylist.Quit)
+                break;
+        }
+    }
+
+    async promptAddSong(playlistName: string): Promise<void> {
         console.clear();
-        database.viewPlaylists();
-        answers = await inquirer.prompt({
-            type: "list",
-            name: "command",
-            message: "Choose option",
-            choices: Object.values(Commands)
+        
+        const nameSong = await inquirer.prompt({
+            type: "input",
+            name: "nameSong",
+            message: "Enter name of the song:",
         });
-
-        switch(answers["command"]) {
-            case Commands.SelectPlatlist:
-                await promptSelectPlaylist();
-                break;
-            case Commands.AddPlaylist:
-                await promptAddPlaylist();
-                break;
-            case Commands.RemovePlaylist:
-                await promptRemovePlaylist();
-                break;
+    
+        if(this.database.findSong(nameSong["nameSong"]) != -1)
+        {
+            this.database.setSongToPlaylist(nameSong["nameSong"], playlistName);
+            this.database.updateDurationPlaylist(playlistName);
         }
-    }
-}
-
-export async function promptUserPlaylist(playlistName: string): Promise<void> {
-    let answers = {
-        commandPlaylist: CommandsPlaylist.AddSong,
+        else
+            console.log("The song doesnt exists");
     }
 
-    while(answers["commandPlaylist"] != CommandsPlaylist.Quit) {
-        //console.clear();
-        database.viewPlaylist(playlistName);
-        const answers = await inquirer.prompt({
-            type: "list",
-            name: "commandPlaylist",
-            message: "Choose option",
-            choices: Object.values(CommandsPlaylist)
+    async promptRemoveSong(playlistName: string): Promise<void> {
+        console.clear();
+        
+        const nameSong = await inquirer.prompt({
+            type: "input",
+            name: "nameSong",
+            message: "Enter name of the song:",
         });
-
-        switch(answers["commandPlaylist"]) {
-            case CommandsPlaylist.AddSong:
-                await promptAddSong(playlistName);
-                break;
-            case CommandsPlaylist.RemoveSong:
-                await promptRemoveSong(playlistName);
-                break;
-            case CommandsPlaylist.Quit:
-                break;
-        }
-
-        if(answers["commandPlaylist"] === CommandsPlaylist.Quit)
-            break;
+    
+        this.database.removeSongFromPlaylist(playlistName, nameSong["nameSong"]);
+        this.database.updateDurationPlaylist(playlistName);
     }
-}
 
-export async function promptAddSong(playlistName: string): Promise<void> {
-    console.clear();
+    async promptSelectPlaylist(): Promise<void> {
+        console.clear();
     
-    const nameSong = await inquirer.prompt({
-        type: "input",
-        name: "nameSong",
-        message: "Enter name of the song:",
-    });
-
-    if(database.findSong(nameSong["nameSong"]) != -1)
-    {
-        database.setSongToPlaylist(nameSong["nameSong"], playlistName);
-        database.updateDurationPlaylist(playlistName);
+        const playlistName = await inquirer.prompt({
+            type: "input",
+            name: "playlistName",
+            message: "Enter name of the playlist: ",
+        });
+    
+        await this.promptUserPlaylist(playlistName["playlistName"]);
     }
-    else
-        console.log("The song doesnt exists");
-}
 
-export async function promptRemoveSong(playlistName: string): Promise<void> {
-    console.clear();
+    async promptAddPlaylist(): Promise<void> {
+        console.clear();
+        
+        const playlistName = await inquirer.prompt({
+            type: "input",
+            name: "playlistName",
+            message: "Enter name of the playlist: ",
+        });
     
-    const nameSong = await inquirer.prompt({
-        type: "input",
-        name: "nameSong",
-        message: "Enter name of the song:",
-    });
+        let newPlaylist = new Playlist (playlistName["playlistName"], [], 0, [])
+        this.database.setPlaylist(newPlaylist);
+    }
 
-    database.removeSongFromPlaylist(playlistName, nameSong["nameSong"]);
-    database.updateDurationPlaylist(playlistName);
-}
-
-export async function promptSelectPlaylist(): Promise<void> {
-    console.clear();
-
-    const playlistName = await inquirer.prompt({
-        type: "input",
-        name: "playlistName",
-        message: "Enter name of the playlist: ",
-    });
-
-    await promptUserPlaylist(playlistName["playlistName"]);
-}
-
-export async function promptAddPlaylist(): Promise<void> {
-    console.clear();
+    async promptRemovePlaylist(): Promise<void> {
+        console.clear();
+        
+        const playlistName = await inquirer.prompt({
+            type: "input",
+            name: "playlistName",
+            message: "Enter name of the playlist: ",
+        });
     
-    const playlistName = await inquirer.prompt({
-        type: "input",
-        name: "playlistName",
-        message: "Enter name of the playlist: ",
-    });
-
-    let newPlaylist = new Playlist (playlistName["playlistName"], [], 0, [])
-    database.setPlaylist(newPlaylist);
-}
-
-export async function promptRemovePlaylist(): Promise<void> {
-    console.clear();
-    
-    const playlistName = await inquirer.prompt({
-        type: "input",
-        name: "playlistName",
-        message: "Enter name of the playlist: ",
-    });
-
-    database.removePlaylist(playlistName["playlistName"]);
+        this.database.removePlaylist(playlistName["playlistName"]);
+    }
 }
