@@ -3,7 +3,7 @@
 **Nombres y correos:**  
 Leonardo Alfonso Cruz Rodríguez - alu0101233093@ull.edu.es  
 Eduardo  
-Orlando  
+José Orlando Nina Orellana - alu0101322308@ull.edu.es 
 
 [![Node.js CI](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/actions/workflows/node.js.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/actions/workflows/node.js.yml)
 
@@ -417,3 +417,239 @@ Y ya estaría configurada la `Gihub Actions` de `Sonar Cloud`. Por último, para
 abajo a la izquierda y copiaremos el badge.
 
 ## Ejercicio 1<a name="id1"></a>
+
+Declararemos una interfaz que tendrá la base datos. La base de datos contendrá un array de géneros, albumes, canciones, artistas, grupos y playlists.
+
+```typescript
+interface Schema {
+    genres: Genre[],
+    albums: Album[],
+    songs: Song[],
+    artists: Artist[],
+    groups: Group[],
+    playlists: Playlist[],
+};
+```
+
+Crearemos la clase `DataBase` que se encargara de manipular la base de datos. En el constructor abriremos un JSON o crearemos si es que no esta creado un fichero llamado db.json. Y con las funciones init comprobaremos si cada uno de los arrays esta en el fichero y si no esta lo crearemos.
+
+```typescript
+constructor() {
+        const adapter = new FileSync<Schema>("db.json");
+        this.db = lowdb(adapter);
+        this.initGenres();
+        this.initAlbums();
+        this.initSongs();
+        this.initArtists();
+        this.initGroups();
+        this.initPlaylists();
+    }
+```
+
+La función `setPlaylist` añade una playlist a la base de datos recibiendo como parámetro un objeto de tipo `Playlist`.
+
+```typescript
+setPlaylist(playlist: Playlist) {
+  this.db.get("playlists").push(playlist).write();
+}
+```
+
+La función `removePlaylist` elimina una playlist de la base de datos recibiendo como parámetro el nombre de la playlist. Primero se busca el índice de la playlist y se guarda en la variable `indexOfPlaylist`. Y ya con el índice se usa el método `splice` para elimar la playlist.
+
+```typescript
+removePlaylist(playlistName: string) {
+  let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+  this.db.get("playlists").splice(indexOfPlaylist, 1).write();
+}
+```
+
+La función `removeSongFromPlaylist` elimina una canción de una playlist, recibiendo como parámetros el nombre de la canción y de la playlist. Se busca primero el índice de la playlist y se guarda en la variable `indexOfPlaylist`. Luego se busca el índice de la canción dentro de la playlist y se guarda en la variable `indexOfSong`. Por último se elimina la canción usando el método `splice`.
+
+```typescript
+removeSongFromPlaylist(playlistName: string, nameSong: string) {
+  let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+  let indexOfSong = this.db.get("playlists").value()[indexOfPlaylist].songs.indexOf(nameSong);
+  this.db.get("playlists").value().at(indexOfPlaylist)?.songs.splice(indexSong, 1);
+  this.db.write();
+}
+```
+
+La función `viewPlaylist` recorre todos las playlists que están en la base de datos e imprime sus nombre por consola.
+
+```typescript
+viewPlaylists() {
+        this.db.get("playlists").value().forEach((playlist: Playlist) => {
+            console.log(playlist.name);
+        })
+    }
+```
+
+Declararemos un enumerado, `Commands`, que contendrá todos los comandos que contendrá el menú principal.
+
+```typescript
+enum Commands {
+  SelectPlatlist = "Select playlist",
+  AddPlaylist = "Add playlist",
+  RemovePlaylist = "Remove playlist",
+  Quit = "Quit",
+}
+```
+
+Declararemos otro enumarado, `CommandsPlaylist`, que contendrá todos los comandos que hay dentro de una playlist.
+
+```typescript
+enum CommandsPlaylist {
+  AddSong = "Add song to a playlist",
+  RemoveSong = "Remove song from a playlist",
+  Quit = "Quit",
+}
+```
+
+Crearemos la clase `Gestor` que se encargará de la interfaz del usuario. Tendrá como atributo un objeto de tipo `DataBase`.
+
+La función `promptUser` se encarga del menú principal. Mientras el comando sea distinto de `Quit` se seguirá ejecutando. Primero se limpiará la consola y se mostrarán todas las playlists. Con el método `prompt` del modulo inquirer recogeremos la respuesta del usuario por línea de comando. Con el switch filtraremos la respuesta del usuario y ejecutaremos el comando.
+
+```typescript
+async promptUser(): Promise<void> {
+  let answers = {
+  command: Commands.SelectPlatlist,
+  }
+    
+  while(answers["command"] != Commands.Quit)
+  {
+    console.clear();
+    this.database.viewPlaylists();
+    answers = await inquirer.prompt({
+      type: "list",
+      name: "command",
+      message: "Choose option",
+      choices: Object.values(Commands)
+    });
+    
+    switch(answers["command"]) {
+      case Commands.SelectPlatlist:
+        await this.promptSelectPlaylist();
+        break;
+      case Commands.AddPlaylist:
+        await this.promptAddPlaylist();
+        break;
+      case Commands.RemovePlaylist:
+        await this.promptRemovePlaylist();
+        break;
+    }
+  }
+}
+```
+
+La función `promptUserPlaylist` 
+
+```typescript
+async promptUserPlaylist(playlistName: string): Promise<void> {
+  let answers = {
+  commandPlaylist: CommandsPlaylist.AddSong,
+  }
+    
+  while(answers["commandPlaylist"] != CommandsPlaylist.Quit) {
+    console.clear();
+    this.database.viewPlaylist(playlistName);
+    const answers = await inquirer.prompt({
+      type: "list",
+      name: "commandPlaylist",
+      message: "Choose option",
+      choices: Object.values(CommandsPlaylist)
+    });
+    
+    switch(answers["commandPlaylist"]) {
+      case CommandsPlaylist.AddSong:
+        await this.promptAddSong(playlistName);
+        break;
+      case CommandsPlaylist.RemoveSong:
+        await this.promptRemoveSong(playlistName);
+        break;
+      case CommandsPlaylist.Quit:
+        break;
+    }
+    
+    if(answers["commandPlaylist"] === CommandsPlaylist.Quit)
+      break;
+  }
+}
+```
+
+```typescript
+async promptAddSong(playlistName: string): Promise<void> {
+  console.clear();
+        
+  const nameSong = await inquirer.prompt({
+    type: "input",
+    name: "nameSong",
+    message: "Enter name of the song:",
+  });
+    
+  if(this.database.findSong(nameSong["nameSong"]) != -1)
+  {
+    this.database.setSongToPlaylist(nameSong["nameSong"], playlistName);
+    this.database.updateDurationPlaylist(playlistName);
+  }
+  else
+    console.log("The song doesnt exists");
+}
+```
+
+```typescript
+async promptRemoveSong(playlistName: string): Promise<void> {
+  console.clear();
+        
+  const nameSong = await inquirer.prompt({
+    type: "input",
+    name: "nameSong",
+    message: "Enter name of the song:",
+  });
+    
+  this.database.removeSongFromPlaylist(playlistName, nameSong["nameSong"]);
+  this.database.updateDurationPlaylist(playlistName);
+}
+```
+
+```typescript
+async promptSelectPlaylist(): Promise<void> {
+  console.clear();
+    
+  const playlistName = await inquirer.prompt({
+  type: "input",
+  name: "playlistName",
+  message: "Enter name of the playlist: ",
+  });
+    
+  await this.promptUserPlaylist(playlistName["playlistName"]);
+}
+```
+
+```typescript
+async promptAddPlaylist(): Promise<void> {
+  console.clear();
+        
+  const playlistName = await inquirer.prompt({
+  type: "input",
+  name: "playlistName",
+  message: "Enter name of the playlist: ",
+  });
+    
+  let newPlaylist = new Playlist (playlistName["playlistName"], [], 0, [])
+  this.database.setPlaylist(newPlaylist);
+}
+```
+
+```typescript
+async promptRemovePlaylist(): Promise<void> {
+  console.clear();
+        
+  const playlistName = await inquirer.prompt({
+    type: "input",
+    name: "playlistName",
+    message: "Enter name of the playlist: ",
+  });
+    
+  this.database.removePlaylist(playlistName["playlistName"]);
+}
+```
