@@ -135,6 +135,38 @@
         "Quinta sinfonía",
         "Las cuatro estaciones"
       ]
+    },
+    {
+      "name": "Bachata",
+      "authors": [
+        "Prince Roye",
+        "Camilo",
+        "Obsesion",
+        "Romeo Santos"
+      ],
+      "albums": [],
+      "songs": [
+        "Propuesta Indecente",
+        "Darte Un Beso",
+        "Obsesion",
+        "BEBÉ"
+      ]
+    },
+    {
+      "name": "Electronica",
+      "authors": [
+        "Avicii",
+        "Mike Posner",
+        "Alan Walker",
+        "The Chainsmokers"
+      ],
+      "albums": [],
+      "songs": [
+        "Don't Let Me Down",
+        "Faded",
+        "Wake Me Up",
+        "I Took A Pill In Ibiza (Seeb Remix)"
+      ]
     }
   ],
   "albums": [],
@@ -498,6 +530,86 @@
       ],
       "single": true,
       "numberReproductions": 125678654
+    },
+    {
+      "name": "Darte Un Beso",
+      "author": "Prince Royce",
+      "duration": 3.26,
+      "genres": [
+        "Bachata"
+      ],
+      "single": true,
+      "numberReproductions": 265628253
+    },
+    {
+      "name": "BEBÉ",
+      "author": "Camilo",
+      "duration": 3.17,
+      "genres": [
+        "Bachata"
+      ],
+      "single": true,
+      "numberReproductions": 152034124
+    },
+    {
+      "name": "Obsesion",
+      "author": "Aventura",
+      "duration": 4.14,
+      "genres": [
+        "Bachata"
+      ],
+      "single": true,
+      "numberReproductions": 280599715
+    },
+    {
+      "name": "Propuesta Indecente",
+      "author": "Romeo Santos",
+      "duration": 3.55,
+      "genres": [
+        "Bachata"
+      ],
+      "single": true,
+      "numberReproductions": 475413408
+    },
+    {
+      "name": "Wake Me Up",
+      "author": "Avicii",
+      "duration": 4.07,
+      "genres": [
+        "Electronica"
+      ],
+      "single": true,
+      "numberReproductions": 1543148730
+    },
+    {
+      "name": "I Took A Pill In Ibiza (Seeb Remix)",
+      "author": "Mike Posner",
+      "duration": 3.17,
+      "genres": [
+        "Electronica"
+      ],
+      "single": true,
+      "numberReproductions": 1520307996
+    },
+    {
+      "name": "Faded",
+      "author": "Alan Walker",
+      "duration": 3.32,
+      "genres": [
+        "Electronica"
+      ],
+      "single": true,
+      "numberReproductions": 1546638645
+    },
+    {
+      "name": "Don't Let Me Down",
+      "author": "The Chainsmokers",
+      "duration": 3.28,
+      "genres": [
+        "Electronica"
+      ],
+      "single": true,
+      "numberReproductions": 1540721566
     }
   ],
   "playlists": [
