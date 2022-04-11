@@ -396,7 +396,7 @@ jobs:
 El paso siguiente sería crear el fichero `sonar-project.properties` y pegar el contenido dado por la página. Modificandolo un poco quedaría de la siguiente manera:
 
 ```properties
-sonar.projectKey=ULL-ESIT-INF-DSI-2122_github-actions-sonar-cloud
+sonar.projectKey=ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f
 sonar.organization=ull-esit-inf-dsi-2122
 
 # This is the name and version displayed in the SonarCloud UI.
