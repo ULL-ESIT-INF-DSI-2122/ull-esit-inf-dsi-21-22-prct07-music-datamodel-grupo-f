@@ -1,22 +1,16 @@
-import { Genre, Album, Song, Artist, Group, Playlist } from './classes';
-import lowdb from 'lowdb';
-import FileSync from 'lowdb/adapters/FileSync';
-
-interface Schema {
-    genres: Genre[],
-    albums: Album[],
-    songsBD: Song[],
-    artists: Artist[],
-    groups: Group[],
-    playlists: Playlist[],
+"use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-
-export class DataBase {
-    private db: lowdb.LowdbSync<Schema>;
-
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.DataBase = void 0;
+const lowdb_1 = __importDefault(require("lowdb"));
+const FileSync_1 = __importDefault(require("lowdb/adapters/FileSync"));
+;
+class DataBase {
     constructor() {
-        const adapter = new FileSync<Schema>("db.json");
-        this.db = lowdb(adapter);
+        const adapter = new FileSync_1.default("db.json");
+        this.db = (0, lowdb_1.default)(adapter);
         this.initGenres();
         this.initAlbums();
         this.initSongs();
@@ -24,78 +18,64 @@ export class DataBase {
         this.initGroups();
         this.initPlaylists();
     }
-
-    private initGenres() {
-        if(!this.db.has("genres").value()) {
+    initGenres() {
+        if (!this.db.has("genres").value()) {
             this.db.set("genres", []).write();
         }
     }
-
-    private initAlbums() {
-        if(!this.db.has("albums").value()) {
+    initAlbums() {
+        if (!this.db.has("albums").value()) {
             this.db.set("albums", []).write();
         }
     }
-
-    private initSongs() {
-        if(!this.db.has("songsBD").value()) {
-            this.db.set("songsBD", []).write();
+    initSongs() {
+        if (!this.db.has("songs").value()) {
+            this.db.set("songs", []).write();
         }
     }
-
-    private initArtists() {
-        if(!this.db.has("artists").value()) {
+    initArtists() {
+        if (!this.db.has("artists").value()) {
             this.db.set("artists", []).write();
         }
     }
-
-    private initGroups() {
-        if(!this.db.has("groups").value()) {
+    initGroups() {
+        if (!this.db.has("groups").value()) {
             this.db.set("groups", []).write();
         }
     }
-
-    private initPlaylists() {
-        if(!this.db.has("playlists").value()) {
+    initPlaylists() {
+        if (!this.db.has("playlists").value()) {
             this.db.set("playlists", []).write();
         }
     }
-
-    findSong(songName: string): number {
-        return this.db.get("songs").value().findIndex((song: Song) => {
+    findSong(songName) {
+        return this.db.get("songs").value().findIndex((song) => {
             return song.name === songName;
         });
     }
-
-    findArtist(artistName: string): number {
-        return this.db.get("artists").value().findIndex((artist: Artist) => {
+    findArtist(artistName) {
+        return this.db.get("artists").value().findIndex((artist) => {
             return artist.name === artistName;
         });
     }
-    
-    findGroup(groupName: string): number {
-        return this.db.get("groups").value().findIndex((group: Group) => {
+    findGroup(groupName) {
+        return this.db.get("groups").value().findIndex((group) => {
             return group.name === groupName;
         });
     }
-
-    findGenres(genres: string[]): number[] {
-        let indexOfGenres: number[] = [];
-        let index: number = 0;
-
-        genres.forEach((genre: string) => {
-            index = Number(this.db.get("genres").findIndex((genreElement: Genre) => {
+    findGenres(genres) {
+        let indexOfGenres = [];
+        let index = 0;
+        genres.forEach((genre) => {
+            index = Number(this.db.get("genres").findIndex((genreElement) => {
                 return genreElement.name === genre;
             }));
-
-            if(index != -1)
+            if (index != -1)
                 indexOfGenres.push(index);
         });
-
         console.log(indexOfGenres);
         return indexOfGenres;
     }
-
     /*setSong(song: Song) {
         
          * existe el autor?
@@ -103,7 +83,7 @@ export class DataBase {
          * [no]-> crear autor
          * existe género?
          * [yes]-> añadir cancion al genero
-         * [no]-> crear genero 
+         * [no]-> crear genero
         
         if(this.findArtist(song.author) != -1)
         {
@@ -147,101 +127,84 @@ export class DataBase {
 
         this.db.get("songs").push(song).write();
     }*/
-
-    setSongToPlaylist(songName: string, playlistName: string) {
-        let indexOfPlaylist = this.db.get("playlists").value().findIndex((playlist: Playlist) => {
+    setSongToPlaylist(songName, playlistName) {
+        var _a;
+        let indexOfPlaylist = this.db.get("playlists").value().findIndex((playlist) => {
             return playlist.name === playlistName;
         });
-
-        this.db.get("playlists").value().at(indexOfPlaylist)?.songs.push(songName);
+        (_a = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _a === void 0 ? void 0 : _a.songs.push(songName);
         this.db.write();
     }
-
-    setPlaylist(playlist: Playlist) {
+    setPlaylist(playlist) {
         this.db.get("playlists").push(playlist).write();
     }
-
-    removePlaylist(playlistName: string) {
-        let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+    removePlaylist(playlistName) {
+        let indexOfPlaylist = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").splice(indexOfPlaylist, 1).write();
     }
-
-    removeSongFromPlaylist(playlistName: string, nameSong: string) {
-        let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+    removeSongFromPlaylist(playlistName, nameSong) {
+        var _a;
+        let indexOfPlaylist = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         let indexSong = this.db.get("playlists").value()[indexOfPlaylist].songs.indexOf(nameSong);
-        this.db.get("playlists").value().at(indexOfPlaylist)?.songs.splice(indexSong, 1);
+        (_a = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _a === void 0 ? void 0 : _a.songs.splice(indexSong, 1);
         this.db.write();
         //this.db.get("playlists").value().at(indexOfPlaylist)?.setDuration
     }
-
     viewPlaylists() {
-        this.db.get("playlists").value().forEach((playlist: Playlist) => {
+        this.db.get("playlists").value().forEach((playlist) => {
             console.log(playlist.name);
-        })
+        });
     }
-
-    viewPlaylist(playlistName: string) {
-        let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
-        let durationOfPlaylist: number = this.db.get("playlists").value().at(indexOfPlaylist)?.duration as number;
-
-        console.log("[" + playlistName +"]    Duration:" + durationOfPlaylist);
-        this.db.get("playlists").value().at(indexOfPlaylist)?.songs.forEach((song: string) => {
+    viewPlaylist(playlistName) {
+        var _a, _b;
+        let indexOfPlaylist = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+        let durationOfPlaylist = (_a = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _a === void 0 ? void 0 : _a.duration;
+        console.log("[" + playlistName + "]    Duration:" + durationOfPlaylist);
+        (_b = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _b === void 0 ? void 0 : _b.songs.forEach((song) => {
             console.log(song);
-        })
+        });
     }
-
     /*writeSong(song: string, playlistName: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.push(song);
         this.db.write();
     }*/
-
-    updateDurationPlaylist(playlistName: string) {
-        let indexOfSong: number;
-        let songs: string[] = [];
-        let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
-        let newduration: number = this.db.get("playlists").value().at(indexOfPlaylist)?.duration as number;
-        
+    updateDurationPlaylist(playlistName) {
+        var _a;
+        let indexOfSong;
+        let songs = [];
+        let indexOfPlaylist = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+        let newduration = (_a = this.db.get("playlists").value().at(indexOfPlaylist)) === null || _a === void 0 ? void 0 : _a.duration;
         this.db.get("playlists")
-            .find({name: playlistName})
+            .find({ name: playlistName })
             .value().songs
-            .forEach((songName: string) => {
-                songs.push(songName);
+            .forEach((songName) => {
+            songs.push(songName);
         });
-
         for (let song of songs) {
-            console.log(this.db.get("songsBD")
-                .find({name: song}));
-        }            
-
+            console.log(this.db.get("songs")
+                .find({ name: song }));
+        }
         /*let durations: number;
         this.db.get("playlists").value().songs.forEach((songName sting) => {
             durations += this.db.get("songs").find({name: playlist})
         })*/
-
         this.db.get("playlists")
-            .find({name: playlistName})
-            .assign({duration : newduration})
+            .find({ name: playlistName })
+            .assign({ duration: newduration })
             .write();
     }
-
-    setGengre(genre: Genre) {
-        this.db.get("genres").push(genre).write();
-    }
-
-    setSong(song: Song) {
-        //this.db.get("songs").push(song).write();
-    }
-
-    setAlbum(album: Album) {
-        this.db.get("albums").push(album).write();
-    }
-
-    setArtist(artist: Artist) {
+    setArtist(artist) {
         this.db.get("artists").push(artist).write();
     }
-
-    setGroup(group: Group) {
+    setGroup(group) {
         this.db.get("groups").push(group).write();
     }
+    setGengre(genre) {
+        this.db.get("genres").push(genre).write();
+    }
+    setAlbum(album) {
+    }
 }
+exports.DataBase = DataBase;
+//# sourceMappingURL=database.js.map

@@ -138,7 +138,7 @@
     }
   ],
   "albums": [],
-  "songs": [
+  "songsBD": [
     {
       "name": "Una noche en Medellín",
       "author": "Cris MJ",
@@ -510,9 +510,14 @@
         "Una noche en Medellín",
         "EL MAKINON",
         "Tu Con El",
-        "La Vaca"
+        "La Vaca",
+        "Volví",
+        "Volví",
+        "Volví",
+        "Volví",
+        "Volví"
       ],
-      "duration": 1313,
+      "duration": 2000,
       "genres": [
         "Salsa"
       ]

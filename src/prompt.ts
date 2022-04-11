@@ -53,7 +53,7 @@ export async function promptUserPlaylist(playlistName: string): Promise<void> {
     }
 
     while(answers["commandPlaylist"] != CommandsPlaylist.Quit) {
-        console.clear();
+        //console.clear();
         database.viewPlaylist(playlistName);
         const answers = await inquirer.prompt({
             type: "list",
