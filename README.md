@@ -13,6 +13,8 @@ Orlando
 - [Mocha y Chai - Programación TDD](#id0.2)
 - [Documentación con TypeDoc](#id0.3)
 - [Cubrimiento de código utilizando Instanbul y Coveralls](#id0.4)
+- [Integración continua de código fuente TypeScript a través de GitHub Action](#id0.5)
+- [Calidad y seguridad del código fuente mediante Sonar Cloud](#id0.6)
 - [Ejercicio 1](#id1)
 
 ## Creación del directorio de trabajo y tareas previas<a name="id0"></a>
@@ -272,5 +274,146 @@ El script quedaría de la siguiente manera:
 
 Ahora cuando ejecutemos por consola `npm run coverage` en la página del repositorio en `Coveralls` se nos mostrará la información del cubrimiento del código.
 Para añadir el `Batch` del cubrimiento al `README.md` se copiará directamente de la página y se pegará en el fichero.
+
+## Integración continua de código fuente TypeScript a través de GitHub Action<a name="id0.5"></a>
+
+El primer paso es instalar el paquete TypeScript:
+
+```
+$npm install -D typescript
+```
+
+Una vez instalado, entraremos a la página del repositorio y nos dirigiremos a Actions, y dentro de dicho apartado bajaremos hasta Continuous integration.
+![image](https://user-images.githubusercontent.com/72469549/160702017-d769658d-cfc4-4ecc-a0d5-ca4caa187c8f.png)  
+
+Buscaremos `Node.js` y le daremos a `Set up this workflow`.
+
+![image](https://user-images.githubusercontent.com/72469549/160702039-bf36ceec-f903-4155-8450-32a70b19f276.png)  
+
+Una vez dentro es importante cambiar el final del fichero por el siguiente contenido:
+
+```
+steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+    - run: npm install
+    - run: npm test
+```
+
+Y realizamos un commit para guardar el fichero generado. Opcionalmente se puede añadir un `badge` en al informe en las siguientes opciones:
+
+![image](https://user-images.githubusercontent.com/72469549/160701932-68d8d9b2-d347-49eb-90c7-76736f17073f.png)
+
+![image](https://user-images.githubusercontent.com/72469549/160701954-2845ea6d-4a1e-4aaf-88c6-31a35a0ee546.png)
+
+A continuación crearemos el fichero `coveralls.yml` y le pondremos el siguiente contenido:
+
+```yml
+name: Coveralls
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cloning repo
+      uses: actions/checkout@v2
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+    - name: Installing dependencies
+      run: npm install
+    - name: Generating coverage information
+      run: npm run coverage
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+
+```
+
+Ahora con cada push se comprobarán los tests y el recubrimiento de código automáticamente y se podrá revisar en Github Actions.
+
+## Calidad y seguridad del código fuente mediante Sonar Cloud y GitHub Actions<a name="id0.6"></a>
+
+Para poder utilizar la herramienta `Sonar Cloud` debemos tener el repositorio en una organización. En este caso lo tendremos alojado en la organización de la asignatura.
+Una vez creada la cuenta en la página <a href = "http://www.sonarcloud.io/">sonarcloud.io</a> añadiremos el repositorio dándole al símbolo `+`. Veremos que nos analizará 
+el proyecto.
+
+A continuación deberemos ir al apartado `administration` y en el desplegable seleccionaremos `analysis method` y desactivaremos el análisis automático.
+El siguiente paso sería entrar en el tutorial de github actions, copiaremos el `SONAR_TOKEN`, accedemos al apartado settings del repositorio, entramos en secrets,
+dentro le daremos a actions y añadiremos un nuevo secreto con el título y el valor que nos ha dado la `Sonar Cloud`.
+
+Una vez añadido el secreto, en la página de `Sonar Cloud` le daremos a `continue`. Seleccionaremos *Other* ya que este proyecto está programado en TS y nos mostrará el 
+contenido que deberá tener el fichero de flujo de trabajo en github actions. Por lo tanto, el siguiente paso sería crear el fichero `sonarcloud.yml` dentro del directorio
+`.github/workflows` y copiaremos el contenido dado por la página. Es necesario cambiar un poco el archivo y añadir pasos, el fichero quedaría de la siguiente manera:
+
+```yml
+name: Sonar-Cloud 
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - name: Installing dependencies
+        run: npm install
+      - name: Generating coverage report
+        run: npm run coverage
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+```
+**¡Importante!** Se deberá cambiar el nombre de las ramas dentro del fichero en caso de que sea necesario.
+
+El paso siguiente sería crear el fichero `sonar-project.properties` y pegar el contenido dado por la página. Modificandolo un poco quedaría de la siguiente manera:
+
+```properties
+sonar.projectKey=ULL-ESIT-INF-DSI-2122_github-actions-sonar-cloud
+sonar.organization=ull-esit-inf-dsi-2122
+
+# This is the name and version displayed in the SonarCloud UI.
+sonar.projectName=github-actions-sonar-cloud
+sonar.projectVersion=1.0
+
+# Path is relative to the sonar-project.properties file. Replace "\" by "/" on Windows.
+sonar.sources=src
+
+# Encoding of the source code. Default is default system encoding
+sonar.sourceEncoding=UTF-8
+
+# Coverage info
+sonar.javascript.lcov.reportPath=coverage/lcov.info
+```
+
+Y ya estaría configurada la `Gihub Actions` de `Sonar Cloud`. Por último, para añadir el badge a la documentación del proyecto, nos dirigiremos al apartado de información
+abajo a la izquierda y copiaremos el badge.
 
 ## Ejercicio 1<a name="id1"></a>
