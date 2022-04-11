@@ -1,7 +1,10 @@
-import inquirer, { Inquirer, PromptModule} from 'inquirer';
-import { Playlist, Song } from './classes';
+import inquirer from 'inquirer';
+import { Playlist } from './classes';
 import { DataBase } from './database';
 
+/**
+ * Comandos del menú principal
+ */
 enum Commands {
     SelectPlatlist = "Select playlist",
     AddPlaylist = "Add playlist",
@@ -9,22 +12,34 @@ enum Commands {
     Quit = "Quit",
 }
 
+/**
+ * Comandos para gestionar una playlist
+ */
 enum CommandsPlaylist {
     AddSong = "Add song to a playlist",
     RemoveSong = "Remove song from a playlist",
     Quit = "Quit",
 }
 
+/**
+ * Clase Gestor
+ */
 export class Gestor {
+    /**
+     * Constructor
+     * @param database Base de datos
+     */
     constructor(private database: DataBase) {}
     
+    /**
+     * Menú principal donde se podrán ejecutar los comandos
+     */
     async promptUser(): Promise<void> {
         let answers = {
             command: Commands.SelectPlatlist,
         }
     
-        while(answers["command"] != Commands.Quit)
-        {
+        while(answers["command"] != Commands.Quit) {
             console.clear();
             this.database.viewPlaylists();
             answers = await inquirer.prompt({
@@ -48,6 +63,10 @@ export class Gestor {
         }
     }
 
+    /**
+     * Menú de una playlist donde se podran ejecutar los comandos para manipular una playlist
+     * @param playlistName Nombre de la playlist a gestionar
+     */
     async promptUserPlaylist(playlistName: string): Promise<void> {
         let answers = {
             commandPlaylist: CommandsPlaylist.AddSong,
@@ -79,6 +98,10 @@ export class Gestor {
         }
     }
 
+    /**
+     * Añade una canción a una playlist
+     * @param playlistName Nombre de la playlist donde se va a añadir la canción
+     */
     async promptAddSong(playlistName: string): Promise<void> {
         console.clear();
         
@@ -88,8 +111,7 @@ export class Gestor {
             message: "Enter name of the song:",
         });
     
-        if(this.database.findSong(nameSong["nameSong"]) != -1)
-        {
+        if(this.database.findSong(nameSong["nameSong"]) != -1) {
             this.database.setSongToPlaylist(nameSong["nameSong"], playlistName);
             this.database.updateDurationPlaylist(playlistName);
         }
@@ -97,6 +119,10 @@ export class Gestor {
             console.log("The song doesnt exists");
     }
 
+    /**
+     * Elimina una canción de una playlist
+     * @param playlistName Nombre de la playlist donde se va a eliminar la canción
+     */
     async promptRemoveSong(playlistName: string): Promise<void> {
         console.clear();
         
@@ -110,6 +136,9 @@ export class Gestor {
         this.database.updateDurationPlaylist(playlistName);
     }
 
+    /**
+     * Abre el menú al seleccionar una playlist
+     */
     async promptSelectPlaylist(): Promise<void> {
         console.clear();
     
@@ -122,6 +151,9 @@ export class Gestor {
         await this.promptUserPlaylist(playlistName["playlistName"]);
     }
 
+    /**
+     * Añade una playlist
+     */
     async promptAddPlaylist(): Promise<void> {
         console.clear();
         
@@ -135,6 +167,9 @@ export class Gestor {
         this.database.setPlaylist(newPlaylist);
     }
 
+    /**
+     * Elimina una playlist
+     */
     async promptRemovePlaylist(): Promise<void> {
         console.clear();
         
