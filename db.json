@@ -1,14 +1,600 @@
 {
+  "genres": [
+    {
+      "name": "Salsa",
+      "authors": [
+        "Frankie Ruiz",
+        "Lalo Rodriguez",
+        "Eddie Santiago"
+      ],
+      "albums": [],
+      "songs": [
+        "Tu Con EL",
+        "Lluvia",
+        "Ven Devórame Otra Vez"
+      ]
+    },
+    {
+      "name": "Reggeaton",
+      "authors": [
+        "Cris MJ",
+        "KAROL G",
+        "Aventura"
+      ],
+      "albums": [],
+      "songs": [
+        "Una noche en Medellín",
+        "Volví",
+        "EL MAKINON"
+      ]
+    },
+    {
+      "name": "Dembow",
+      "authors": [
+        "El Alfa",
+        "Chimbala"
+      ],
+      "albums": [],
+      "songs": [
+        "Rueda",
+        "La Mamá de la Mamá"
+      ]
+    },
+    {
+      "name": "K-pop",
+      "authors": [
+        "BTS",
+        "TWICE"
+      ],
+      "albums": [],
+      "songs": [
+        "Dynamite",
+        "What is Love"
+      ]
+    },
+    {
+      "name": "Indie",
+      "authors": [
+        "Yawn Vibes",
+        "Goth Babe",
+        "Swiss Portrait"
+      ],
+      "albums": [],
+      "songs": [
+        "Stadium",
+        "Canary Islands",
+        "Patagonia"
+      ]
+    },
+    {
+      "name": "Hip-hop",
+      "authors": [
+        "Desiigner",
+        "Tyga",
+        "Future",
+        "50 Cent",
+        "Migos"
+      ],
+      "albums": [],
+      "songs": [
+        "Panda",
+        "Taste",
+        "Mask Off",
+        "In Da Club",
+        "Bad And Boujee"
+      ]
+    },
+    {
+      "name": "Merengue",
+      "authors": [
+        "Toño Rosario",
+        "Los Hermanos Rosario",
+        "Oro Solido",
+        "Mala Fe"
+      ],
+      "albums": [],
+      "songs": [
+        "Kiliki Taka Ti",
+        "La Dueña del Swing",
+        "Abusadora",
+        "La Morena",
+        "La Vaca"
+      ]
+    },
+    {
+      "name": "Rock",
+      "authors": [
+        "Led Zeppelin",
+        "AC/DC",
+        "Queen",
+        "The Rolling Stones",
+        "KISS"
+      ],
+      "albums": [],
+      "songs": [
+        "Whole Lotta Love",
+        "Highway to Hell",
+        "Don't Stop Me Now",
+        "Gimme Shelter",
+        "Detroit Rock City"
+      ]
+    },
+    {
+      "name": "Clasica",
+      "authors": [
+        "Mozart",
+        "Beethoven",
+        "Bach",
+        "Vivaldi"
+      ],
+      "albums": [],
+      "songs": [
+        "Eine kleine Nachtmusik",
+        "Für Elise",
+        "Tocata y Fuga en Re menor",
+        "Quinta sinfonía",
+        "Las cuatro estaciones"
+      ]
+    }
+  ],
+  "albums": [],
   "songs": [
     {
-      "nCancion_": "a",
-      "nAutor_": "a",
-      "duracion_": 1,
-      "genero_": [
-        "a"
+      "name": "Una noche en Medellín",
+      "author": "Cris MJ",
+      "duration": 2.33,
+      "genres": [
+        "Reggeaton"
       ],
-      "single_": true,
-      "nReprod": 1
+      "single": true,
+      "numberReproductions": 94290145
+    },
+    {
+      "name": "Volví",
+      "author": "Aventura",
+      "duration": 3.5,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 433326208
+    },
+    {
+      "name": "EL MAKINON",
+      "author": "KAROL G",
+      "duration": 3.29,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 335382390
+    },
+    {
+      "name": "Tu Con El",
+      "author": "Frankie Ruiz",
+      "duration": 5.02,
+      "genres": [
+        "Salsa"
+      ],
+      "single": true,
+      "numberReproductions": 100379735
+    },
+    {
+      "name": "Ven Devórame Otra Vez",
+      "author": "Lalo Rodriguez",
+      "duration": 5.14,
+      "genres": [
+        "Salsa"
+      ],
+      "single": true,
+      "numberReproductions": 112015653
+    },
+    {
+      "name": "Lluvia",
+      "author": "Eddie Santiago",
+      "duration": 4.56,
+      "genres": [
+        "Salsa"
+      ],
+      "single": true,
+      "numberReproductions": 87247709
+    },
+    {
+      "name": "Una Cerveza",
+      "author": "Rafaga",
+      "duration": 4,
+      "genres": [
+        "Cumbia"
+      ],
+      "single": true,
+      "numberReproductions": 89912993
+    },
+    {
+      "name": "Mentirosa",
+      "author": "Rafaga",
+      "duration": 3.15,
+      "genres": [
+        "Cumbia"
+      ],
+      "single": true,
+      "numberReproductions": 60182725
+    },
+    {
+      "name": "Me volví a enamorar",
+      "author": "Cumbia Juan",
+      "duration": 3.03,
+      "genres": [
+        "Cumbia"
+      ],
+      "single": true,
+      "numberReproductions": 6826879
+    },
+    {
+      "name": "La Mamá de la Mamá",
+      "author": "El ALfa",
+      "duration": 3.39,
+      "genres": [
+        "Dembow"
+      ],
+      "single": true,
+      "numberReproductions": 112302359
+    },
+    {
+      "name": "Rueda",
+      "author": "Chimbala",
+      "duration": 3.3,
+      "genres": [
+        "Dembow"
+      ],
+      "single": true,
+      "numberReproductions": 58440545
+    },
+    {
+      "name": "Dynamite",
+      "author": "BTS",
+      "duration": 3.19,
+      "genres": [
+        "K-pop"
+      ],
+      "single": true,
+      "numberReproductions": 1313978219
+    },
+    {
+      "name": "What is Love",
+      "author": "TWICE",
+      "duration": 3.28,
+      "genres": [
+        "K-pop"
+      ],
+      "single": true,
+      "numberReproductions": 253100367
+    },
+    {
+      "name": "Stadium",
+      "author": "Yawn Vibes",
+      "duration": 2.48,
+      "genres": [
+        "Indie"
+      ],
+      "single": true,
+      "numberReproductions": 12237
+    },
+    {
+      "name": "Canary Islands",
+      "author": "Goth Babes",
+      "duration": 3.24,
+      "genres": [
+        "Indie"
+      ],
+      "single": true,
+      "numberReproductions": 12394256
+    },
+    {
+      "name": "Patagonia",
+      "author": "Swiss Portrait",
+      "duration": 4,
+      "genres": [
+        "Indie"
+      ],
+      "single": true,
+      "numberReproductions": 115993
+    },
+    {
+      "name": "Panda",
+      "author": "Dessigner",
+      "duration": 4.07,
+      "genres": [
+        "Hip-hop"
+      ],
+      "single": true,
+      "numberReproductions": 1045727696
+    },
+    {
+      "name": "Taste",
+      "author": "Tyga",
+      "duration": 3.52,
+      "genres": [
+        "Hip-hop"
+      ],
+      "single": true,
+      "numberReproductions": 1105587603
+    },
+    {
+      "name": "Mask Off",
+      "author": "Future",
+      "duration": 3.24,
+      "genres": [
+        "Hip-hop"
+      ],
+      "single": true,
+      "numberReproductions": 1166553156
+    },
+    {
+      "name": "In Da Club",
+      "author": "50 Cent",
+      "duration": 3.13,
+      "genres": [
+        "Hip-hop"
+      ],
+      "single": true,
+      "numberReproductions": 812532904
+    },
+    {
+      "name": "Bad And Boujee",
+      "author": "Migos",
+      "duration": 5.43,
+      "genres": [
+        "Hip-hop"
+      ],
+      "single": true,
+      "numberReproductions": 602220111
+    },
+    {
+      "name": "Kiliki Taka Ti",
+      "author": "Toño Rosario",
+      "duration": 6.4,
+      "genres": [
+        "Merengue"
+      ],
+      "single": true,
+      "numberReproductions": 20453193
+    },
+    {
+      "name": "La Dueña del Swing",
+      "author": "Los Hermanos Rosario",
+      "duration": 4.2,
+      "genres": [
+        "Merengue"
+      ],
+      "single": true,
+      "numberReproductions": 6078101
+    },
+    {
+      "name": "Abusadora",
+      "author": "Oro Solido",
+      "duration": 4.39,
+      "genres": [
+        "Merengue"
+      ],
+      "single": true,
+      "numberReproductions": 23166030
+    },
+    {
+      "name": "La Morena",
+      "author": "Oro Solido",
+      "duration": 4.48,
+      "genres": [
+        "Merengue"
+      ],
+      "single": true,
+      "numberReproductions": 3789640
+    },
+    {
+      "name": "La Vaca",
+      "author": "Mala Fe",
+      "duration": 4.15,
+      "genres": [
+        "Merengue"
+      ],
+      "single": true,
+      "numberReproductions": 30911303
+    },
+    {
+      "name": "Whole Lotta Love",
+      "author": "Led Zeppelin",
+      "duration": 5.44,
+      "genres": [
+        "Rock"
+      ],
+      "single": true,
+      "numberReproductions": 629459
+    },
+    {
+      "name": "Highway to Hell",
+      "author": "AC/DC",
+      "duration": 3.28,
+      "genres": [
+        "Rock"
+      ],
+      "single": true,
+      "numberReproductions": 952660013
+    },
+    {
+      "name": "Don't Stop Me Now",
+      "author": "Queen",
+      "duration": 3.29,
+      "genres": [
+        "Rock"
+      ],
+      "single": true,
+      "numberReproductions": 1276703591
+    },
+    {
+      "name": "Gimme Shelter",
+      "author": "The Rolling Stones",
+      "duration": 4.3,
+      "genres": [
+        "Rock"
+      ],
+      "single": true,
+      "numberReproductions": 405015510
+    },
+    {
+      "name": "Detroit Rock City",
+      "author": "KISS",
+      "duration": 3.47,
+      "genres": [
+        "Rock"
+      ],
+      "single": true,
+      "numberReproductions": 141250521
+    },
+    {
+      "name": "Eine kleine Nachtmusik",
+      "author": "Mozart",
+      "duration": 5.52,
+      "genres": [
+        "Clasica"
+      ],
+      "single": true,
+      "numberReproductions": 16923320
+    },
+    {
+      "name": "Für Elise",
+      "author": "Beethoven",
+      "duration": 2.52,
+      "genres": [
+        "Clasica"
+      ],
+      "single": true,
+      "numberReproductions": 9501494
+    },
+    {
+      "name": "Tocata y Fuga en Re menor",
+      "author": "Bach",
+      "duration": 8.23,
+      "genres": [
+        "Clasica"
+      ],
+      "single": true,
+      "numberReproductions": 4102442
+    },
+    {
+      "name": "Quinta sinfonía",
+      "author": "Beethoven",
+      "duration": 39.15,
+      "genres": [
+        "Clasica"
+      ],
+      "single": true,
+      "numberReproductions": 60424014
+    },
+    {
+      "name": "Las cuatro estaciones",
+      "author": "Vivaldi",
+      "duration": 41.59,
+      "genres": [
+        "Clasica"
+      ],
+      "single": true,
+      "numberReproductions": 125678654
+    }
+  ],
+  "playlists": [
+    {
+      "name": "Playlist N1",
+      "songs": [
+        "Tu Con EL",
+        "Lluvia",
+        "Volví",
+        "Una noche en Medellín",
+        "EL MAKINON",
+        "Tu Con El",
+        "La Vaca"
+      ],
+      "duration": 1313,
+      "genres": [
+        "Salsa"
+      ]
+    },
+    {
+      "name": "snfief",
+      "songs": [],
+      "duration": 0,
+      "genres": []
+    }
+  ],
+  "artists": [
+    {
+      "name": "KAROL G",
+      "genres": [
+        "Reggeaton"
+      ],
+      "albums": [],
+      "monthlyListeners": 50134269,
+      "groups": [],
+      "songs": [
+        "EL MAKINON"
+      ]
+    },
+    {
+      "name": "El Alfa",
+      "genres": [
+        "Dembow"
+      ],
+      "albums": [],
+      "monthlyListeners": 20423564,
+      "groups": [],
+      "songs": [
+        "La Mamá de la Mamá"
+      ]
+    }
+  ],
+  "groups": [
+    {
+      "name": "KISS",
+      "genres": [
+        "Rock"
+      ],
+      "albums": [],
+      "monthlyListeners": 10236792,
+      "artists": [
+        "Paul Stanley",
+        "Gene Simmons",
+        "Ace Frehley",
+        "Eric Singer"
+      ],
+      "yearCreation": 1973
+    },
+    {
+      "name": "Rafaga",
+      "genres": [
+        "Cumbia"
+      ],
+      "albums": [],
+      "monthlyListeners": 403670,
+      "artists": [
+        "Ramón Ariel Puchetta",
+        "Victor Omar Morel",
+        "Ulises Estanislao Piñeyro",
+        "Juan Carlos Fusco"
+      ],
+      "yearCreation": 1994
+    },
+    {
+      "name": "Aventura",
+      "genres": [
+        "Reggeaton"
+      ],
+      "albums": [],
+      "monthlyListeners": 1452870,
+      "artists": [
+        "Romeo Santos",
+        "Lenny Santos",
+        "Henry Santos",
+        "Max Santos"
+      ],
+      "yearCreation": 1993
     }
   ]
 }
