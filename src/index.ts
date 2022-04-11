@@ -1,3 +1,6 @@
-import { promptUser } from './prompt'
+import { Gestor } from './prompt';
+import { DataBase} from './database';
 
-promptUser();
+let db = new DataBase();
+let app = new Gestor(db);
+app.promptUser();
