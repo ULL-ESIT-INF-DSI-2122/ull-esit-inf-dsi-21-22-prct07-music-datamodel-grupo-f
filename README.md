@@ -541,7 +541,7 @@ async promptUser(): Promise<void> {
 }
 ```
 
-La función `promptUserPlaylist` 
+La función `promptUserPlaylist` se encarga del menú de una playlist pasada como parámetro. Mientras el comando sea distinto `Quit` en cada iteración se limpiará la consola, se mostrará por pantalla la información general de la playlist con la función `viewPlaylist`, ser recogerá el comando con el `prompt` y se ejecutará el comando filtrado con un switch.
 
 ```typescript
 async promptUserPlaylist(playlistName: string): Promise<void> {
@@ -624,6 +624,8 @@ async promptSelectPlaylist(): Promise<void> {
   await this.promptUserPlaylist(playlistName["playlistName"]);
 }
 ```
+
+La función `promptAddPlaylist` añade una nueva playlist a la base de datos. Primeramente limpia la consola, recoge por línea de comando el nombre de la nueva playlist, crea un nuevo objeto `Playlist` con solo el nombre como atributo y se inserta el objeto a la base de datos con la función `setPlaylist`.
 
 ```typescript
 async promptAddPlaylist(): Promise<void> {
