@@ -1,4 +1,9 @@
 /**
+ * Define la propiedad de la playlist
+ */
+export type Property = 'user' | 'system'; 
+
+/**
  * Clase Género
  */
 export class Genre {
@@ -103,6 +108,8 @@ export class Playlist {
      * @param songs Canciones de la playlist
      * @param duration Duración de la playlist en horas y minutos
      * @param genres Géneros de la playlist
+     * @param owner Propietario de la playlist
      */
-    constructor(public name: string, public songs: string[], public duration: number, public genres: string[]) {}
+    constructor(public name: string, public songs: string[], public duration: number, public genres: string[], public owner: Property = 'system') {}
+
 }

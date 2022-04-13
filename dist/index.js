@@ -1,5 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const prompt_1 = require("./prompt");
-(0, prompt_1.promptUser)();
+const gestor_1 = require("./gestor");
+const database_1 = require("./database");
+let db = new database_1.DataBase();
+let app = new gestor_1.Gestor(db);
+app.promptUser();
 //# sourceMappingURL=index.js.map

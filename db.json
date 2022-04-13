@@ -616,34 +616,40 @@
     {
       "name": "Playlist N1",
       "songs": [
-        "EL MAKINON",
         "La Morena",
         "Lluvia",
         "Una noche en Medellín",
-        "Volví"
+        "Obsesion",
+        "EL MAKINON",
+        "Volví",
+        "La Vaca"
       ],
-      "duration": 182,
+      "duration": 0.28,
       "genres": [
-        "Salsa"
-      ]
-    },
-    {
-      "name": "snfief",
-      "songs": [],
-      "duration": 0,
-      "genres": []
+        "Merengue",
+        "Salsa",
+        "Reggeaton",
+        "Bachata"
+      ],
+      "owner": "system"
     },
     {
       "name": "T1",
       "songs": [
-        "Volví",
+        "Una noche en Medellín",
+        "EL MAKINON",
+        "Obsesion",
         "La Morena",
-        "Las cuatro estaciones",
-        "Las cuatro estaciones",
-        "Las cuatro estaciones"
+        "Lluvia"
       ],
-      "duration": 2.14,
-      "genres": []
+      "duration": 0.2,
+      "genres": [
+        "Reggeaton",
+        "Bachata",
+        "Merengue",
+        "Salsa"
+      ],
+      "owner": "user"
     }
   ],
   "artists": [

@@ -1,4 +1,4 @@
-import { Genre, Album, Song, Artist, Group, Playlist } from './classes';
+import { Genre, Album, Song, Artist, Group, Playlist, Property } from './classes';
 import lowdb from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 
@@ -97,7 +97,7 @@ export class DataBase {
         });
     }
 
-    setGengre(genre: Genre) {
+    setGenre(genre: Genre) {
         this.db.get("genres").push(genre).write();
     }
 
@@ -110,6 +110,11 @@ export class DataBase {
     }
 
     setArtist(artist: Artist) {
+        artist.genres.forEach(genre => {
+            if (this.findGenre(genre) != -1) {
+                
+            }
+        });
         this.db.get("artists").push(artist).write();
     }
 
@@ -151,6 +156,30 @@ export class DataBase {
         return this.db.get("playlists").value().at(indexOfPlaylist);
     }
 
+    getFormattedDurationPlaylist(playlist: Playlist): string {
+        let out: string = "";
+        if (playlist !== undefined) {
+            let hours = Math.floor(playlist.duration);
+            let minutes = Math.floor((playlist.duration - hours) * 100);
+            out = "Duration: " + hours + " hours and " + minutes + " minutes";
+        } else {
+            out = "ERROR: The playlist was not located to calculate its duration";
+        }
+        return out;
+    }
+
+    getFormattedDurationSong(song: Song): string {
+        let out: string = "";
+        if (song !== undefined) {
+            let minutes = Math.floor(song.duration);
+            let seconds = Math.floor((song.duration - minutes) * 100);
+            out = "[" + minutes + " min " + seconds + " sec]";
+        } else {
+            out = "ERROR: The song was not located to calculate its duration";
+        }
+        return out;
+    }
+    
     setSongToPlaylist(songName: string, playlistName: string) {
         let indexOfPlaylist = this.db.get("playlists").value().findIndex((playlist: Playlist) => {
             return playlist.name === playlistName;
@@ -172,28 +201,48 @@ export class DataBase {
         this.db.write();
     }
 
+    changeOwnerOfPlaylist(playlistName: string, newowner: Property) {
+        this.db.get("playlists")
+            .find({name: playlistName})
+            .assign({owner : newowner})
+            .write();
+    }
+
+
     viewPlaylists() {
+        let show: string = "";
+        console.log("---LIST OF PLAYLISTS---");
         this.db.get("playlists").value().forEach((playlist: Playlist) => {
-            console.log(playlist.name);
+            show = playlist.name;
+            show += "\n  Genres: [" + playlist.genres.toString() + "]";
+            show += "\n  " + this.getFormattedDurationPlaylist(playlist);
+            console.log(show);
         })
     }
 
     viewPlaylist(playlistName: string) {
-        let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
-        let durationOfPlaylist: number = this.db.get("playlists").value().at(indexOfPlaylist)?.duration as number;
-        let horas = Math.floor(durationOfPlaylist);
-        let minutos = Math.floor((durationOfPlaylist - horas) * 100);
-
-        console.log("[" + playlistName +"]    Duration: " + horas + " hours and " + minutos + " minutes");
-        this.db.get("playlists").value().at(indexOfPlaylist)?.songs.forEach((song: string) => {
-            console.log(song);
-        })
+        let playlist = this.getPlaylist(playlistName);
+        let showSong: string = "";
+        if (playlist !== undefined) {
+            console.log("[" + playlist.name +"] " + this.getFormattedDurationPlaylist(playlist) + "\n");
+            playlist.songs.forEach((song: string) => {
+                let dbsong = this.getSong(song);
+                if (dbsong !== undefined) {
+                    showSong = dbsong.name + " | " + dbsong.author + " | ";
+                    showSong += this.getFormattedDurationSong(dbsong);
+                    showSong += " | [" + dbsong.genres.toString() + "] | Reprd. " + dbsong.numberReproductions + "\n";
+                    console.log(showSong);
+                } else {
+                    console.log("ERROR: Song not found");
+                }
+            })
+        } else {
+            console.log("ERROR: Playlist not found");
+        }
     }
 
     updateDurationPlaylist(playlistName: string) {
         let indexOfSong: number;
-        let songs: string[] = [];
-        let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         let newduration = 0;
         let min = 0; 
         let sec = 0; 
@@ -206,10 +255,10 @@ export class DataBase {
                 indexOfSong = this.findSong(songName);
                 newduration = (this.db.get("songs")
                 .value().at(indexOfSong)?.duration as number);
-                let auxarray = newduration
                 min += Math.floor(newduration);
                 sec += parseFloat(((newduration - Math.floor(newduration)) * 100).toFixed(2));
-        });
+            }
+        );
 
         min += Math.floor(sec/60);
         hour = Math.floor(min/60);
@@ -219,6 +268,30 @@ export class DataBase {
         this.db.get("playlists")
             .find({name: playlistName})
             .assign({duration : newduration})
+            .write();
+    }
+
+    updateGenresPlaylist(playlistName: string) {
+        let newGenres: string[] = [];
+        this.db.get("playlists")
+            .find({name: playlistName})
+            .value().songs
+            .forEach((songName: string) => {
+                let dbsong = this.getSong(songName);
+                if (dbsong !== undefined) {
+                    dbsong.genres.forEach((genreName: string) => {
+                        if (!newGenres.includes(genreName)) {
+                            newGenres.push(genreName);
+                        }
+                    })
+                } else {
+                    console.log("ERROR: Song not found to update genres playlist");
+                }
+            })
+        
+        this.db.get("playlists")
+            .find({name: playlistName})
+            .assign({genres : newGenres})
             .write();
     }
 

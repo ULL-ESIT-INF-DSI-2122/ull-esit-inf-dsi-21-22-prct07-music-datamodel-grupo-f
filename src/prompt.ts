@@ -1,51 +1,99 @@
 import inquirer from 'inquirer';
-import { Playlist } from './classes';
+import { Genre, Album, Song, Artist, Group, Playlist, Property } from './classes';
 import { DataBase } from './database';
 
 /**
  * Comandos del menú principal
  */
 enum Commands {
-    SelectPlatlist = "Select playlist",
-    AddPlaylist = "Add playlist",
-    RemovePlaylist = "Remove playlist",
+    AddInformation = "Add new information to DataBase",
+    RemoveInformation = "Remove information from DataBase",
+    ModifyInformation = "Modify information from DataBase",
+    VizualizeInformation = "Visualize information about the author",
     Quit = "Quit",
 }
 
 /**
- * Comandos para gestionar una playlist
+ * Comandos para añadir información
  */
-enum CommandsPlaylist {
-    AddSong = "Add song to a playlist",
-    RemoveSong = "Remove song from a playlist",
-    DurationSort = "Sort by duration",
-    AlphabeticalSongNameSort = "Sort by song name",
-    AlphabeticalAuthorNameSort = "Sort by author name",
-    NumberOfReproductionSort = "Sort by number of reproductions",
+enum CommandsAdd {
+    AddGenre = "Add a new genre",
+    AddArtist = "Add a new artist",
+    AddGroup = "Add a new group",
+    AddSong = "Add a new song",
+    AddAlbum = "Add a new album",
     Quit = "Quit",
 }
 
 /**
- * Clase Gestor
+ * Comandos para eliminar información
  */
-export class Gestor {
-    /**
-     * Constructor
-     * @param database Base de datos
-     */
+ enum CommandsRemove {
+  RemoveGenre = "Remove a genre",
+  RemoveArtist = "Remove an artist",
+  RemoveGroup = "Remove a group",
+  RemoveSong = "Remove a song",
+  RemoveAlbum = "Remove an album",
+  Quit = "Quit",
+}
+
+/**
+ * Comandos para modificar información
+ */
+ enum CommandsModify {
+  ModifyGenre = "Modify a genre",
+  ModifyArtist = "Modify an artist",
+  ModifyGroup = "Modify a group",
+  ModifySong = "Modify a song",
+  ModifyAlbum = "Modify an album",
+  Quit = "Quit",
+}
+
+/**
+ * Comandos para visualizar, ordenar y filtrar información
+ */
+ enum CommandsVisualizer {
+  AlphabeticalSongNameSort = "Sort by song name",
+  AlphabeticalAlbumNameSort = "Sort by album name",
+  NumberOfReproductionSort = "Sort by number of reproductions",
+  Quit = "Quit",
+}
+
+/**
+ * Pausa la ejecución los segundos introducidos
+ * @param ms Milisegundos de tiempo de espera
+ * @returns 
+ */
+ function sleep(ms: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, ms);
+  });
+} 
+
+export class DataBaseManipulator {
     constructor(private database: DataBase) {}
-    
+
+    /**
+     * Imprime un mensaje con un tiempo de delay
+     * @param message El mensaje a imprimir
+     */
+        async showMessage(message: string) {
+        console.log(message);
+        await sleep(4500);
+    }
+
     /**
      * Menú principal donde se podrán ejecutar los comandos
      */
     async promptUser(): Promise<void> {
         let answers = {
-            command: Commands.SelectPlatlist,
+            command: Commands.AddInformation,
         }
     
         while(answers["command"] != Commands.Quit) {
             console.clear();
-            this.database.viewPlaylists();
+            console.log("--- DATABASE MANIPULATOR ---");
+            console.log("--- Main Menu ---");
             answers = await inquirer.prompt({
                 type: "list",
                 name: "command",
@@ -54,184 +102,144 @@ export class Gestor {
             });
     
             switch(answers["command"]) {
-                case Commands.SelectPlatlist:
-                    await this.promptSelectPlaylist();
+                case Commands.AddInformation:
+                    await this.promptAddInformation();
                     break;
-                case Commands.AddPlaylist:
-                    await this.promptAddPlaylist();
+                case Commands.RemoveInformation:
+                    await this.promptRemoveInformation();
                     break;
-                case Commands.RemovePlaylist:
+                case Commands.ModifyInformation:
+                    await this.promptModifyInformation();
+                    break;
+                case Commands.VizualizeInformation:
+                    // Añadir visualizador
+                    break;
+            }
+        }
+    } 
+    
+    async promptAddInformation(): Promise<void> {
+        let answers = {
+            command: CommandsAdd.AddGenre,
+        }
+    
+        while(answers["command"] != CommandsAdd.Quit) {
+            console.clear();
+            console.log("--- DATABASE MANIPULATOR ---");
+            console.log("--- Add Information ---");
+            answers = await inquirer.prompt({
+                type: "list",
+                name: "command",
+                message: "Choose option",
+                choices: Object.values(CommandsAdd)
+            });
+    
+            switch(answers["command"]) {
+                case CommandsAdd.AddGenre:
+                    await this.funcAddGenre();
+                    break;
+                case CommandsAdd.AddArtist:
+                    await this.promptAddPlaylistFromScratch();
+                    break;
+                case CommandsAdd.AddGroup:
+                    await this.promptAddPlaylistFromExistingOne();
+                    break;
+                case CommandsAdd.AddSong:
+                    await this.promptRemovePlaylist();
+                    break;
+                case CommandsAdd.AddAlbum:
                     await this.promptRemovePlaylist();
                     break;
             }
         }
     }
 
-    /**
-     * Menú de una playlist donde se podran ejecutar los comandos para manipular una playlist
-     * @param playlistName Nombre de la playlist a gestionar
-     */
-    async promptUserPlaylist(playlistName: string): Promise<void> {
+    async promptRemoveInformation(): Promise<void> {
         let answers = {
-            commandPlaylist: CommandsPlaylist.AddSong,
+            command: CommandsRemove.RemoveGenre,
         }
     
-        while(answers["commandPlaylist"] != CommandsPlaylist.Quit) {
+        while(answers["command"] != CommandsRemove.Quit) {
             console.clear();
-            this.database.viewPlaylist(playlistName);
-            const answers = await inquirer.prompt({
+            console.log("--- DATABASE MANIPULATOR ---");
+            console.log("--- Remove Information ---");
+            answers = await inquirer.prompt({
                 type: "list",
-                name: "commandPlaylist",
+                name: "command",
                 message: "Choose option",
-                choices: Object.values(CommandsPlaylist)
+                choices: Object.values(CommandsRemove)
             });
     
-            switch(answers["commandPlaylist"]) {
-                case CommandsPlaylist.AddSong:
-                    await this.promptAddSong(playlistName);
+            switch(answers["command"]) {
+                case CommandsRemove.RemoveGenre:
+                    await this.promptRemoveInformation();
                     break;
-                case CommandsPlaylist.RemoveSong:
-                    await this.promptRemoveSong(playlistName);
+                case CommandsRemove.RemoveArtist:
+                    await this.promptRemovePlaylistFromScratch();
                     break;
-                case CommandsPlaylist.DurationSort:
-                    await this.promptDurationSort(playlistName);
+                case CommandsRemove.RemoveGroup:
+                    await this.promptRemovePlaylistFromExistingOne();
                     break;
-                case CommandsPlaylist.AlphabeticalSongNameSort:
-                    await this.promptAlphabeticalSongNameSort(playlistName);
+                case CommandsRemove.RemoveSong:
+                    await this.promptRemovePlaylist();
                     break;
-                case CommandsPlaylist.AlphabeticalAuthorNameSort:
-                    await this.promptAlphabeticalAuthorNameSort(playlistName);
-                    break;
-                case CommandsPlaylist.NumberOfReproductionSort:
-                    await this.promptNumberOfReproductionSort(playlistName);
-                    break;
-                case CommandsPlaylist.Quit:
+                case CommandsRemove.RemoveAlbum:
+                    await this.promptRemovePlaylist();
                     break;
             }
-    
-            if(answers["commandPlaylist"] === CommandsPlaylist.Quit)
-                break;
         }
     }
 
-    /**
-     * Añade una canción a una playlist
-     * @param playlistName Nombre de la playlist donde se va a añadir la canción
-     */
-    async promptAddSong(playlistName: string): Promise<void> {
+    async promptModifyInformation(): Promise<void> {
+        let answers = {
+            command: CommandsModify.ModifyGenre,
+        }
+    
+        while(answers["command"] != CommandsModify.Quit) {
+            console.clear();
+            console.log("--- DATABASE MANIPULATOR ---");
+            console.log("--- Modify Information ---");
+            answers = await inquirer.prompt({
+                type: "list",
+                name: "command",
+                message: "Choose option",
+                choices: Object.values(CommandsModify)
+            });
+    
+            switch(answers["command"]) {
+                case CommandsModify.ModifyGenre:
+                    await this.promptRemoveInformation();
+                    break;
+                case CommandsModify.ModifyArtist:
+                    await this.promptRemovePlaylistFromScratch();
+                    break;
+                case CommandsModify.ModifyGroup:
+                    await this.promptRemovePlaylistFromExistingOne();
+                    break;
+                case CommandsModify.ModifySong:
+                    await this.promptRemovePlaylist();
+                    break;
+                case CommandsModify.ModifyAlbum:
+                    await this.promptRemovePlaylist();
+                    break;
+            }
+        }
+    }
+
+    async funcAddGenre(): Promise<void> {
         console.clear();
         
-        const nameSong = await inquirer.prompt({
+        const nameGenre = await inquirer.prompt({
             type: "input",
-            name: "nameSong",
-            message: "Enter name of the song:",
+            name: "nameGenre",
+            message: "Enter name of the genre:",
         });
     
-        if(this.database.findSong(nameSong["nameSong"]) != -1) {
-            this.database.setSongToPlaylist(nameSong["nameSong"], playlistName);
-            this.database.updateDurationPlaylist(playlistName);
+        if(this.database.findGenre(nameGenre["nameGenre"]) == -1) {
+            let newGenre = new Genre(nameGenre["nameGenre"], [], [], []);
+            this.database.setGenre(newGenre);
         }
         else
-            console.log("The song doesnt exists");
-    }
-
-    /**
-     * Elimina una canción de una playlist
-     * @param playlistName Nombre de la playlist donde se va a eliminar la canción
-     */
-    async promptRemoveSong(playlistName: string): Promise<void> {
-        console.clear();
-        
-        const nameSong = await inquirer.prompt({
-            type: "input",
-            name: "nameSong",
-            message: "Enter name of the song:",
-        });
-    
-        this.database.removeSongFromPlaylist(playlistName, nameSong["nameSong"]);
-        this.database.updateDurationPlaylist(playlistName);
-    }
-
-    /**
-     * Ordena la playlist por duración
-     * @param playlistName Nombre de la playlist que se va ordenar
-     */
-    async promptDurationSort(playlistName: string): Promise<void> {
-        console.clear();
-        this.database.durationSort(playlistName);
-    }
-
-    /**
-     * Ordena la playlist alfabéticamente por el nombre de la canción
-     * @param playlistName Nombre de la playlist que se va ordenar
-     */
-    async promptAlphabeticalSongNameSort(playlistName: string): Promise<void> {
-        console.clear();
-        this.database.alphabeticalSongNameSort(playlistName);
-    }
-
-
-    /**
-     * Ordena la playlist alfabéticamente por el nombre del autor de la canción
-     * @param playlistName Nombre de la playlist que se va ordenar
-     */
-    async promptAlphabeticalAuthorNameSort(playlistName: string): Promise<void> {
-        console.clear();
-        this.database.alphabeticalAuthorNameSort(playlistName);
-    }
-
-    /**
-     * Ordena la playlist alfabéticamente por el número de reproducciones
-     * @param playlistName Nombre de la playlist que se va ordenar
-     */
-    async promptNumberOfReproductionSort(playlistName: string): Promise<void> {
-        console.clear();
-        this.database.numberOfReproductionSort(playlistName);
-    }
-
-    /**
-     * Abre el menú al seleccionar una playlist
-     */
-    async promptSelectPlaylist(): Promise<void> {
-        console.clear();
-    
-        const playlistName = await inquirer.prompt({
-            type: "input",
-            name: "playlistName",
-            message: "Enter name of the playlist: ",
-        });
-    
-        await this.promptUserPlaylist(playlistName["playlistName"]);
-    }
-
-    /**
-     * Añade una playlist
-     */
-    async promptAddPlaylist(): Promise<void> {
-        console.clear();
-        
-        const playlistName = await inquirer.prompt({
-            type: "input",
-            name: "playlistName",
-            message: "Enter name of the playlist: ",
-        });
-    
-        let newPlaylist = new Playlist (playlistName["playlistName"], [], 0, [])
-        this.database.setPlaylist(newPlaylist);
-    }
-
-    /**
-     * Elimina una playlist
-     */
-    async promptRemovePlaylist(): Promise<void> {
-        console.clear();
-        
-        const playlistName = await inquirer.prompt({
-            type: "input",
-            name: "playlistName",
-            message: "Enter name of the playlist: ",
-        });
-    
-        this.database.removePlaylist(playlistName["playlistName"]);
+            await this.showMessage("The genre already exists");
     }
 }
