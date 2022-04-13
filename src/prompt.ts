@@ -28,35 +28,35 @@ enum CommandsAdd {
 /**
  * Comandos para eliminar información
  */
- enum CommandsRemove {
-  RemoveGenre = "Remove a genre",
-  RemoveArtist = "Remove an artist",
-  RemoveGroup = "Remove a group",
-  RemoveSong = "Remove a song",
-  RemoveAlbum = "Remove an album",
-  Quit = "Quit",
+enum CommandsRemove {
+    RemoveGenre = "Remove a genre",
+    RemoveArtist = "Remove an artist",
+    RemoveGroup = "Remove a group",
+    RemoveSong = "Remove a song",
+    RemoveAlbum = "Remove an album",
+    Quit = "Quit",
 }
 
 /**
  * Comandos para modificar información
  */
- enum CommandsModify {
-  ModifyGenre = "Modify a genre",
-  ModifyArtist = "Modify an artist",
-  ModifyGroup = "Modify a group",
-  ModifySong = "Modify a song",
-  ModifyAlbum = "Modify an album",
-  Quit = "Quit",
+enum CommandsModify {
+    ModifyGenre = "Modify a genre",
+    ModifyArtist = "Modify an artist",
+    ModifyGroup = "Modify a group",
+    ModifySong = "Modify a song",
+    ModifyAlbum = "Modify an album",
+    Quit = "Quit",
 }
 
 /**
  * Comandos para visualizar, ordenar y filtrar información
  */
- enum CommandsVisualizer {
-  AlphabeticalSongNameSort = "Sort by song name",
-  AlphabeticalAlbumNameSort = "Sort by album name",
-  NumberOfReproductionSort = "Sort by number of reproductions",
-  Quit = "Quit",
+enum CommandsVisualizer {
+    AlphabeticalSongNameSort = "Sort by song name",
+    AlphabeticalAlbumNameSort = "Sort by album name",
+    NumberOfReproductionSort = "Sort by number of reproductions",
+    Quit = "Quit",
 }
 
 /**
@@ -64,10 +64,10 @@ enum CommandsAdd {
  * @param ms Milisegundos de tiempo de espera
  * @returns 
  */
- function sleep(ms: number) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
+function sleep(ms: number) {
+    return new Promise((resolve) => {
+        setTimeout(resolve, ms);
+    });
 } 
 
 export class DataBaseManipulator {
@@ -77,7 +77,7 @@ export class DataBaseManipulator {
      * Imprime un mensaje con un tiempo de delay
      * @param message El mensaje a imprimir
      */
-        async showMessage(message: string) {
+    async showMessage(message: string) {
         console.log(message);
         await sleep(4500);
     }
@@ -139,16 +139,16 @@ export class DataBaseManipulator {
                     await this.funcAddGenre();
                     break;
                 case CommandsAdd.AddArtist:
-                    await this.promptAddPlaylistFromScratch();
+                    await this.funcAddArtist();
                     break;
                 case CommandsAdd.AddGroup:
-                    await this.promptAddPlaylistFromExistingOne();
+                    await this.funcAddGroup();
                     break;
                 case CommandsAdd.AddSong:
-                    await this.promptRemovePlaylist();
+                    await this.funcAddSong();
                     break;
                 case CommandsAdd.AddAlbum:
-                    await this.promptRemovePlaylist();
+                    await this.funcAddAlbum();
                     break;
             }
         }
@@ -172,19 +172,19 @@ export class DataBaseManipulator {
     
             switch(answers["command"]) {
                 case CommandsRemove.RemoveGenre:
-                    await this.promptRemoveInformation();
+                    await this.funcRemoveGenre();
                     break;
                 case CommandsRemove.RemoveArtist:
-                    await this.promptRemovePlaylistFromScratch();
+                    await this.funcRemoveArtist();
                     break;
                 case CommandsRemove.RemoveGroup:
-                    await this.promptRemovePlaylistFromExistingOne();
+                    await this.funcRemoveGroup();
                     break;
                 case CommandsRemove.RemoveSong:
-                    await this.promptRemovePlaylist();
+                    await this.funcRemoveSong();
                     break;
                 case CommandsRemove.RemoveAlbum:
-                    await this.promptRemovePlaylist();
+                    await this.funcRemoveAlbum();
                     break;
             }
         }
@@ -208,19 +208,19 @@ export class DataBaseManipulator {
     
             switch(answers["command"]) {
                 case CommandsModify.ModifyGenre:
-                    await this.promptRemoveInformation();
+                    
                     break;
                 case CommandsModify.ModifyArtist:
-                    await this.promptRemovePlaylistFromScratch();
+                    
                     break;
                 case CommandsModify.ModifyGroup:
-                    await this.promptRemovePlaylistFromExistingOne();
+                    
                     break;
                 case CommandsModify.ModifySong:
-                    await this.promptRemovePlaylist();
+                    
                     break;
                 case CommandsModify.ModifyAlbum:
-                    await this.promptRemovePlaylist();
+                    
                     break;
             }
         }
@@ -229,17 +229,160 @@ export class DataBaseManipulator {
     async funcAddGenre(): Promise<void> {
         console.clear();
         
-        const nameGenre = await inquirer.prompt({
+        const genreName = await inquirer.prompt({
             type: "input",
-            name: "nameGenre",
+            name: "genreName",
             message: "Enter name of the genre:",
         });
     
-        if(this.database.findGenre(nameGenre["nameGenre"]) == -1) {
-            let newGenre = new Genre(nameGenre["nameGenre"], [], [], []);
+        if(this.database.findGenre(genreName["genreName"]) === -1) {
+            let newGenre = new Genre(genreName["genreName"], [], [], []);
             this.database.setGenre(newGenre);
         }
         else
             await this.showMessage("The genre already exists");
+    }
+
+    async funcAddArtist(): Promise<void> {
+        console.clear();
+
+        const artistName = await inquirer.prompt({
+            type: "input",
+            name: "artistName",
+            message: "Enter name of artist",
+        });
+        
+        if(this.database.findArtist(artistName["artistName"]) === -1) {
+            let newArtist = new Artist(artistName["artistName"], [], [], [], [], 0);
+            this.database.setArtist(newArtist);
+        }
+        else
+            await this.showMessage("The artist already exists");
+    }
+
+    async funcAddGroup(): Promise<void> {
+        console.clear();
+
+        const groupName = await inquirer.prompt({
+            type: "input",
+            name: "groupName",
+            message: "Enter name of group",
+        });
+        
+        if(this.database.findGroup(groupName["groupName"]) === -1) {
+            let newGroup = new Group(groupName["groupName"], [], 0, [], [], 0);
+            this.database.setGroup(newGroup);
+        }
+        else
+            await this.showMessage("The group already exists");
+    }
+
+    async funcAddSong(): Promise<void> {
+        console.clear();
+
+        const songName = await inquirer.prompt({
+            type: "input",
+            name: "songName",
+            message: "Enter name of song",
+        });
+        
+        if(this.database.findSong(songName["songName"]) === -1) {
+            let newSong = new Song(songName["songName"], "", 0, [], true, 0);
+            this.database.setSong(newSong);
+        }
+        else
+            await this.showMessage("The song already exists");
+    }
+
+    async funcAddAlbum(): Promise<void> {
+        console.clear();
+
+        const albumName = await inquirer.prompt({
+            type: "input",
+            name: "albumName",
+            message: "Enter name of song",
+        });
+        
+        if(this.database.findAlbum(albumName["albumName"]) === -1) {
+            let newAlbum = new Album(albumName["albumName"], "", 0, [], []);
+            this.database.setAlbum(newAlbum);
+        }
+        else
+            await this.showMessage("The album already exists");
+    }
+
+    async funcRemoveGenre(): Promise<void> {
+        console.clear();
+        
+        const genreName = await inquirer.prompt({
+            type: "input",
+            name: "genreName",
+            message: "Enter name of the genre:",
+        });
+    
+        if(this.database.findGenre(genreName["genreName"]) !== -1) 
+            this.database.removeGenre(genreName["genreName"]);
+        else
+            await this.showMessage("The genre does not exist");
+    }
+
+    async funcRemoveArtist(): Promise<void> {
+        console.clear();
+
+        const artistName = await inquirer.prompt({
+            type: "input",
+            name: "artistName",
+            message: "Enter name of artist",
+        });
+        
+        if(this.database.findArtist(artistName["artistName"]) !== -1)
+            this.database.removeArtist(artistName["artistName"]);
+        else
+            await this.showMessage("The artist does not exist");
+    }
+
+    async funcRemoveGroup(): Promise<void> {
+        console.clear();
+
+        const groupName = await inquirer.prompt({
+            type: "input",
+            name: "groupName",
+            message: "Enter name of group",
+        });
+        
+        if(this.database.findGroup(groupName["groupName"]) !== -1)
+            this.database.removeGroup(groupName["groupName"]);
+        else
+            await this.showMessage("The group does not exist");
+    }
+
+    async funcRemoveSong(): Promise<void> {
+        console.clear();
+
+        const songName = await inquirer.prompt({
+            type: "input",
+            name: "songName",
+            message: "Enter name of song",
+        });
+        
+        if(this.database.findSong(songName["songName"]) !== -1)
+            this.database.removeSong(songName["songName"]);
+        else
+            await this.showMessage("The song does not exist");
+    }
+
+    async funcRemoveAlbum(): Promise<void> {
+        console.clear();
+
+        const albumName = await inquirer.prompt({
+            type: "input",
+            name: "albumName",
+            message: "Enter name of song",
+        });
+        
+        if(this.database.findAlbum(albumName["albumName"]) !== -1)
+            this.database.removeAlbum(albumName["albumName"]);
+        else
+            await this.showMessage("The album does not exist");
     }
 }
