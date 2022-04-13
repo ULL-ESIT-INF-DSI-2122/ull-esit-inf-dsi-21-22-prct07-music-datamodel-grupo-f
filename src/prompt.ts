@@ -399,17 +399,14 @@ export class DataBaseManipulator {
             case Genre.prototype.name:
                 await this.funcRemoveGenre();
                 break;
-            case CommandsRemove.RemoveArtist:
+            case Genre.prototype.authors:
                 await this.funcRemoveArtist();
                 break;
-            case CommandsRemove.RemoveGroup:
+            case Genre.prototype.albums:
                 await this.funcRemoveGroup();
                 break;
-            case CommandsRemove.RemoveSong:
+            case Genre.prototype.songs:
                 await this.funcRemoveSong();
-                break;
-            case CommandsRemove.RemoveAlbum:
-                await this.funcRemoveAlbum();
                 break;
         }
     }
