@@ -208,7 +208,6 @@ export class DataBase {
             .write();
     }
 
-
     viewPlaylists() {
         let show: string = "";
         console.log("---LIST OF PLAYLISTS---");
@@ -331,5 +330,30 @@ export class DataBase {
             return reproductions1 - reproductions2;
         });
         this.db.write();
+    }
+
+    removeGenre(genreName: string) {
+        let indexOfGenre: number = this.findGenre(genreName);
+        this.db.get("genres").splice(indexOfGenre, 1).write();
+    }
+
+    removeArtist(artistName: string) {
+        let indexOfArtist: number = this.findArtist(artistName);
+        this.db.get("artists").splice(indexOfArtist, 1).write();
+    }
+
+    removeGroup(groupName: string) {
+        let indexOfGroup: number = this.findGroup(groupName);
+        this.db.get("groups").splice(indexOfGroup, 1).write();
+    }
+
+    removeSong(songName: string) {
+        let indexOfSong: number = this.findSong(songName);
+        this.db.get("songs").splice(indexOfSong, 1).write();
+    }
+
+    removeAlbum(albumName: string) {
+        let indexOfAlbum: number = this.findAlbum(albumName);
+        this.db.get("albums").splice(indexOfAlbum, 1).write();
     }
 }
