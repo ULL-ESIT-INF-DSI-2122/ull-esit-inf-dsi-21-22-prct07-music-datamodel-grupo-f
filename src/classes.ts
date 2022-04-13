@@ -111,5 +111,4 @@ export class Playlist {
      * @param owner Propietario de la playlist
      */
     constructor(public name: string, public songs: string[], public duration: number, public genres: string[], public owner: Property = 'system') {}
-
 }

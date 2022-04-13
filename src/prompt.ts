@@ -385,4 +385,32 @@ export class DataBaseManipulator {
         else
             await this.showMessage("The album does not exist");
     }
+
+    async funcModifyGenre(): Promise<void> {
+        console.clear();
+        const answers = await inquirer.prompt({
+            type: "list",
+            name: "command",
+            message: "Choose option",
+            choices: Object.values(Genre.prototype)
+        });
+    
+        switch(answers["command"]) {
+            case Genre.prototype.name:
+                await this.funcRemoveGenre();
+                break;
+            case CommandsRemove.RemoveArtist:
+                await this.funcRemoveArtist();
+                break;
+            case CommandsRemove.RemoveGroup:
+                await this.funcRemoveGroup();
+                break;
+            case CommandsRemove.RemoveSong:
+                await this.funcRemoveSong();
+                break;
+            case CommandsRemove.RemoveAlbum:
+                await this.funcRemoveAlbum();
+                break;
+        }
+    }
 }
