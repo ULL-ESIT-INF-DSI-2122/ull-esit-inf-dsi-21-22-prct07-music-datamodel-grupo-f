@@ -366,6 +366,12 @@ export class DataBaseManipulator {
             name: "songName",
             message: "Enter name of song",
         });
+
+        /*const songArtist = await inquirer.prompt({
+            type: "input",
+            name: "songArtist",
+            message: "Enter artist of song",
+        });*/
         
         if(this.database.findSong(songName["songName"]) === -1) {
             let newSong = new Song(songName["songName"], "", 0, [], true, 0);
