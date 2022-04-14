@@ -179,6 +179,22 @@ export class Gestor {
     }
 
     /**
+     * Ordena la playlist por género
+     * @param playlistName Nombre de la playlist que se va ordenar
+     */
+     async promptGenreSort(playlistName: string): Promise<void> {
+        console.clear();
+
+        const nameGenre = await inquirer.prompt({
+            type: "input",
+            name: "nameGenre",
+            message: "Enter the genre:",
+        });
+
+        this.database.genreSort(nameGenre["nameGenre"], playlistName);
+    }
+
+    /**
      * Ordena la playlist por duración
      * @param playlistName Nombre de la playlist que se va ordenar
      */

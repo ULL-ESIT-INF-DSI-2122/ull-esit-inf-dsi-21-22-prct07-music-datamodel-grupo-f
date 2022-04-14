@@ -203,7 +203,7 @@ export class DataBase {
             .write();
     }
 
-    viewPlaylists() {
+    viewPlaylists(): string {
         let show: string = "";
         show += "---LIST OF PLAYLISTS---\n";
         this.db.get("playlists").value().forEach((playlist: Playlist) => {
@@ -214,25 +214,25 @@ export class DataBase {
         return show;
     }
 
-    viewPlaylist(playlistName: string) {
+    viewPlaylist(playlistName: string): string {
         let playlist = this.getPlaylist(playlistName);
         let showSong: string = "";
         if (playlist !== undefined) {
-            console.log("[" + playlist.name +"] " + this.getFormattedDurationPlaylist(playlist) + "\n");
+            showSong += "[" + playlist.name +"] " + this.getFormattedDurationPlaylist(playlist) + "\n";
             playlist.songs.forEach((song: string) => {
                 let dbsong = this.getSong(song);
                 if (dbsong !== undefined) {
-                    showSong = dbsong.name + " | " + dbsong.author + " | ";
-                    showSong += this.getFormattedDurationSong(dbsong);
+                    showSong += dbsong.name + " | " + dbsong.author + " | ";
+                    showSong += this.getFormattedDurationSong(dbsong) + "\n";
                     showSong += " | [" + dbsong.genres.toString() + "] | Reprd. " + dbsong.numberReproductions + "\n";
-                    console.log(showSong);
                 } else {
-                    console.log("ERROR: Song not found");
+                    showSong = "ERROR: Song not found";
                 }
             })
         } else {
-            console.log("ERROR: Playlist not found");
+            showSong = "ERROR: Playlist not found";
         }
+        return showSong;
     }
 
     updateDurationPlaylist(playlistName: string) {
@@ -287,6 +287,16 @@ export class DataBase {
             .find({name: playlistName})
             .assign({genres : newGenres})
             .write();
+    }
+
+    genreSort(genreName: string, playlistName: string) {
+        let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
+        /*this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
+            let genre1: string = this.db.get("songs").value().at(this.findSong(song1))?.genres[0] as string;
+            let genre2: string = this.db.get("songs").value().at(this.findSong(song2))?.genres[0] as string;;
+            return genre1 === genreName && genre2 === genreName;
+        });*/
+        this.db.write();
     }
 
     alphabeticalSongNameSort(playlistName: string) {
@@ -510,11 +520,11 @@ export class DataBase {
         let show: string = "";
         let song = this.getSong(songName);
 
-        show += "name: " + song?.name;
-        show += "author: " + song?.author;
-        show += "duration: " + song?.duration;
-        show += "genres: " + song?.genres;
-        show += "single: " + song?.single;
+        show += "name: " + song?.name + "\n";
+        show += "author: " + song?.author + "\n";
+        show += "duration: " + song?.duration + "\n";
+        show += "genres: " + song?.genres + "\n";
+        show += "single: " + song?.single + "\n";
         show += "number of reproductions: " + song?.numberReproductions;
         return show;
     }
@@ -522,9 +532,9 @@ export class DataBase {
     viewGenre(genreName: string): string {
         let show: string = "";
         let genre = this.getGenre(genreName);
-        show += "name: " + genre?.name;
-        show += "authors: " + genre?.authors;
-        show += "albums: " + genre?.albums;
+        show += "name: " + genre?.name + "\n";
+        show += "authors: " + genre?.authors + "\n";
+        show += "albums: " + genre?.albums + "\n";
         show += "songs: " + genre?.songs;
         return show;
     }
@@ -532,10 +542,10 @@ export class DataBase {
     viewAlbum(albumName: string): string {
         let show: string = "";
         let album = this.getAlbum(albumName);
-        show += "name: " + album?.name;
-        show += "author: " + album?.author;
-        show += "year of publication:" + album?.yearPublication;
-        show += "genres: " + album?.genres;
+        show += "name: " + album?.name + "\n";
+        show += "author: " + album?.author + "\n";
+        show += "year of publication:" + album?.yearPublication + "\n";
+        show += "genres: " + album?.genres + "\n";
         show += "songs: " + album?.songs;
         return show;
     }
@@ -543,11 +553,11 @@ export class DataBase {
     viewGroup(groupName: string): string {
         let show: string = "";
         let group = this.getGroup(groupName);
-        show += "name: " + group?.name;
-        show += "artists: " + group?.artists;
-        show += "year of creation: " + group?.yearCreation;
-        show += "genres: " + group?.genres;
-        show += "albums: " + group?.albums;
+        show += "name: " + group?.name + "\n";
+        show += "artists: " + group?.artists + "\n";
+        show += "year of creation: " + group?.yearCreation + "\n";
+        show += "genres: " + group?.genres + "\n";
+        show += "albums: " + group?.albums + "\n";
         show += "monthly listeners: " + group?.monthlyListeners;
         return show;
     }
@@ -555,11 +565,11 @@ export class DataBase {
     viewArtist(artistName: string): string {
         let show: string = "";
         let artist = this.getArtist(artistName);
-        show += "name: " + artist?.name;
-        show += "groups: " + artist?.groups;
-        show += "genres: " + artist?.genres;
-        show += "albums: " + artist?.albums;
-        show += "songs: " + artist?.songs;
+        show += "name: " + artist?.name + "\n";
+        show += "groups: " + artist?.groups + "\n";
+        show += "genres: " + artist?.genres + "\n";
+        show += "albums: " + artist?.albums + "\n";
+        show += "songs: " + artist?.songs + "\n";
         show += "monthly listeners: " + artist?.monthlyListeners;
         return show;
     }

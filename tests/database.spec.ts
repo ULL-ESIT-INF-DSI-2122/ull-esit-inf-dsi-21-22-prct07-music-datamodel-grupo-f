@@ -18,7 +18,7 @@ let artistTest = new Artist("artistTest", [], [],[], [], 0);
 let albumTest = new Album("albumTest", "", 0, [], []);
 let playlistTest = new Playlist("playlistTest", [], 0, []);
 
-let viewPlay: string = "---LIST OF PLAYLISTS---\n" +
+let viewPlayAux: string = "---LIST OF PLAYLISTS---\n" +
 "\nPlaylist N1\n" +
 "  Genres: [Merengue,Salsa,Reggeaton,Bachata]\n" +
 "  Duration: 0 hours and 28 minutes" +
@@ -28,6 +28,38 @@ let viewPlay: string = "---LIST OF PLAYLISTS---\n" +
 "\nplaylistTest\n" +
 "  Genres: []\n" +
 "  Duration: 0 hours and 0 minutes";
+
+let viewSongAux: string = "name: Touch Too Much\n" +
+"author: AC/DC\n" +
+"duration: 4.26\n" +
+"genres: Rock\n" +
+"single: false\n" +
+"number of reproductions: 51817548";
+
+let viewGenreAux: string = "name: Merengue\n" +
+"authors: Toño Rosario,Los Hermanos Rosario,Oro Solido,Mala Fe\n" +
+"albums: \n" +
+"songs: Kiliki Taka Ti,La Dueña del Swing,Abusadora,La Morena,La Vaca";
+
+let viewAlbumAux: string = "name: Highway to Hell\n" +
+"author: AC/DC\n" +
+"year of publication:1979\n" +
+"genres: Rock\n" +
+"songs: Highway to Hell,If You Want Blood (You've Got It),Touch Too Much";
+
+let viewGroupAux: string = "name: KISS\n" +
+"artists: Paul Stanley,Gene Simmons,Ace Frehley,Eric Singer\n" +
+"year of creation: 1973\n" +
+"genres: Rock\n" +
+"albums: \n" +
+"monthly listeners: 10236792";
+
+let viewArtistAux: string = "name: Pablo Alborán\n" +
+"groups: \n" +
+"genres: Pop,Bachata\n" +
+"albums: \n" +
+"songs: \n" +
+"monthly listeners: 2846772345";
 
 describe("Tests clase Database - Métodos Find", () => {
 
@@ -138,7 +170,7 @@ describe("Tests clase Database - Métodos Setters", () => {
   });
 
   it('setSongToPlaylist test', () => {
-    db.setSongToPlaylist(playlistTest.name, "cancion845");
+    db.setSongToPlaylist("cancion845", playlistTest.name);
     expect(db.getPlaylist(playlistTest.name).songs).to.be.eql(["cancion845"]);
   });
 })
@@ -262,12 +294,28 @@ describe("Tests clase Database - Métodos Modify", () => {
 
 describe("Tests clase Database - Métodos View", () => {
     it('viewPlaylist test', () => {
-        expect(db.viewPlaylists()).to.be.equal(viewPlay);
+        expect(db.viewPlaylists()).to.be.equal(viewPlayAux);
     });
 
     it('viewSong test', () => {
-        //expect(db.viewSong().to.be.equal());
-    })
+        expect(db.viewSong("Touch Too Much")).to.be.equal(viewSongAux);
+    });
+
+    it('viewGenre test', () => {
+        expect(db.viewGenre("Merengue")).to.be.equal(viewGenreAux);
+    });
+
+    it('viewAlbum test', () => {
+        expect(db.viewAlbum("Highway to Hell")).to.be.equal(viewAlbumAux);
+    });
+
+    it('viewGroup test', () => {
+        expect(db.viewGroup("KISS")).to.be.equal(viewGroupAux);
+    });
+
+    it('viewArtist test', () => {
+        expect(db.viewArtist("Pablo Alborán")).to.be.equal(viewArtistAux);
+    });
 })
 
 describe("Tests clase Database - Métodos Remove", () => {
