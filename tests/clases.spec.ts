@@ -65,7 +65,7 @@ describe('Tests canciones', () => {
     });
 
     it('findGenre test', () => {
-        expect(db.findGenre(Salsa.name)).to.be.equal(0);
+        expect(db.findGenre(Salsa.name)).to.be.equal(1);
     });
 
     it('findArtist test', () => {
