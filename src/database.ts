@@ -131,9 +131,9 @@ export class DataBase {
         return this.db.get("genres").value().at(indexOfGenre);
     }
 
-    getSong(songName: string): Song | undefined {
+    getSong(songName: string): Song {
         let indexOfSong: number = this.findSong(songName);
-        return this.db.get("songs").value().at(indexOfSong);
+        return this.db.get("songs").value().at(indexOfSong) as Song;
     }
 
     getAlbum(albumName: string): Album | undefined {
@@ -507,7 +507,7 @@ export class DataBase {
     modifyNumberReproductionsSong(songName: string, songNumberOfReproductions: number) {
         this.db.get("songs")
             .find({name: songName})
-            .assign({numberOfReproduction: songNumberOfReproductions})
+            .assign({numberReproductions: songNumberOfReproductions})
             .write();
     }
 
