@@ -378,6 +378,76 @@ export class DataBase {
             .write();
     }
 
+    modifyGroupsArtist(artistName: string, artistGroups: string[]) {
+        this.db.get("artists")
+            .find({name: artistName})
+            .assign({groups: artistGroups})
+            .write();
+    }
+
+    modifyGenresArtist(artistName: string, artistGenres: string[]) {
+        this.db.get("artists")
+            .find({name: artistName})
+            .assign({genres: artistGenres})
+            .write();
+    }
+
+    modifyAlbumsArtist(artistName: string, artistAlbums: string[]) {
+        this.db.get("artists")
+            .find({name: artistName})
+            .assign({albums: artistAlbums})
+            .write();
+    }
+
+    modifySongsArtist(artistName: string, artistSongs: string[]) {
+        this.db.get("artists")
+            .find({name: artistName})
+            .assign({songs: artistSongs})
+            .write();
+    }
+
+    modifyMonthlyListenersArtist(artistName: string, artistMonthlyListeners: number) {
+        this.db.get("artists")
+            .find({name: artistName})
+            .assign({monthlyListeners: artistMonthlyListeners})
+            .write();
+    }
+
+    modifyArtistsGroup(groupName: string, groupArtists: string[]) {
+        this.db.get("groups")
+            .find({name: groupName})
+            .assign({artists: groupArtists})
+            .write();
+    }
+
+    modifyYearCreationGroup(groupName: string, groupYearCreation: number) {
+        this.db.get("groups")
+            .find({name: groupName})
+            .assign({yearCreation: groupYearCreation})
+            .write();
+    }
+
+    modifyGenresGroup(groupName: string, groupGenres: string[]) {
+        this.db.get("groups")
+            .find({name: groupName})
+            .assign({genres: groupGenres})
+            .write();
+    }
+
+    modifyAlbumsGroup(groupName: string, groupAlbums: string[]) {
+        this.db.get("groups")
+            .find({name: groupName})
+            .assign({albums: groupAlbums})
+            .write();
+    }
+
+    modifyMonthlyListenersGroup(groupName: string, groupMonthlyListeners: number) {
+        this.db.get("groups")
+            .find({name: groupName})
+            .assign({monthlyListeners: groupMonthlyListeners})
+            .write();
+    }
+
     modifyAuthorAlbum(albumName: string, albumAuthor: string) {
         this.db.get("albums")
             .find({name: albumName})
@@ -439,5 +509,52 @@ export class DataBase {
             .find({name: songName})
             .assign({numberOfReproduction: songNumberOfReproductions})
             .write();
+    }
+
+    viewSong(songName: string) {
+        let song = this.getSong(songName);
+        console.log("name: " + song?.name);
+        console.log("author: " + song?.author);
+        console.log("duration: " + song?.duration);
+        console.log("genres: " + song?.genres);
+        console.log("single: " + song?.single);
+        console.log("number of reproductions: " + song?.numberReproductions);
+    }
+
+    viewGenre(genreName: string) {
+        let genre = this.getGenre(genreName);
+        console.log("name: " + genre?.name);
+        console.log("authors: " + genre?.authors);
+        console.log("albums: " + genre?.albums);
+        console.log("songs: " + genre?.songs);
+    }
+
+    viewAlbum(albumName: string) {
+        let album = this.getAlbum(albumName);
+        console.log("name: " + album?.name);
+        console.log("author: " + album?.author);
+        console.log("year of publication:" + album?.yearPublication);
+        console.log("genres: " + album?.genres);
+        console.log("songs: " + album?.songs);
+    }
+
+    viewGroup(groupName: string) {
+        let group = this.getGroup(groupName);
+        console.log("name: " + group?.name);
+        console.log("artists: " + group?.artists);
+        console.log("year of creation: " + group?.yearCreation);
+        console.log("genres: " + group?.genres);
+        console.log("albums: " + group?.albums);
+        console.log("monthly listeners: " + group?.monthlyListeners);
+    }
+
+    viewArtist(artistName: string) {
+        let artist = this.getArtist(artistName);
+        console.log("name: " + artist?.name);
+        console.log("groups: " + artist?.groups);
+        console.log("genres: " + artist?.genres);
+        console.log("albums: " + artist?.albums);
+        console.log("songs: " + artist?.songs);
+        console.log("monthly listeners: " + artist?.monthlyListeners);
     }
 }
