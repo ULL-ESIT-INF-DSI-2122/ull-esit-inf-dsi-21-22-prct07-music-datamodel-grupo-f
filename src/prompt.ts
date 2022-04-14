@@ -208,7 +208,7 @@ export class DataBaseManipulator {
     
             switch(answers["command"]) {
                 case CommandsModify.ModifyGenre:
-                    
+                    await this.funcModifyGenre();
                     break;
                 case CommandsModify.ModifyArtist:
                     
@@ -217,10 +217,10 @@ export class DataBaseManipulator {
                     
                     break;
                 case CommandsModify.ModifySong:
-                    
+                    await this.funcModifySong();
                     break;
                 case CommandsModify.ModifyAlbum:
-                    
+                    await this.funcModifyAlbum();
                     break;
             }
         }
@@ -388,25 +388,78 @@ export class DataBaseManipulator {
 
     async funcModifyGenre(): Promise<void> {
         console.clear();
-        const answers = await inquirer.prompt({
+
+        const genreName = await inquirer.prompt({
             type: "list",
-            name: "command",
+            name: "genreName",
             message: "Choose option",
             choices: Object.values(Genre.prototype)
         });
     
-        switch(answers["command"]) {
-            case Genre.prototype.name:
-                await this.funcRemoveGenre();
-                break;
+        switch(genreName["genreName"]) {
             case Genre.prototype.authors:
-                await this.funcRemoveArtist();
+                this.database.modifyAuthorsGenre(genreName["genreName"], []);
                 break;
             case Genre.prototype.albums:
-                await this.funcRemoveGroup();
+                this.database.modifyAlbumsGenre(genreName["genreName"], []);
                 break;
             case Genre.prototype.songs:
-                await this.funcRemoveSong();
+                this.database.modifySongsGenre(genreName["genreName"], []);
+                break;
+        }
+    }
+
+    async funcModifyAlbum(): Promise<void> {
+        console.clear();
+
+        const albumName = await inquirer.prompt({
+            type: "list",
+            name: "albumName",
+            message: "Choose option",
+            choices: Object.values(Album.prototype)
+        });
+    
+        switch(albumName["albumName"]) {
+            case Album.prototype.author:
+                this.database.modifyAuthorAlbum(albumName["albumName"], "");
+                break;
+            case Album.prototype.yearPublication:
+                this.database.modifyYearPublicationAlbum(albumName["albumName"], 0);
+                break;
+            case Album.prototype.genres:
+                this.database.modifyGenresAlbum(albumName["albumName"], []);
+                break;
+            case Album.prototype.songs:
+                this.database.modifySongsAlbum(albumName["albumName"], []);
+                break;
+        }
+    }
+
+    async funcModifySong(): Promise<void> {
+        console.clear();
+
+        const songName = await inquirer.prompt({
+            type: "list",
+            name: "songName",
+            message: "Choose option",
+            choices: Object.values(Song.prototype)
+        });
+    
+        switch(songName["songName"]) {
+            case Song.prototype.author:
+                this.database.modifyAuthorSong(songName["songName"], "");
+                break;
+            case Song.prototype.duration:
+                this.database.modifyDurationSong(songName["songName"], 0);
+                break;
+            case Song.prototype.genres:
+                this.database.modifyGenresSong(songName["songName"], []);
+                break;
+            case Song.prototype.single:
+                this.database.modifySingleSong(songName["songName"], false);
+                break;
+            case Song.prototype.numberReproductions:
+                this.database.modifyNumberReproductionsSong(songName["songName"], 0)
                 break;
         }
     }

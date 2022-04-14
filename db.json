@@ -1,6 +1,19 @@
 {
   "genres": [
     {
+      "name": "Pop",
+      "authors": [
+        "Bruno Mars"
+      ],
+      "albums": ["24K Magic"],
+      "songs": [
+        "24K Magic", 
+        "That's What I Like", 
+        "Finesse",
+        "Versace on the Floor"
+      ]
+    },
+    {
       "name": "Salsa",
       "authors": [
         "Frankie Ruiz",
@@ -110,8 +123,10 @@
         "The Rolling Stones",
         "KISS"
       ],
-      "albums": [],
+      "albums": ["Highway to Hell"],
       "songs": [
+        "If You Want Blood (You've Got It)", 
+        "Touch Too Much",
         "Whole Lotta Love",
         "Highway to Hell",
         "Don't Stop Me Now",
@@ -160,8 +175,10 @@
         "Alan Walker",
         "The Chainsmokers"
       ],
-      "albums": [],
+      "albums": ["The Days/Nights"],
       "songs": [
+        "The Days", 
+        "The Nights",
         "Don't Let Me Down",
         "Faded",
         "Wake Me Up",
@@ -169,7 +186,29 @@
       ]
     }
   ],
-  "albums": [],
+  "albums": [
+    {
+      "name": "The Days/Nights",
+      "author": "Avicii",
+      "yearPublication": 2014,
+      "genres": ["Electrónica"],
+      "songs": ["The Days", "The Nights"] 
+    },
+    {
+      "name": "Highway to Hell",
+      "author": "AC/DC",
+      "yearPublication": 1979,
+      "genres": ["Rock"],
+      "songs": ["Highway to Hell", "If You Want Blood (You've Got It)", "Touch Too Much"] 
+    },
+    {
+      "name": "24K Magic",
+      "author": "Bruno Mars",
+      "yearPublication": 2016,
+      "genres": ["Pop"],
+      "songs": ["24K Magic", "That's What I Like", "Finesse","Versace on the Floor"] 
+    }
+  ],
   "songs": [
     {
       "name": "Una noche en Medellín",
@@ -230,6 +269,76 @@
       ],
       "single": true,
       "numberReproductions": 87247709
+    },
+    {
+      "name": "If You Want Blood (You've Got It)",
+      "author": "AC/DC",
+      "duration": 4.43,
+      "genres": [
+        "Rock"
+      ],
+      "single": false,
+      "numberReproductions": 64950042
+    },
+    {
+      "name": "Touch Too Much",
+      "author": "AC/DC",
+      "duration": 4.26,
+      "genres": [
+        "Rock"
+      ],
+      "single": false,
+      "numberReproductions": 51817548
+    },
+    {
+      "name": "24K Magic",
+      "author": "Bruno Mars",
+      "duration": 3.45,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 1080548804
+    },
+    {
+      "name": "That's What I Like",
+      "author": "Bruno Mars",
+      "duration": 3.26,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 1388674766
+    },
+    {
+      "name": "Finesse",
+      "author": "Bruno Mars",
+      "duration": 3.11,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 172500149
+    },
+    {
+      "name": "Versace on the Floor",
+      "author": "Bruno Mars",
+      "duration": 4.21,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 553066176
+    },
+    {
+      "name": "You Make Me Feel So Young",
+      "author": "Frank Sinatra",
+      "duration": 2.57,
+      "genres": [
+        "Jazz"
+      ],
+      "single": false,
+      "numberReproductions": 553066176
     },
     {
       "name": "Una Cerveza",
@@ -580,6 +689,26 @@
       ],
       "single": true,
       "numberReproductions": 1543148730
+    },
+    {
+      "name": "The Nights",
+      "author": "Avicii",
+      "duration": 2.56,
+      "genres": [
+        "Electronica"
+      ],
+      "single": false,
+      "numberReproductions": 1037442394
+    },
+    {
+      "name": "The Days",
+      "author": "Avicii",
+      "duration": 4.38,
+      "genres": [
+        "Electronica"
+      ],
+      "single": false,
+      "numberReproductions": 284948702
     },
     {
       "name": "I Took A Pill In Ibiza (Seeb Remix)",

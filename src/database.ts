@@ -356,4 +356,88 @@ export class DataBase {
         let indexOfAlbum: number = this.findAlbum(albumName);
         this.db.get("albums").splice(indexOfAlbum, 1).write();
     }
+
+    modifyAuthorsGenre(genreName: string, genreAuthors: string[]) {
+        this.db.get("genres")
+            .find({name: genreName})
+            .assign({authors: genreAuthors})
+            .write();
+    }
+
+    modifyAlbumsGenre(genreName: string, genreAlbums: string[]) {
+        this.db.get("genres")
+            .find({name: genreName})
+            .assign({albums: genreAlbums})
+            .write();
+    }
+
+    modifySongsGenre(genreName: string, genreSongs: string[]) {
+        this.db.get("genres")
+            .find({name: genreName})
+            .assign({songs: genreSongs})
+            .write();
+    }
+
+    modifyAuthorAlbum(albumName: string, albumAuthor: string) {
+        this.db.get("albums")
+            .find({name: albumName})
+            .assign({author: albumAuthor})
+            .write();
+    }
+
+    modifyYearPublicationAlbum(albumName: string, albumYearPublication: number) {
+        this.db.get("albums")
+            .find({name: albumName})
+            .assign({yearPublication: albumYearPublication})
+            .write();
+    }
+
+    modifyGenresAlbum(albumName: string, albumGenres: string[]) {
+        this.db.get("albums")
+            .find({name: albumName})
+            .assign({genres: albumGenres})
+            .write();
+    }
+
+    modifySongsAlbum(albumName: string, albumSongs: string[]) {
+        this.db.get("albums")
+            .find({name: albumName})
+            .assign({songs: albumSongs})
+            .write();
+    }
+
+    modifyAuthorSong(songName: string, songAuthor: string) {
+        this.db.get("songs")
+            .find({name: songName})
+            .assign({author: songAuthor})
+            .write();
+    }
+
+    modifyDurationSong(songName: string, songDuration: number) {
+        this.db.get("songs")
+            .find({name: songName})
+            .assign({duration: songDuration})
+            .write();
+    }
+
+    modifyGenresSong(songName: string, songGenres: string[]) {
+        this.db.get("songs")
+            .find({name: songName})
+            .assign({genres: songGenres})
+            .write();
+    }
+
+    modifySingleSong(songName: string, songSingle: boolean) {
+        this.db.get("songs")
+            .find({name: songName})
+            .assign({single: songSingle})
+            .write();
+    }
+
+    modifyNumberReproductionsSong(songName: string, songNumberOfReproductions: number) {
+        this.db.get("songs")
+            .find({name: songName})
+            .assign({numberOfReproduction: songNumberOfReproductions})
+            .write();
+    }
 }
