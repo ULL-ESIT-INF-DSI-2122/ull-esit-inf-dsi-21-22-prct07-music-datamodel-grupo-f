@@ -307,6 +307,9 @@ export class DataBaseManipulator {
         }
     }
 
+    /**
+     * Añade un nuevo género
+     */
     async funcAddGenre(): Promise<void> {
         console.clear();
         
@@ -324,41 +327,200 @@ export class DataBaseManipulator {
             await this.showMessage("The genre already exists");
     }
 
+    /**
+     * Añade un nuevo artista, actualizando los generos
+     */
     async funcAddArtist(): Promise<void> {
         console.clear();
+        let allGenres: string[] = [];
+        let continueMessage: string;
 
+        // Introducir nombre del artista
         const artistName = await inquirer.prompt({
             type: "input",
             name: "artistName",
             message: "Enter name of artist",
         });
-        
+
         if(this.database.findArtist(artistName["artistName"]) === -1) {
-            let newArtist = new Artist(artistName["artistName"], [], [], [], [], 0);
+            // Introducir generos
+            do {
+                var genreName = await inquirer.prompt({
+                    type: "input",
+                    name: "genreName",
+                    message: "Enter name of the genre:",
+                });
+                if (this.database.findGenre(genreName["genreName"]) !== -1) {
+                    allGenres.push(genreName["genreName"]);
+                    const confirmation = await inquirer.prompt({
+                        type: "input",
+                        name: "confirmation",
+                        message: "Add more genres? Yes or No:",
+                    });
+                    continueMessage = confirmation["confirmation"];
+                    continueMessage = continueMessage.toLowerCase();
+                } else {
+                    await this.showMessage("ERROR: This genre doesn't exists");
+                    continueMessage = "no";
+                }
+            } while (continueMessage = "yes");
+            
+            // Introducir numero de oyenetes
+            const listeners = await inquirer.prompt({
+                type: "input",
+                name: "listeners",
+                message: "Enter number of listeners:",
+            });
+        
+            // Creacion 
+            let newArtist = new Artist(artistName["artistName"], [], allGenres, [], [], Number(listeners["listeners"]));
             this.database.setArtist(newArtist);
+            // Expansion de los generos
+            for (let genre of allGenres) {
+                let getGenre = this.database.getGenre(genre);
+                if (getGenre !== undefined) {
+                    let newAuthors = getGenre.authors;
+                    newAuthors.push(artistName["artistName"]);
+                    this.database.modifyAuthorsGenre(genre, newAuthors);
+                } else {
+                    await this.showMessage("ERROR: Genre not found in artist creation");
+                }
+            }
         }
         else
             await this.showMessage("The artist already exists");
     }
 
+    /**
+     * Añade un nuevo grupo, actualizando artistas y generos
+     */
     async funcAddGroup(): Promise<void> {
         console.clear();
-
+        let allGenres: string[] = [];
+        let allArtist: string[] = [];
+        let continueMessage: string;
+        
+        // Introducir nombre del grupo
         const groupName = await inquirer.prompt({
             type: "input",
             name: "groupName",
-            message: "Enter name of group",
+            message: "Enter name of group:",
         });
-        
-        if(this.database.findGroup(groupName["groupName"]) === -1) {
-            let newGroup = new Group(groupName["groupName"], [], 0, [], [], 0);
+        if(this.database.findGroup(groupName["groupName"]) === -1) {  
+            // Introducir anio de creacion          
+            const yearCreation = await inquirer.prompt({
+                type: "input",
+                name: "year",
+                message: "Enter the year of creation:",
+            });
+
+            // Introducir generos
+            do {
+                var genreName = await inquirer.prompt({
+                    type: "input",
+                    name: "genreName",
+                    message: "Enter name of the genre:",
+                });
+                if (this.database.findGenre(genreName["genreName"]) !== -1) {
+                    allGenres.push(genreName["genreName"]);
+                    const confirmation = await inquirer.prompt({
+                        type: "input",
+                        name: "confirmation",
+                        message: "Add more genres? Yes or No:",
+                    });
+                    continueMessage = confirmation["confirmation"];
+                    continueMessage = continueMessage.toLowerCase();
+                } else {
+                    await this.showMessage("ERROR: This genre doesn't exists");
+                    continueMessage = "no";
+                }
+            } while (continueMessage = "yes");
+
+            // Introducir artistas
+            do {
+                var artistName = await inquirer.prompt({
+                    type: "input",
+                    name: "artistName",
+                    message: "Enter the name of the artist component of the group:",
+                });
+                if (this.database.findArtist(artistName["artistName"]) !== -1) {
+                    allArtist.push(artistName["artistName"]);
+                    const confirmation = await inquirer.prompt({
+                        type: "input",
+                        name: "confirmation",
+                        message: "Add more artists? Yes or No:",
+                    });
+                    continueMessage = confirmation["confirmation"];
+                    continueMessage = continueMessage.toLowerCase();
+                } else {
+                    await this.showMessage("ERROR: This artist doesn't exists");
+                    continueMessage = "no";
+                }
+            } while (continueMessage = "yes");
+
+            // Introducir oyentes
+            const listeners = await inquirer.prompt({
+                type: "input",
+                name: "listeners",
+                message: "Enter number of listeners:",
+            });
+            
+            // Creacion
+            let newGroup = new Group(groupName["groupName"], allArtist, Number(yearCreation["year"]), allGenres, [], Number(listeners["listeners"]));
             this.database.setGroup(newGroup);
+            // Expansion de los artistas
+            for (let artist of allArtist) {
+                let artistToModify = this.database.getArtist(artist);
+                if (artistToModify !== undefined) {
+                    // Tomar viejos generos y añadirles los nuevos no repetidos
+                    let newGenres = artistToModify.genres;
+                    for (let toAdd of allGenres) {
+                        if (!newGenres.includes(toAdd))
+                            newGenres.push(toAdd);
+                    }
+                    // Modificar generos del artista
+                    this.database.modifyGenresArtist(artist, newGenres);
+
+                    // Tomar viejos grupos y añadirle el nuevo
+                    let groupsToAdd = artistToModify.groups;
+                    groupsToAdd.push(groupName["groupName"]);
+                    // Modificar grupos del artista
+                    this.database.modifyGroupsArtist(artist, groupsToAdd);
+
+                    // Tomar numero de oyentes individual y sumarle el del grupo
+                    let updateListeners: number = artistToModify.monthlyListeners;
+                    updateListeners += Number(listeners["listeners"]);
+                    // Modificar oyentes del artista
+                    this.database.modifyMonthlyListenersArtist(artist, updateListeners);                    
+                }
+            }
+            // Expansion de los generos
+            for (let genre of allGenres) {
+                let getGenre = this.database.getGenre(genre);
+                if (getGenre !== undefined) {
+                    // Añadir grupo a autores del genero
+                    let newAuthors = getGenre.authors;
+                    newAuthors.push(groupName["groupName"]);
+                    // Añadir artistas componente del grupo a autores del genero, no repetidos
+                    for (let artistToAdd of allArtist) {
+                        if (!newAuthors.includes(artistToAdd))
+                            newAuthors.push(artistToAdd);
+                    }
+                    // Modificar autores del genero
+                    this.database.modifyAuthorsGenre(genre, newAuthors);
+                } else {
+                    await this.showMessage("ERROR: Genre not found in artist creation");
+                }
+            }
         }
         else
             await this.showMessage("The group already exists");
     }
-
-    async funcAddSong(): Promise<void> {
+    
+    /**
+     * Añadir una nueva canción, actualizando albumes, autores y generos
+     */
+     async funcAddSong(): Promise<void> {
         console.clear();
 
         const songName = await inquirer.prompt({
@@ -367,11 +529,13 @@ export class DataBaseManipulator {
             message: "Enter name of song",
         });
 
-        /*const songArtist = await inquirer.prompt({
+        /*const Artist = await inquirer.prompt({
             type: "input",
-            name: "songArtist",
+            name: "Artist",
             message: "Enter artist of song",
         });*/
+
+        if(this.database.findSong(songName["songName"]))
         
         if(this.database.findSong(songName["songName"]) === -1) {
             let newSong = new Song(songName["songName"], "", 0, [], true, 0);
@@ -381,6 +545,9 @@ export class DataBaseManipulator {
             await this.showMessage("The song already exists");
     }
 
+    /**
+     * Añadir un nuevo album, actualizando autores y generos
+     */
     async funcAddAlbum(): Promise<void> {
         console.clear();
 

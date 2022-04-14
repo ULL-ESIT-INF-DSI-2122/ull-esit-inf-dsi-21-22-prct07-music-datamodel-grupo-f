@@ -102,7 +102,7 @@ export class Gestor {
     
         while(answers["commandPlaylist"] != CommandsPlaylist.Quit) {
             console.clear();
-            this.database.viewPlaylist(playlistName);
+            console.log(this.database.viewPlaylist(playlistName));
             const answers = await inquirer.prompt({
                 type: "list",
                 name: "commandPlaylist",

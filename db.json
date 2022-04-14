@@ -3,12 +3,16 @@
     {
       "name": "Pop",
       "authors": [
-        "Bruno Mars"
+        "Bruno Mars",
+        "David Bisbal",
+        "Pablo Alborán"
       ],
-      "albums": ["24K Magic"],
+      "albums": [
+        "24K Magic"
+      ],
       "songs": [
-        "24K Magic", 
-        "That's What I Like", 
+        "24K Magic",
+        "That's What I Like",
         "Finesse",
         "Versace on the Floor"
       ]
@@ -123,9 +127,11 @@
         "The Rolling Stones",
         "KISS"
       ],
-      "albums": ["Highway to Hell"],
+      "albums": [
+        "Highway to Hell"
+      ],
       "songs": [
-        "If You Want Blood (You've Got It)", 
+        "If You Want Blood (You've Got It)",
         "Touch Too Much",
         "Whole Lotta Love",
         "Highway to Hell",
@@ -157,7 +163,8 @@
         "Prince Roye",
         "Camilo",
         "Obsesion",
-        "Romeo Santos"
+        "Romeo Santos",
+        "Pablo Alborán"
       ],
       "albums": [],
       "songs": [
@@ -175,9 +182,11 @@
         "Alan Walker",
         "The Chainsmokers"
       ],
-      "albums": ["The Days/Nights"],
+      "albums": [
+        "The Days/Nights"
+      ],
       "songs": [
-        "The Days", 
+        "The Days",
         "The Nights",
         "Don't Let Me Down",
         "Faded",
@@ -191,22 +200,40 @@
       "name": "The Days/Nights",
       "author": "Avicii",
       "yearPublication": 2014,
-      "genres": ["Electrónica"],
-      "songs": ["The Days", "The Nights"] 
+      "genres": [
+        "Electrónica"
+      ],
+      "songs": [
+        "The Days",
+        "The Nights"
+      ]
     },
     {
       "name": "Highway to Hell",
       "author": "AC/DC",
       "yearPublication": 1979,
-      "genres": ["Rock"],
-      "songs": ["Highway to Hell", "If You Want Blood (You've Got It)", "Touch Too Much"] 
+      "genres": [
+        "Rock"
+      ],
+      "songs": [
+        "Highway to Hell",
+        "If You Want Blood (You've Got It)",
+        "Touch Too Much"
+      ]
     },
     {
       "name": "24K Magic",
       "author": "Bruno Mars",
       "yearPublication": 2016,
-      "genres": ["Pop"],
-      "songs": ["24K Magic", "That's What I Like", "Finesse","Versace on the Floor"] 
+      "genres": [
+        "Pop"
+      ],
+      "songs": [
+        "24K Magic",
+        "That's What I Like",
+        "Finesse",
+        "Versace on the Floor"
+      ]
     }
   ],
   "songs": [
@@ -746,12 +773,12 @@
       "name": "Playlist N1",
       "songs": [
         "La Morena",
+        "La Vaca",
         "Lluvia",
         "Una noche en Medellín",
         "Obsesion",
         "EL MAKINON",
-        "Volví",
-        "La Vaca"
+        "Volví"
       ],
       "duration": 0.28,
       "genres": [
@@ -760,7 +787,7 @@
         "Reggeaton",
         "Bachata"
       ],
-      "owner": "system"
+      "owner": "user"
     },
     {
       "name": "T1",
@@ -805,6 +832,27 @@
       "songs": [
         "La Mamá de la Mamá"
       ]
+    },
+    {
+      "name": "David Bisbal",
+      "genres": [
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 12342358,
+      "groups": [],
+      "songs": []
+    },
+    {
+      "name": "Pablo Alborán",
+      "genres": [
+        "Pop",
+        "Bachata"
+      ],
+      "albums": [],
+      "monthlyListeners": 2846772345,
+      "groups": [],
+      "songs": []
     }
   ],
   "groups": [

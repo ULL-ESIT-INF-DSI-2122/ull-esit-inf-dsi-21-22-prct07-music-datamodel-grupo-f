@@ -110,11 +110,6 @@ export class DataBase {
     }
 
     setArtist(artist: Artist) {
-        artist.genres.forEach(genre => {
-            if (this.findGenre(genre) != -1) {
-                
-            }
-        });
         this.db.get("artists").push(artist).write();
     }
 
@@ -126,9 +121,9 @@ export class DataBase {
         this.db.get("playlists").push(playlist).write();
     }
 
-    getGenre(genreName: string): Genre | undefined {
+    getGenre(genreName: string): Genre {
         let indexOfGenre: number = this.findGenre(genreName);
-        return this.db.get("genres").value().at(indexOfGenre);
+        return this.db.get("genres").value().at(indexOfGenre) as Genre;
     }
 
     getSong(songName: string): Song {
@@ -136,24 +131,24 @@ export class DataBase {
         return this.db.get("songs").value().at(indexOfSong) as Song;
     }
 
-    getAlbum(albumName: string): Album | undefined {
+    getAlbum(albumName: string): Album {
         let indexOfAlbum: number = this.findAlbum(albumName);
-        return this.db.get("albums").value().at(indexOfAlbum);
+        return this.db.get("albums").value().at(indexOfAlbum) as Album;
     }
 
-    getArtist(artistName: string): Artist | undefined {
+    getArtist(artistName: string): Artist {
         let indexOfArtist: number = this.findArtist(artistName);
-        return this.db.get("artists").value().at(indexOfArtist);
+        return this.db.get("artists").value().at(indexOfArtist) as Artist;
     }
 
-    getGroup(groupName: string): Group | undefined {
+    getGroup(groupName: string): Group {
         let indexOfGroup: number = this.findGroup(groupName);
-        return this.db.get("groups").value().at(indexOfGroup);
+        return this.db.get("groups").value().at(indexOfGroup) as Group;
     }
 
-    getPlaylist(playlistName: string): Playlist | undefined {
+    getPlaylist(playlistName: string): Playlist {
         let indexOfPlaylist: number = this.findPlaylist(playlistName);
-        return this.db.get("playlists").value().at(indexOfPlaylist);
+        return this.db.get("playlists").value().at(indexOfPlaylist) as Playlist;
     }
 
     getFormattedDurationPlaylist(playlist: Playlist): string {
@@ -210,13 +205,13 @@ export class DataBase {
 
     viewPlaylists() {
         let show: string = "";
-        console.log("---LIST OF PLAYLISTS---");
+        show += "---LIST OF PLAYLISTS---\n";
         this.db.get("playlists").value().forEach((playlist: Playlist) => {
-            show = playlist.name;
+            show +=  "\n" + playlist.name;
             show += "\n  Genres: [" + playlist.genres.toString() + "]";
             show += "\n  " + this.getFormattedDurationPlaylist(playlist);
-            console.log(show);
         })
+        return show;
     }
 
     viewPlaylist(playlistName: string) {
@@ -511,50 +506,61 @@ export class DataBase {
             .write();
     }
 
-    viewSong(songName: string) {
+    viewSong(songName: string): string {
+        let show: string = "";
         let song = this.getSong(songName);
-        console.log("name: " + song?.name);
-        console.log("author: " + song?.author);
-        console.log("duration: " + song?.duration);
-        console.log("genres: " + song?.genres);
-        console.log("single: " + song?.single);
-        console.log("number of reproductions: " + song?.numberReproductions);
+
+        show += "name: " + song?.name;
+        show += "author: " + song?.author;
+        show += "duration: " + song?.duration;
+        show += "genres: " + song?.genres;
+        show += "single: " + song?.single;
+        show += "number of reproductions: " + song?.numberReproductions;
+        return show;
     }
 
-    viewGenre(genreName: string) {
+    viewGenre(genreName: string): string {
+        let show: string = "";
         let genre = this.getGenre(genreName);
-        console.log("name: " + genre?.name);
-        console.log("authors: " + genre?.authors);
-        console.log("albums: " + genre?.albums);
-        console.log("songs: " + genre?.songs);
+        show += "name: " + genre?.name;
+        show += "authors: " + genre?.authors;
+        show += "albums: " + genre?.albums;
+        show += "songs: " + genre?.songs;
+        return show;
     }
 
-    viewAlbum(albumName: string) {
+    viewAlbum(albumName: string): string {
+        let show: string = "";
         let album = this.getAlbum(albumName);
-        console.log("name: " + album?.name);
-        console.log("author: " + album?.author);
-        console.log("year of publication:" + album?.yearPublication);
-        console.log("genres: " + album?.genres);
-        console.log("songs: " + album?.songs);
+        show += "name: " + album?.name;
+        show += "author: " + album?.author;
+        show += "year of publication:" + album?.yearPublication;
+        show += "genres: " + album?.genres;
+        show += "songs: " + album?.songs;
+        return show;
     }
 
-    viewGroup(groupName: string) {
+    viewGroup(groupName: string): string {
+        let show: string = "";
         let group = this.getGroup(groupName);
-        console.log("name: " + group?.name);
-        console.log("artists: " + group?.artists);
-        console.log("year of creation: " + group?.yearCreation);
-        console.log("genres: " + group?.genres);
-        console.log("albums: " + group?.albums);
-        console.log("monthly listeners: " + group?.monthlyListeners);
+        show += "name: " + group?.name;
+        show += "artists: " + group?.artists;
+        show += "year of creation: " + group?.yearCreation;
+        show += "genres: " + group?.genres;
+        show += "albums: " + group?.albums;
+        show += "monthly listeners: " + group?.monthlyListeners;
+        return show;
     }
 
-    viewArtist(artistName: string) {
+    viewArtist(artistName: string): string {
+        let show: string = "";
         let artist = this.getArtist(artistName);
-        console.log("name: " + artist?.name);
-        console.log("groups: " + artist?.groups);
-        console.log("genres: " + artist?.genres);
-        console.log("albums: " + artist?.albums);
-        console.log("songs: " + artist?.songs);
-        console.log("monthly listeners: " + artist?.monthlyListeners);
+        show += "name: " + artist?.name;
+        show += "groups: " + artist?.groups;
+        show += "genres: " + artist?.genres;
+        show += "albums: " + artist?.albums;
+        show += "songs: " + artist?.songs;
+        show += "monthly listeners: " + artist?.monthlyListeners;
+        return show;
     }
 }
