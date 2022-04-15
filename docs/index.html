@@ -1,0 +1,436 @@
+<!DOCTYPE html><html class="default"><head><meta charSet="utf-8"/><meta http-equiv="x-ua-compatible" content="IE=edge"/><title>p7</title><meta name="description" content="Documentation for p7"/><meta name="viewport" content="width=device-width, initial-scale=1"/><link rel="stylesheet" href="assets/style.css"/><link rel="stylesheet" href="assets/highlight.css"/><script async src="assets/search.js" id="search-script"></script></head><body><script>document.body.classList.add(localStorage.getItem("tsd-theme") || "os")</script><header><div class="tsd-page-toolbar"><div class="container"><div class="table-wrap"><div class="table-cell" id="tsd-search" data-base="."><div class="field"><label for="tsd-search-field" class="tsd-widget search no-caption">Search</label><input type="text" id="tsd-search-field"/></div><ul class="results"><li class="state loading">Preparing search index...</li><li class="state failure">The search index is not available</li></ul><a href="index.html" class="title">p7</a></div><div class="table-cell" id="tsd-widgets"><div id="tsd-filter"><a href="#" class="tsd-widget options no-caption" data-toggle="options">Options</a><div class="tsd-filter-group"><div class="tsd-select" id="tsd-filter-visibility"><span class="tsd-select-label">All</span><ul class="tsd-select-list"><li data-value="public">Public</li><li data-value="protected">Public/Protected</li><li data-value="private" class="selected">All</li></ul></div> <input type="checkbox" id="tsd-filter-inherited" checked/><label class="tsd-widget" for="tsd-filter-inherited">Inherited</label><input type="checkbox" id="tsd-filter-externals" checked/><label class="tsd-widget" for="tsd-filter-externals">Externals</label></div></div><a href="#" class="tsd-widget menu no-caption" data-toggle="menu">Menu</a></div></div></div></div><div class="tsd-page-title"><div class="container"><h1> p7 </h1></div></div></header><div class="container container-main"><div class="row"><div class="col-8 col-content"><div class="tsd-panel tsd-typography">
+<a href="#práctica-7-digitalizando-la-colección-de-música-de-los-abuelos" id="práctica-7-digitalizando-la-colección-de-música-de-los-abuelos" style="color: inherit; text-decoration: none;">
+  <h1>Práctica 7. Digitalizando la colección de música de los abuelos</h1>
+</a>
+<p><strong>Asignatura:</strong> Desarrollo de sistemas informáticos<br><strong>Nombres y correos:</strong><br>Leonardo Alfonso Cruz Rodríguez - <a href="mailto:alu0101233093@ull.edu.es">alu0101233093@ull.edu.es</a><br>Eduardo González Pérez - <a href="mailto:alu0101319001@ull.edu.es">alu0101319001@ull.edu.es</a><br>José Orlando Nina Orellana - <a href="mailto:alu0101322308@ull.edu.es">alu0101322308@ull.edu.es</a> </p>
+<p><a href="https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/actions/workflows/node.js.yml"><img src="https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/actions/workflows/node.js.yml/badge.svg" alt="Node.js CI"></a>
+<a href="https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f"><img src="https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f&metric=alert_status" alt="Quality Gate Status"></a>
+<a href="https://coveralls.io/github/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f?branch=main"><img src="https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/badge.svg?branch=main" alt="Coverage Status"></a></p>
+
+<a href="#índice" id="índice" style="color: inherit; text-decoration: none;">
+  <h2>Índice</h2>
+</a>
+<ul>
+<li><a href="#id0">Creación del directorio de trabajo y tareas previas</a></li>
+<li><a href="#id0.1">Debugger TypeScript en VSC</a></li>
+<li><a href="#id0.2">Mocha y Chai - Programación TDD</a></li>
+<li><a href="#id0.3">Documentación con TypeDoc</a></li>
+<li><a href="#id0.4">Cubrimiento de código utilizando Instanbul y Coveralls</a></li>
+<li><a href="#id0.5">Integración continua de código fuente TypeScript a través de GitHub Action</a></li>
+<li><a href="#id0.6">Calidad y seguridad del código fuente mediante Sonar Cloud</a></li>
+<li><a href="#id1">Clases Genre, Album, Song, Author, Group, Artist, Playlist</a></li>
+<li><a href="#id2">Clase DataBase</a></li>
+<li><a href="#id3">Clase Gestor</a></li>
+<li><a href="#id4">Clase DataBaseManipulator</a></li>
+<li><a href="#id5">Ejemplo de uso Gestor</a></li>
+<li><a href="#id6">Ejemplo de uso DataBaseManipulator</a></li>
+</ul>
+
+<a href="#creación-del-directorio-de-trabajo-y-tareas-previas" id="creación-del-directorio-de-trabajo-y-tareas-previas" style="color: inherit; text-decoration: none;">
+  <h2>Creación del directorio de trabajo y tareas previas<a name="id0"></a></h2>
+</a>
+<p>Antes de empezar el proyecto es necesario instalar diversos paquetes para tener una estructura de directorios adecuada. Para ello el primer paso es crear el directorio principal:</p>
+<pre><code class="language-bash"><span class="hl-0">$mkdir</span><span class="hl-1"> P7</span><br/><span class="hl-0">$cd</span><span class="hl-1"> P7/</span>
+</code></pre>
+<p>Una vez dentro, ejecutaremos los siguientes comandos:</p>
+<pre><code class="language-bash"><span class="hl-0">$npm</span><span class="hl-1"> init --yes</span><br/><span class="hl-0">$npm</span><span class="hl-1"> install -D eslint eslint-config-google @typescript-eslint/eslint-plugin @typescript-eslint/parser</span><br/><span class="hl-0">$tsc</span><span class="hl-1"> --init</span><br/><span class="hl-0">$mkdir</span><span class="hl-1"> src</span><br/><span class="hl-0">$touch</span><span class="hl-1"> README.md</span>
+</code></pre>
+<p>Tras ejecutarlos habremos inicializado el Node Project Manager con la herramienta Eslint y el compilador de TypeScript. Además de crear el directorio donde estará almacenado el código y el fichero <code>README.md</code>.  </p>
+<p>El siguiente paso es configurar el fichero <code>tsconfig.json</code> descomentando las siguientes lineas dentro del fichero:</p>
+<ul>
+<li><code>rootDirs</code> se debe indicar el directorio <code>src</code> para almacenar el código principal, la carpeta <code>tests</code> será para almacenar las pruebas a la hora de programar en TDD.  <pre><code class="language-json"><span class="hl-2">&quot;rootDirs&quot;</span><span class="hl-1">: [</span><span class="hl-2">&quot;./src&quot;</span><span class="hl-1">,</span><span class="hl-2">&quot;./tests&quot;</span><span class="hl-1">]</span>
+</code></pre>
+</li>
+<li><code>declaration</code> se requerirá para usar el debugger.  <pre><code class="language-json"><span class="hl-2">&quot;declaration&quot;</span><span class="hl-1">: </span><span class="hl-3">true</span>
+</code></pre>
+</li>
+<li><code>sourceMap</code> se necesita cuando se exportan funciones.  <pre><code class="language-json"><span class="hl-2">&quot;sourceMap&quot;</span><span class="hl-1">: </span><span class="hl-3">true</span>
+</code></pre>
+</li>
+<li><code>outDir</code> para almacenar los archivos compilados en un directorio concreto.  <pre><code class="language-json"><span class="hl-2">&quot;outDir&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;./dist&quot;</span>
+</code></pre>
+</li>
+</ul>
+<p>Por último, faltaría iniciar el directorio git. Pero antes, crearemos el fichero <code>.gitignore</code> para evitar que git tenga en seguimiento lo que introduzcamos en dicho archivo.</p>
+<pre><code class="language-bash"><span class="hl-0">$touch</span><span class="hl-1"> .gitignore</span><br/><span class="hl-0">$cat</span><span class="hl-1"> .gitignore</span><br/><span class="hl-1">node_modules/</span><br/><span class="hl-1">dist/</span><br/><span class="hl-1">package-lock.json</span><br/><span class="hl-1">.vscode/</span>
+</code></pre>
+<p>Ahora si, y para finalizar, iniciaremos el repositorio git y añadiremos el remoto:</p>
+<pre><code class="language-bash"><span class="hl-0">$git</span><span class="hl-1"> init</span><br/><span class="hl-0">$git</span><span class="hl-1"> remote add origin git@github.com:ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f.git</span>
+</code></pre>
+
+<a href="#debugger-typescript-en-vsc" id="debugger-typescript-en-vsc" style="color: inherit; text-decoration: none;">
+  <h2>Debugger TypeScript en VSC<a name="id0.1"></a></h2>
+</a>
+<p>Para utilizar el debugger en nuestro proyecto pincharemos en el icono de la barra situada a la izquierda:  </p>
+<p><img src="https://user-images.githubusercontent.com/72469549/156930570-8ada3bf7-a9b6-4ff4-acb3-77925e9298d6.png" alt="image"></p>
+<p>A continuación pinchamos en <code>cree un archivo launch.json</code> y se abrirá el siguiente menu desplegable:</p>
+<p><img src="https://user-images.githubusercontent.com/72469549/156930748-8ce798ba-fa91-4f74-a026-1cb969c18514.png" alt="image"></p>
+<p>Seleccionaremos <code>Node.js</code> y se abrirá el fichero <code>launch.json</code>. En él solo habrá que cambiar la dirección de <code>outFiles</code>, quedaría de la siguiente manera:</p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;version&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;0.2.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;configurations&quot;</span><span class="hl-1">: [</span><br/><span class="hl-1">        {</span><br/><span class="hl-1">            </span><span class="hl-4">&quot;type&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;pwa-node&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-4">&quot;request&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;launch&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-4">&quot;name&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;Launch Program&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-4">&quot;skipFiles&quot;</span><span class="hl-1">: [</span><br/><span class="hl-1">                </span><span class="hl-2">&quot;&lt;node_internals&gt;/**&quot;</span><br/><span class="hl-1">            ],</span><br/><span class="hl-1">            </span><span class="hl-4">&quot;program&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;${workspaceFolder}/src/ejemplo.ts&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">            </span><span class="hl-4">&quot;outFiles&quot;</span><span class="hl-1">: [</span><br/><span class="hl-1">                </span><span class="hl-2">&quot;${workspaceFolder}/dist/**/*.js&quot;</span><br/><span class="hl-1">            ]</span><br/><span class="hl-1">        }</span><br/><span class="hl-1">    ]</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p>Para debuggear un archivo, debe compilarse previamente y darle al botón verde en la parte superior.  </p>
+<p><img src="https://user-images.githubusercontent.com/72469549/156931099-b62aecbb-80c9-441f-96dd-493d35cf9052.png" alt="image"></p>
+
+<a href="#mocha-y-chai---programación-tdd" id="mocha-y-chai---programación-tdd" style="color: inherit; text-decoration: none;">
+  <h2>Mocha y Chai - Programación TDD<a name="id0.2"></a></h2>
+</a>
+<p>Para seguir el paradigma de programación dirigido por pruebas (TDD) instalaremos los paquetes Mocha y Chai, además de crear el directorio <code>tests</code> para almacenar las pruebas.  </p>
+<pre><code class="language-bash"><span class="hl-0">$npm</span><span class="hl-1"> install -D mocha chai @types/mocha @types/chai ts-node</span><br/><span class="hl-0">$mkdir</span><span class="hl-1"> tests</span>
+</code></pre>
+<p>A continuación crearemos el fichero <code>.mocharc.json</code> para configurar Mocha con el siguiente contenido.</p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;extension&quot;</span><span class="hl-1">: [</span><br/><span class="hl-1">        </span><span class="hl-2">&quot;ts&quot;</span><br/><span class="hl-1">    ],</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;spec&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;tests/*.spec.ts&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;require&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;ts-node/register&quot;</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p>Por último, dentro del archivo <code>package.json</code>, cambiaremos la opción de test por Mocha. Quedaría de la siguiente manera:  </p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;name&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;testingproyect&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;version&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;1.0.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;description&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;main&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;index.js&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;scripts&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;test&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;mocha&quot;</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;keywords&quot;</span><span class="hl-1">: [],</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;author&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;license&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;ISC&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;devDependencies&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;@types/chai&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^4.3.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;@types/mocha&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^9.1.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;chai&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^4.3.6&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;mocha&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^9.2.1&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;ts-node&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^10.7.0&quot;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p>Ahora solo faltaría crear los tests con la extensión <code>.spec.ts</code> dentro de la carpeta <code>tests</code>, y ejecutarlos con el siguiente comando:</p>
+<pre><code class="language-bash"><span class="hl-0">$npm</span><span class="hl-1"> </span><span class="hl-5">test</span>
+</code></pre>
+
+<a href="#documentación-con-typedoc" id="documentación-con-typedoc" style="color: inherit; text-decoration: none;">
+  <h2>Documentación con TypeDoc<a name="id0.3"></a></h2>
+</a>
+<p>El primer paso para realizar la documentación con la herramienta <code>TypeDoc</code> sería instalar la librería correspondiente:</p>
+<pre><code class="language-bash"><span class="hl-0">$npm</span><span class="hl-1"> install -D typedoc</span>
+</code></pre>
+<p>A continuación se debe crear el archivo <code>typedoc.json</code> para escribir la configuración con los parámetros necesarios, el contenido del fichero quedaría como se ve a continuación:</p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;entryPoints&quot;</span><span class="hl-1">: [</span><br/><span class="hl-1">        </span><span class="hl-2">&quot;./src/ejemplo-1&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">        </span><span class="hl-2">&quot;./src/ejemplo-2&quot;</span><br/><span class="hl-1">    ],</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;out&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;./docs&quot;</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p>Cabe destacar que en el parámetro <code>entryPoints</code> deben ir los ficheros que se van a documentar uno por uno.<br>El paso siguiente sería escribir la documentación en nuestro código. Para ello debemos escribir <code>/**</code> encima de una función y nos aparecerá lo siguiente:  </p>
+<p><img src="https://user-images.githubusercontent.com/72469549/157311335-0db0a914-62f8-4cd4-b4da-18b6d01a6f03.png" alt="image_2022-03-08_19-23-34"></p>
+<p>Teclearemos enter y se nos generará automáticamente una plantilla por defecto para escribir la documentación a cerca de la función.</p>
+<p><img src="https://user-images.githubusercontent.com/72469549/157311857-05a84b71-e88b-4816-adb3-f05ca75f08fb.png" alt="image"></p>
+<p>El siguiente paso sería rellenarla, por ejemplo de la siguiente manera:</p>
+<pre><code class="language-typescript"><span class="hl-6">/**</span><br/><span class="hl-6"> * Saluda al mundo un número de veces determinado</span><br/><span class="hl-6"> * </span><span class="hl-3">@param</span><span class="hl-6"> </span><span class="hl-0">veces</span><span class="hl-6"> Almacena el número de veces que se saludará</span><br/><span class="hl-6"> * </span><span class="hl-3">@returns</span><span class="hl-6"> La cadena con los saludos concatenados</span><br/><span class="hl-6"> */</span><br/><span class="hl-3">function</span><span class="hl-1"> </span><span class="hl-5">hello</span><span class="hl-1">(</span><span class="hl-0">veces</span><span class="hl-1">: </span><span class="hl-7">number</span><span class="hl-1">): </span><span class="hl-7">string</span><span class="hl-1"> {</span><br/><span class="hl-1">    </span><span class="hl-3">let</span><span class="hl-1"> </span><span class="hl-0">hi</span><span class="hl-1"> = </span><span class="hl-2">&quot;&quot;</span><span class="hl-1">;</span><br/><span class="hl-1">    </span><span class="hl-8">for</span><span class="hl-1">(</span><span class="hl-3">let</span><span class="hl-1"> </span><span class="hl-0">i</span><span class="hl-1"> = </span><span class="hl-9">0</span><span class="hl-1">; </span><span class="hl-0">i</span><span class="hl-1"> &lt; </span><span class="hl-0">veces</span><span class="hl-1">; </span><span class="hl-0">i</span><span class="hl-1">++)</span><br/><span class="hl-1">        </span><span class="hl-0">hi</span><span class="hl-1"> += </span><span class="hl-2">&quot;¡Hello world! &quot;</span><span class="hl-1">;</span><br/><span class="hl-1">    </span><span class="hl-8">return</span><span class="hl-1"> </span><span class="hl-0">hi</span><span class="hl-1">;</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p>Por último, debemos añadir al fichero <code>package.json</code> un parámetro que nos permitirá ejecutar la documentación con el comando <code>npm run doc</code> y se guardaría en <code>./docs</code>.<br>El fichero quedaría de la siguiente manera:</p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;name&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;p4&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;version&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;1.0.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;description&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;main&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;index.js&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;scripts&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;test&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;mocha&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;doc&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;typedoc&quot;</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;keywords&quot;</span><span class="hl-1">: [],</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;author&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;license&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;ISC&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;devDependencies&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;@types/chai&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^4.3.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;@types/mocha&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^9.1.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;chai&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^4.3.6&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;mocha&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^9.2.1&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;ts-node&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^10.7.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;typedoc&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^0.22.13&quot;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+</code></pre>
+
+<a href="#cubrimiento-de-código-utilizando-instanbul-y-coveralls" id="cubrimiento-de-código-utilizando-instanbul-y-coveralls" style="color: inherit; text-decoration: none;">
+  <h2>Cubrimiento de código utilizando Instanbul y Coveralls<a name="id0.4"></a></h2>
+</a>
+<p>Primero instalaremos los paquetes y dependencias necesarios para usar la herramientas:</p>
+<pre><code class="language-bash"><span class="hl-0">$npm</span><span class="hl-1"> install -D nyc coveralls</span>
+</code></pre>
+<p>A continuación, añadiremos en el fichero <code>package.json</code> un script para realizar el cubrimiento de código. <code>&quot;coverage&quot;: &quot;nyc npm test&quot;</code>.
+El fichero quedaría de la siguiente manera:</p>
+<pre><code class="language-json"><span class="hl-1">{</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;name&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;p4&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;version&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;1.0.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;description&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;main&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;index.js&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;scripts&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;test&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;mocha&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;doc&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;typedoc&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;coverage&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;nyc npm test&quot;</span><br/><span class="hl-1">  },</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;keywords&quot;</span><span class="hl-1">: [],</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;author&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;license&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;ISC&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">  </span><span class="hl-4">&quot;devDependencies&quot;</span><span class="hl-1">: {</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;@types/chai&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^4.3.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;@types/mocha&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^9.1.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;chai&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^4.3.6&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;mocha&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^9.2.1&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;ts-node&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^10.7.0&quot;</span><span class="hl-1">,</span><br/><span class="hl-1">    </span><span class="hl-4">&quot;typedoc&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;^0.22.13&quot;</span><br/><span class="hl-1">  }</span><br/><span class="hl-1">}</span>
+</code></pre>
+<p>Para ejecutar este script simplemente introducimos por consola:</p>
+<pre><code class="language-bash"><span class="hl-0">$npm</span><span class="hl-1"> run coverage</span>
+</code></pre>
+<p>A continuación debemos entrar a la página web <a href = "http://www.coveralls.io/">coveralls.io</a> y habilitaremos el cubrimiento de código en nuestro proyecto.
+(El proyecto debe estar en público para el uso de coveralls.io gratuito).</p>
+<p><strong>Imagen de la página con el repositorio</strong></p>
+<p>Una vez habilitado, entraremos en <code>details</code> y copiaremos la línea donde pone <em>repo_token</em>. Después crearemos el archivo <code>.coveralls.yml</code> y añadiremos dicha línea.
+El archivo quedaría de la siguiente manera:</p>
+<pre><code><span class="hl-10">repo_token</span><span class="hl-1">: </span><span class="hl-0">RA8doCOxxJr3ALE8PDVTh3g0AAmYBcPQW</span>
+</code></pre>
+<p>El siguiente paso sería añadir al script <code>coverage</code> en el fichero <code>package.json</code> los comandos <code>nyc report --reporter=text-lcov | coveralls &amp;&amp; rm -rfv .nyc_output</code>.
+El script quedaría de la siguiente manera:</p>
+<pre><code class="language-json"><span class="hl-2">&quot;coverage&quot;</span><span class="hl-1">: </span><span class="hl-2">&quot;nyc npm test &amp;&amp; nyc report --reporter=text-lcov | coveralls &amp;&amp; rm -rfv .nyc_output&quot;</span>
+</code></pre>
+<p>Ahora cuando ejecutemos por consola <code>npm run coverage</code> en la página del repositorio en <code>Coveralls</code> se nos mostrará la información del cubrimiento del código.
+Para añadir el <code>Batch</code> del cubrimiento al <code>README.md</code> se copiará directamente de la página y se pegará en el fichero.</p>
+
+<a href="#integración-continua-de-código-fuente-typescript-a-través-de-github-action" id="integración-continua-de-código-fuente-typescript-a-través-de-github-action" style="color: inherit; text-decoration: none;">
+  <h2>Integración continua de código fuente TypeScript a través de GitHub Action<a name="id0.5"></a></h2>
+</a>
+<p>El primer paso es instalar el paquete TypeScript:</p>
+<pre><code><span class="hl-0">$npm</span><span class="hl-1"> </span><span class="hl-0">install</span><span class="hl-1"> -</span><span class="hl-11">D</span><span class="hl-1"> </span><span class="hl-0">typescript</span>
+</code></pre>
+<p>Una vez instalado, entraremos a la página del repositorio y nos dirigiremos a Actions, y dentro de dicho apartado bajaremos hasta Continuous integration.
+<img src="https://user-images.githubusercontent.com/72469549/160702017-d769658d-cfc4-4ecc-a0d5-ca4caa187c8f.png" alt="image">  </p>
+<p>Buscaremos <code>Node.js</code> y le daremos a <code>Set up this workflow</code>.</p>
+<p><img src="https://user-images.githubusercontent.com/72469549/160702039-bf36ceec-f903-4155-8450-32a70b19f276.png" alt="image">  </p>
+<p>Una vez dentro es importante cambiar el final del fichero por el siguiente contenido:</p>
+<pre><code><span class="hl-10">steps</span><span class="hl-1">:</span><br/><span class="hl-1">    - </span><span class="hl-10">uses</span><span class="hl-1">: </span><span class="hl-0">actions</span><span class="hl-1">/</span><span class="hl-0">checkout</span><span class="hl-1">@</span><span class="hl-0">v2</span><br/><span class="hl-1">    - </span><span class="hl-10">name</span><span class="hl-1">: </span><span class="hl-0">Use</span><span class="hl-1"> </span><span class="hl-0">Node</span><span class="hl-1">.</span><span class="hl-0">js</span><span class="hl-1"> </span><span class="hl-0">$</span><span class="hl-1">{{ </span><span class="hl-0">matrix</span><span class="hl-1">.</span><span class="hl-0">node</span><span class="hl-1">-</span><span class="hl-0">version</span><span class="hl-1"> }}</span><br/><span class="hl-1">      </span><span class="hl-10">uses</span><span class="hl-1">: </span><span class="hl-0">actions</span><span class="hl-1">/</span><span class="hl-0">setup</span><span class="hl-1">-</span><span class="hl-0">node</span><span class="hl-1">@</span><span class="hl-0">v2</span><br/><span class="hl-1">      </span><span class="hl-8">with</span><span class="hl-1">:</span><br/><span class="hl-1">        </span><span class="hl-0">node</span><span class="hl-1">-</span><span class="hl-10">version</span><span class="hl-1">: </span><span class="hl-0">$</span><span class="hl-1">{{ </span><span class="hl-0">matrix</span><span class="hl-1">.</span><span class="hl-0">node</span><span class="hl-1">-</span><span class="hl-0">version</span><span class="hl-1"> }}</span><br/><span class="hl-1">    - </span><span class="hl-10">run</span><span class="hl-1">: </span><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">install</span><br/><span class="hl-1">    - </span><span class="hl-10">run</span><span class="hl-1">: </span><span class="hl-0">npm</span><span class="hl-1"> </span><span class="hl-0">test</span>
+</code></pre>
+<p>Y realizamos un commit para guardar el fichero generado. Opcionalmente se puede añadir un <code>badge</code> en al informe en las siguientes opciones:</p>
+<p><img src="https://user-images.githubusercontent.com/72469549/160701932-68d8d9b2-d347-49eb-90c7-76736f17073f.png" alt="image"></p>
+<p><img src="https://user-images.githubusercontent.com/72469549/160701954-2845ea6d-4a1e-4aaf-88c6-31a35a0ee546.png" alt="image"></p>
+<p>A continuación crearemos el fichero <code>coveralls.yml</code> y le pondremos el siguiente contenido:</p>
+<pre><code class="language-yml">name: Coveralls
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Cloning repo
+      uses: actions/checkout@v2
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v2
+      with:
+        node-version: 16.x
+    - name: Installing dependencies
+      run: npm install
+    - name: Generating coverage information
+      run: npm run coverage
+    - name: Coveralls GitHub Action
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{ secrets.GITHUB_TOKEN }}
+</code></pre>
+<p>Ahora con cada push se comprobarán los tests y el recubrimiento de código automáticamente y se podrá revisar en Github Actions.</p>
+
+<a href="#calidad-y-seguridad-del-código-fuente-mediante-sonar-cloud-y-github-actions" id="calidad-y-seguridad-del-código-fuente-mediante-sonar-cloud-y-github-actions" style="color: inherit; text-decoration: none;">
+  <h2>Calidad y seguridad del código fuente mediante Sonar Cloud y GitHub Actions<a name="id0.6"></a></h2>
+</a>
+<p>Para poder utilizar la herramienta <code>Sonar Cloud</code> debemos tener el repositorio en una organización. En este caso lo tendremos alojado en la organización de la asignatura.
+Una vez creada la cuenta en la página <a href = "http://www.sonarcloud.io/">sonarcloud.io</a> añadiremos el repositorio dándole al símbolo <code>+</code>. Veremos que nos analizará 
+el proyecto.</p>
+<p>A continuación deberemos ir al apartado <code>administration</code> y en el desplegable seleccionaremos <code>analysis method</code> y desactivaremos el análisis automático.
+El siguiente paso sería entrar en el tutorial de github actions, copiaremos el <code>SONAR_TOKEN</code>, accedemos al apartado settings del repositorio, entramos en secrets,
+dentro le daremos a actions y añadiremos un nuevo secreto con el título y el valor que nos ha dado la <code>Sonar Cloud</code>.</p>
+<p>Una vez añadido el secreto, en la página de <code>Sonar Cloud</code> le daremos a <code>continue</code>. Seleccionaremos <em>Other</em> ya que este proyecto está programado en TS y nos mostrará el 
+contenido que deberá tener el fichero de flujo de trabajo en github actions. Por lo tanto, el siguiente paso sería crear el fichero <code>sonarcloud.yml</code> dentro del directorio
+<code>.github/workflows</code> y copiaremos el contenido dado por la página. Es necesario cambiar un poco el archivo y añadir pasos, el fichero quedaría de la siguiente manera:</p>
+<pre><code class="language-yml">name: Sonar-Cloud 
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - name: Cloning repo
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Use Node.js 16.x
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16.x
+      - name: Installing dependencies
+        run: npm install
+      - name: Generating coverage report
+        run: npm run coverage
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+</code></pre>
+<p><strong>¡Importante!</strong> Se deberá cambiar el nombre de las ramas dentro del fichero en caso de que sea necesario.</p>
+<p>El paso siguiente sería crear el fichero <code>sonar-project.properties</code> y pegar el contenido dado por la página. Modificandolo un poco quedaría de la siguiente manera:</p>
+<pre><code class="language-properties">sonar.projectKey=ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f
+sonar.organization=ull-esit-inf-dsi-2122
+
+# This is the name and version displayed in the SonarCloud UI.
+sonar.projectName=github-actions-sonar-cloud
+sonar.projectVersion=1.0
+
+# Path is relative to the sonar-project.properties file. Replace &quot;\&quot; by &quot;/&quot; on Windows.
+sonar.sources=src
+
+# Encoding of the source code. Default is default system encoding
+sonar.sourceEncoding=UTF-8
+
+# Coverage info
+sonar.javascript.lcov.reportPath=coverage/lcov.info
+</code></pre>
+<p>Y ya estaría configurada la <code>Gihub Actions</code> de <code>Sonar Cloud</code>. Por último, para añadir el badge a la documentación del proyecto, nos dirigiremos al apartado de información
+abajo a la izquierda y copiaremos el badge.</p>
+
+<a href="#clases-genre-album-song-author-group-artist-playlist" id="clases-genre-album-song-author-group-artist-playlist" style="color: inherit; text-decoration: none;">
+  <h2>Clases Genre, Album, Song, Author, Group, Artist, Playlist<a name="id1"></a></h2>
+</a>
+<p>La clase <code>Genre</code> representa un género musical que tiene como atributos: nombre, autores, albumes y canciones.</p>
+<p>La clase <code>Album</code> representa un album de canciones que tiene como atributos: nombre, autor, año de publicación, géneros y canciones.</p>
+<p>La clase <code>Song</code> representa una canción que tiene como atributos: nombre, autor, duración, géneros, número de reproducciones y si es un single o no.</p>
+<p>La clase abstracta <code>author</code> representa a un autor que tiene como atributos: un nombre, géneros, albumes y oyentes mensuales.</p>
+<p>La clase <code>group</code> que deriva de <code>author</code> representa un grupo que tiene como atributos: un nombre, los artistas que lo componen, el año de creación, los géneros, los albumes y los oyentes mensuales.</p>
+<p>La clase <code>artist</code> que deriva de <code>author</code> representa a un artista que tiene como atributos: un nombre, grupos a los que pertenece, géneros, albumes, cancionesy oyentes mensuales.</p>
+<p>La clase <code>playlist</code> que representa a una playlist que tiene como atributos: un nombre, una serie de canciones, la duración de la playlist, géneros asociados y una variable <code>owner</code> de tipo <code>Property</code> que indica si la playlist esta creada por el sistema o por un usuario.</p>
+
+<a href="#clase-database" id="clase-database" style="color: inherit; text-decoration: none;">
+  <h2>Clase DataBase<a name="id2"></a></h2>
+</a>
+<p>Declararemos una interfaz <code>Schema</code> que tendrá la base datos. La base de datos contendrá un array de géneros, albumes, canciones, artistas, grupos y playlists.</p>
+<p>Crearemos la clase <code>DataBase</code> que se encargara de manipular la base de datos. En el constructor abriremos un JSON o crearemos si es que no esta creado un fichero con el nombre pasado como parámetro. Y con las funciones init comprobaremos si cada uno de los arrays esta en el fichero y si no esta lo crearemos.</p>
+<p>Las funciones <code>find</code> se encargarán de buscar en la base de datos el índice del objeto dentro de array de la base de datos. Si no lo encuentra devuelve un -1, en caso contrario devuelve otro número.</p>
+<p>Las funciones <code>set</code> se encargán de meter un objeto nuevo en la base de datos. Reciben como parámetro el objeto a meter, hacen un <code>push</code> en el array correspondiente y hacen un <code>write</code> para guardar los cambios.</p>
+<p>Las funciones <code>get</code> se encargán de devolver un objeto de la base de datos recibiendo como parámetro el nombre del objeto. Primero se buscará el índice en el array haciendo uso del <code>find</code> y con ese índice se puede devolver el valor de objeto con un <code>at</code>.</p>
+<p>Las funciones <code>remove</code> se encargán de eliminar un objeto de la base de datos recibiendo como parámetro el nombre del objeto. Primero se buscará el índice en el array haciendo uso del <code>find</code> y con ese índice se puede eliminar ese objeto haciendo uso del <code>splice</code> y un <code>write</code> para guardar los cambios.</p>
+<p>Las funciones <code>view</code> se encargá de recoger toda la información un objeto en un string y devolverlo.</p>
+<p>Las funciones <code>sort</code> se encargán de ordenar un array de canciones de una playlist recibiendo como parámetro el nombre del playlist. Buscará el índice de la playlist en la base de datos y luego la ordenerá con el <code>sort</code>.</p>
+<p>Las funciones <code>modify</code> se encargarán de modificar un atributo de un objeto recibiendo como parámetro el nombre del objeto y el nuevo atributo. Se buscará primero el objeto con <code>find</code> y se cambiará el atributo con el <code>assign</code> y por último se hará un <code>write</code> para guardar los cambios.</p>
+
+<a href="#clase-gestor" id="clase-gestor" style="color: inherit; text-decoration: none;">
+  <h2>Clase Gestor<a name="id3"></a></h2>
+</a>
+<p>Declararemos un enumerado, <code>Commands</code>, que contendrá todos los comandos que contendrá el menú principal como seleccionar una playlist, añadir playlists, eliminar playlists.</p>
+<p>Declararemos otro enumarado, <code>CommandsPlaylist</code>, que contendrá todos los comandos que hay dentro de una playlist como añadir o borrar canciones y métodos de ordenación de las playlists.</p>
+<p>Crearemos la clase <code>Gestor</code> que se encargará de la interfaz del usuario. Tendrá como atributo un objeto de tipo <code>DataBase</code>. Esta clase permitirá crear nuevas playlist, navegar por estas, añadir o eliminar canciones, etc.</p>
+<p>La función <code>promptUser</code> se encarga del menú principal. Mientras el comando sea distinto de <code>Quit</code> se seguirá ejecutando. Primero se limpiará la consola y se mostrarán todas las playlists con <code>viewPlaylists</code>. Con el método <code>prompt</code> del modulo inquirer recogeremos la respuesta del usuario por línea de comando. Con el switch filtraremos la respuesta del usuario y ejecutaremos el comando.</p>
+<p>La función <code>promptUserPlaylist</code> se encarga del menú de una playlist pasada como parámetro. Mientras el comando sea distinto <code>Quit</code> en cada iteración se limpiará la consola, se mostrará por pantalla la información general de la playlist con la función <code>viewPlaylist</code>, se recogerá el comando con el <code>prompt</code> y se ejecutará el comando filtrado con un switch.</p>
+<p>La función <code>promptAddSong</code> se encarga del añadir una canción a una playlist recibiendo como parámetro el nombre de la playlist. Se limpiará la consola, se recogerá el nombre de la canción con el <code>prompt</code>, se comprueba si la canción existe en la base de datos haciendo uso del <code>findSong</code>. Si <code>findSong</code> devuelve un -1 significa que la canción no existe por lo que mostramos un mensaje de error indicando que no existe. Si devuelve distinto de -1 añadimos la canción haciendo uso de <code>setSongToPlaylist</code> y actulizamos la duración de la playlist con <code>updateDurationPlaylist</code>. </p>
+<p>La función <code>promptRemoveSong</code> se encarga de eliminar una canción de una playlist recibiendo como parámetro el nombre de la playlist. Limpiará la consola, recogerá el nombre de la canción haciendo uso de <code>prompt</code> y eliminará la canción haciendo uso de <code>removeSongFromPlaylist</code> y actulizando la duración de la playlist con <code>updateDurationPlaylist</code>. </p>
+<p>La función <code>promptGenreSort</code> ordena una playlist según la duración de la canción recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola y usa <code>genreSort</code> para ordenar la función.</p>
+<p>La función <code>promptDurationSort</code> ordena una playlist según un género recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola, lee por línea de comando el nombre del género y usa <code>genreSort</code> para ordenar la playlist.</p>
+<p>La función <code>promptAlphabeticalSongNameSort</code> ordena una playlist alfabéticamente según el nombre de la canción recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola y usa <code>alphabeticalSongNameSort</code> para ordenar la playlist.</p>
+<p>La función <code>promptAlphabeticalAuthorNameSort</code> ordena una playlist alfabéticamente según el nombre del autor recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola y usa <code>alphabeticalAuthorNameSort</code> para ordenar la playlist.</p>
+<p>La función <code>promptNumberOfReproductionSort</code> ordena una playlist según el número de reproducciones recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola y usa <code>numberOfReproductionSort</code> para ordenar la playlist.</p>
+<p>La función <code>promptSelectPlaylist</code> se encarga de abrir el menú de una playlist. Limpia la consola, lee por línea de comando el nombre de la playlist con <code>prompt</code> y abre el menú de la playlist con <code>promptUserPlaylist</code>.</p>
+<p>La función <code>promptAddPlaylistFromScratch</code> añade una nueva playlist a la base de datos. Primeramente limpia la consola, recoge por línea de comando el nombre de la nueva playlist, comprueba si existe otra playlist con ese nombre usando el <code>findPlaylist</code>. En caso que no exista crea un nuevo objeto <code>Playlist</code> con solo el nombre como atributo y se inserta el objeto a la base de datos con la función <code>setPlaylist</code>.</p>
+<p>La función <code>promptRemovePlaylist</code> elimina una playlist. Se limpia la consola, se recoge el nombre de la playlist con <code>prompt</code>. Se comprueba si la playlist existe, si no existe se muestra un mensaje indicando el error. Si existe se comprueba si la playlist es del sistema, si es del sistema se indica que no se puede borrar, en caso de que no sea del sistema se borra la playlist.</p>
+
+<a href="#clase-databasemanipulator" id="clase-databasemanipulator" style="color: inherit; text-decoration: none;">
+  <h2>Clase DataBaseManipulator<a name="id4"></a></h2>
+</a>
+
+<a href="#commands" id="commands" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Commands</strong></u></h3>
+</a>
+<p>El enumerado <code>Commands</code> define los comandos del menú principal: añadir, eliminar, modificar o visualizar información.</p>
+<p>El enumerado <code>CommandsAdd</code> define los comandos para añadir géneros, artistas, grupos, canciones o albumes.</p>
+<p>El enumerado <code>CommandsRemove</code> define los comandos para eliminar géneros, artistas, grupos, canciones o albumes.</p>
+<p>El enumerado <code>CommandsModify</code> define los comandos para modificar géneros, artistas, grupos, canciones o albumes.</p>
+<p>El enumerado <code>CommandsVisualizer</code> define los comandos para visualizar información asociada a un artista o grupo y poder filtrar dicha información.</p>
+
+<a href="#getters" id="getters" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Getters</strong></u></h3>
+</a>
+<p>La función <code>getArray</code> recoge por línea comando un array de strings usando el <code>prompt</code>. Recoge un string completo y luego lo divide por comas convirtiendolo en un array de strings.</p>
+<p>La función <code>getString</code> recoge por línea comando un string usando el <code>prompt</code>.</p>
+<p>La función <code>getNumber</code> recoge por línea comando un número usando el <code>prompt</code>.</p>
+<p>La función <code>getBoolean</code> reocge por línea de comando un boolean usando el <code>prompt</code>.</p>
+
+<a href="#prompt" id="prompt" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Prompt</strong></u></h3>
+</a>
+<p>La función <code>promptUser</code> muestra por pantalla en menú principal donde se puede elegir una opción de <code>Commands</code>, se filtra la opción con un switch y se ejecuta.</p>
+<p>La función <code>promptAddInformation</code> muetra por pantalla las opciones del <code>CommandsAdd</code>, se filtra la opción elegida con un switch y se ejecuta dicho comando.</p>
+<p>La función <code>promptRemoveInformation</code> muestra por pantlla las opciones del <code>CommandsRemove</code>, se filtra la opción elegida con un switch y se ejecuta el comando. </p>
+<p>La función <code>promptVisualizerInformation</code> muestra por pantalla el menú para visualizar información asociada a un artista o grupo. Selecciona un opción del prompt de tipo <code>list</code> y lo filtra con un switch.</p>
+<p>La función <code>funcViewInfo</code> busca información asociada a un autor o un grupo. Devuelve dos array dentro de un array, el primero contiene las canciones y el segundo los albumes.</p>
+
+<a href="#sort-methods" id="sort-methods" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Sort Methods</strong></u></h3>
+</a>
+<p>La función <code>numberReproductionsSort</code> ordena un array por el número de reproducciones de las canciones.</p>
+<p>La función <code>alphabeticalSort</code> ordena un array alfabéticamente.</p>
+<p>La función <code>yearPublicactionSort</code> ordena un array de albumes por el año de publicación.</p>
+<p>La función <code>singleSort</code> ordena un array de canciones por el atributo single.</p>
+
+<a href="#modify-methods" id="modify-methods" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Modify Methods</strong></u></h3>
+</a>
+<p>La función <code>promptModifyInformation</code> muestra por pantalla el menú para modificar géneros, artistas, grupos, albumes, canciones. Filtra el comando con switch.</p>
+<p>La función <code>funcModifyGenre</code> modifica los atributos de un género. Limpia la consola, recoge el nombre del género con el <code>prompt</code>, muestra toda la información asociada a ese género con <code>viewGenre</code>. Mediante un <code>prompt</code> de tipo <code>list</code> elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.</p>
+<p>La función <code>funcModifyArtist</code> modifica los atributos de un artista. Limpia la consola, recoge el nombre del artista con el <code>prompt</code>, muestra toda la información asociada a ese artista con <code>viewArtist</code>. Mediante un <code>prompt</code> de tipo <code>list</code> elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.</p>
+<p>La función <code>funcModifyGroup</code> modifica los atributos de un grupo. Limpia la consola, recoge el nombre del grupo con el <code>prompt</code>, muestra toda la información asociada a ese grupo con <code>viewGroup</code>. Mediante un <code>prompt</code> de tipo <code>list</code> elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.</p>
+<p>La función <code>funcModifyAlbum</code> modifica los atributos de un album. Limpia la consola, recoge el nombre del album con el <code>prompt</code>, muestra toda la información asociada a ese album con <code>viewAlbum</code>. Mediante un <code>prompt</code> de tipo <code>list</code> elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.</p>
+<p>La función <code>funcModifySong</code> modifica los atributos de una canción. Limpia la consola, recoge el nombre de la canción con el <code>prompt</code>, muestra toda la información asociada a esa canción con <code>viewSong</code>. Mediante un <code>prompt</code> de tipo <code>list</code> elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.</p>
+
+<a href="#métodos-de-inserción-de-objetos-en-la-base-de-datos" id="métodos-de-inserción-de-objetos-en-la-base-de-datos" style="color: inherit; text-decoration: none;">
+  <h2>Métodos de inserción de objetos en la base de datos</h2>
+</a>
+<p>Hemos optado por crear una jerarquía de dependencias a la hora de insertar un objeto en la playlist. De tal manera que cuando se inserte un objeto nuevo, es posible
+que los demás cambien con dicha inserción.</p>
+
+<a href="#add-genre" id="add-genre" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Add Genre</strong></u></h3>
+</a>
+<p>Este es el objeto más sencillo de añadir, ya que no depende de ningún otro objeto y se puede instanciar con los atributos vacíos (a excepción del nombre del género).
+Primer se invoca al <code>prompt</code> para pedirle al usuario el nombre del género. En caso de que no exista, lo crea y en caso contrario le indica por mensaje que ya existe.</p>
+
+<a href="#add-artist" id="add-artist" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Add Artist</strong></u></h3>
+</a>
+<p>Primera etapa de inserción de un artista. Todos los datos que se le pidan al usuario se solicitarán haciendo uso del <code>prompt</code>. Primero se solicita el <u>nombre</u> del 
+artista, se comprueba que el artista no existe y a continuación se pide el <u>género</u> (Si el género no existe, se crea). Después de esto, se le pregunta al usuario si desea 
+añadir más géneros al artista, en caso afirmativo se repetiría el proceso anterior. El siguiente paso es solicitar al usuario el número de oyentes de dicho artista. 
+Con este último requisito, termina la obtención de datos del artista. </p>
+<p>En la segunda etapa crearemos al artista y procederemos a la expansión de los objetos dependientes. En este caso, únicamente expanderíamos al objeto <code>Genre</code>, de tal manera que
+en el array de artistas de los géneros introducidos se añadirá el nuevo artista.</p>
+
+<a href="#add-group" id="add-group" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Add Group</strong></u></h3>
+</a>
+<p>Primera etapa de inserción de un grupo. Todos los datos que se le pidan al usuario se solicitarán haciendo uso del <code>prompt</code>. Primero se solicita el 
+<u>nombre</u> del grupo y se comprueba que el grupo no existe. A continuación se pide el <u>año</u> de creación del grupo y los géneros de las canciones 
+que producen (Si el género no existe, se crea). Después de esto, se le pregunta al usuario si desea añadir más géneros al grupo, en caso afirmativo se 
+repetiría el proceso anterior. Lo siguiente que se solicita es el nombre de los <u>artistas</u> del grupo. Si alguno de los artistas introducidos no existe 
+se indicará. Por último se pedirá los <u>oyentes mensuales</u> del grupo.</p>
+<p>En la segunda etapa crearemos el grupo y haremos la expansión a los artistas, de tal manera que los objetos <code>Artist</code> se les añadirá el grupo al que ahora 
+pertenecen y los géneros del nuevo grupo. También se sumarán los oyentes mensuales del grupo a los oyentes mensuales del artista. Por último haremos 
+expansión a los objetos <code>Genre</code>, de tal manera que en el array de grupos de los géneros introducidos se añadirá el nuevo grupo.</p>
+
+<a href="#add-album" id="add-album" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Add Album</strong></u></h3>
+</a>
+<p>Primera etapa de inserción de un álbum. Todos los datos que se le pidan al usuario se solicitarán haciendo uso del <code>prompt</code>. Primero se solicita el 
+<u>nombre</u> del álbum y se comprueba que el álbum no existe. Después solicitará al usuario el <u>año</u> de publicación del álbum y el 
+<u>autor</u> del álbum. Si el autor no es ningún artista o grupo registrado se indicará al usuario. Por último, le pide al usuario la cantidad de canciones
+que almacena el álbum y después le pregunta el nombre de las <u>canciones</u>.
+Si alguna de las canciones no existe, se indicará y preguntará de nuevo.</p>
+<p>En la segunda etapa creaaremos el álbum y haremos expansión al autor (que puede ser tanto un objeto <code>Artist</code> como un objeto <code>Genre</code>), de tal manera que 
+en el array de albumes del autor se añadirá el nuevo album. Además se expandirá al objeto <code>Genre</code>, de tal manera que al array de álbumes del género introducido
+se le añadirá el nuevo álbum.</p>
+
+<a href="#add-song" id="add-song" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Add Song</strong></u></h3>
+</a>
+<p>Primera etapa de inserción de una canción. Todos los datos que se le pidan al usuario se solicitarán haciendo uso del <code>prompt</code>. Primero se solicita el <u>nombre</u> de la canción y se comprueba que no existe. A continuación, se pide introducir el nombre del <u>autor</u>, comprobando si un artista o grupo coincide y por lo tanto existe. Desupués, se solicita la <u>duración</u> de la canción, en su formato decimal, en el que la parte entera corresponde a los minutos y la decimal a los segundos. Tras esto, se solicitan los <u>géneros</u>; la confirmación con yes or no sobre si la canción fue publicada como un <u>single</u>; y el <u>número de reproducciones</u>. </p>
+<p>En la segunda etapa crearemos la canción y haremos la expansión tanto del autor como de los géneros. Para la <u>expansión del autor</u>, se determina si es un artista o un grupo, variando el comportamiendo en ambos casos. Para la <u>expansión en un artista</u>, actualizaremos sus géneros, añadiendo los posibles nuevos géneros de la canción al artista, y al mismo tiempo, actualizar los artistas del género; y le añadiremos el nombre de la nueva canción a su lista de canciones. Por el otro lado, en la <u>expansión de un grupo</u>, solo tendremos que actualizar sus géneros. Por último, en la <u>expansión de géneros</u>, le añadimos a los géneros de la canción, el nombre de la misma en su lista de canciones. </p>
+
+<a href="#esquema-de-inserción" id="esquema-de-inserción" style="color: inherit; text-decoration: none;">
+  <h3><u><strong>Esquema de inserción</strong></u></h3>
+</a>
+<p>En el siguiente diagrama podemos observar las dependencias entre objetos a la hora de insertarlos. Cada objeto es representado por un color, los atributos que contienen una línea
+de color, indican que la inserción del objeto representado por dicho color actualizará el atributo mencionado.</p>
+<p><img src="https://gyazo.com/81190215e44d53c4bb573e7e15b61dad.png" alt=""></p>
+
+<a href="#métodos-de-eliminación-de-objetos-en-la-base-de-datos" id="métodos-de-eliminación-de-objetos-en-la-base-de-datos" style="color: inherit; text-decoration: none;">
+  <h2>Métodos de eliminación de objetos en la base de datos</h2>
+</a>
+<p>La eliminación de objetos sigue el mismo esquema y métodología que la inserción, pero a la inversa. De forma que la eliminación más básica sería la
+de un álbum, en la que solo se elimina extrictamente el nombre del álbum en los objetos en los que aparece. Cuando se va avanzando en la jerarquía hasta la 
+eliminación del género realizando varias expansiones de elimniación de forma que cualquier rastro del género u otro objeto que se quiera eliminar 
+desaparezca completamente de la base de datos.</p>
+<p>En el siguiente esquema se puede observar la jerarquía de eliminación, que se asemeja bastante a la de inserción como se ha mencionado anteriormente.
+Las líneas de colores indican que en caso de eliminación del objeto que representa dicho color, el objeto no se eliminaría. En caso de tener una &quot;X&quot; en vez de una línea, el objeto podría ser eliminado.</p>
+<p><img src="https://gyazo.com/52b399e622a31d18b9a0958f484924b8.png" alt=""></p>
+
+<a href="#ejemplo-de-uso-gestor" id="ejemplo-de-uso-gestor" style="color: inherit; text-decoration: none;">
+  <h2>Ejemplo de uso Gestor<a name="id5"></a></h2>
+</a>
+<p>Del menú seleccionaremos la opción <code>Gestor</code>.</p>
+<p><img src="https://gyazo.com/cf7360517d625be5d6fd005a47235cbd.png" alt=""></p>
+<p>Se abrirá un menú con todas las playlists existentes y con información general.</p>
+<p><img src="https://gyazo.com/f8d6af50914f4f3fcfbe8e75ced5fd08.png" alt=""></p>
+<p>Selecionaremos por ejemplo la opción <code>Select Playlist</code> y pondremos el nombre de la playlist que queremos seleccionar, por ejemplo la Playlist N1.</p>
+<p><img src="https://gyazo.com/a84cf04ef2ffb044bf197e99e0b8585e.png" alt=""></p>
+<p>Se nos abrirá la playlist con toda la información asociada al mismo como duración de la playlist, canciones con sus atributos, etc.</p>
+<p><img src="https://gyazo.com/f8ffbeb0b97b0f15c99ae977e89016dd.png" alt=""></p>
+
+<a href="#ejemplo-de-uso-databasemanipulator" id="ejemplo-de-uso-databasemanipulator" style="color: inherit; text-decoration: none;">
+  <h2>Ejemplo de uso DataBaseManipulator<a name="id6"></a></h2>
+</a>
+<p>Del menú seleccionaremos la opción <code>DataBaseManipulator</code>.</p>
+<p><img src="https://gyazo.com/cf7360517d625be5d6fd005a47235cbd.png" alt=""></p>
+<p>Se abrirá un menú con las opciones para manipular la base de datos como añadir nuevos objetos, eliminar objetos existentes, modificar objetos y visualizar objetos.</p>
+<p><img src="https://gyazo.com/a60df934e1c8e7537e1db43e74c4c515.png" alt=""></p>
+<p>Y seleccionaremos la opción <code>Visualize informtation about an author</code> y nos aparacerá un menú como el siguiente.</p>
+<p><img src="https://gyazo.com/c3d60ac034943ee2f76a1ec08d9aa4e3.png" alt=""></p>
+<p>Por ejemplo, si queremos buscar información sobre Bruno Mars seleccionaremos <code>View info about an author</code> e introduciremos el nombre.</p>
+<p><img src="https://gyazo.com/b44d36232f872a5952cd592323313a15.png" alt=""></p>
+<p>Y nos aparecerá las cacniones de Bruno Mars y los albumes en los que ha participado.</p>
+<p><img src="https://gyazo.com/167f2d4ed21be6672fdcc54465910b33.png" alt=""></p>
+<p>También podemos ordenar dicha información, como por ejemplo ordenarlo alfabéticamente con la opción</p>
+</div></div><div class="col-4 col-menu menu-sticky-wrap menu-highlight"><nav class="tsd-navigation primary"><ul><li class="current"><a href="modules.html">Modules</a></li><li class=" tsd-kind-module"><a href="modules/classes.html">classes</a></li><li class=" tsd-kind-module"><a href="modules/database.html">database</a></li><li class=" tsd-kind-module"><a href="modules/gestor.html">gestor</a></li><li class=" tsd-kind-module"><a href="modules/prompt.html">prompt</a></li></ul></nav></div></div></div><footer class="with-border-bottom"><div class="container"><h2>Legend</h2><div class="tsd-legend-group"><ul class="tsd-legend"><li class="tsd-kind-type-alias"><span class="tsd-kind-icon">Type alias</span></li></ul><ul class="tsd-legend"><li class="tsd-kind-class"><span class="tsd-kind-icon">Class</span></li></ul></div><h2>Settings</h2><p>Theme <select id="theme"><option value="os">OS</option><option value="light">Light</option><option value="dark">Dark</option></select></p></div></footer><div class="container tsd-generator"><p>Generated using <a href="https://typedoc.org/" target="_blank">TypeDoc</a></p></div><div class="overlay"></div><script src="assets/main.js"></script></body></html>

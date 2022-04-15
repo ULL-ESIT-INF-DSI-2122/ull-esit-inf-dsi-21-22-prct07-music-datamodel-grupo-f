@@ -1,10 +1,10 @@
 {
     "entryPoints": [
-        "./src/index",
-        "./src/classes",
-        "./src/database",
-        "./src/prompt",
-        "./src/gestor"
+        "./src/index.ts",
+        "./src/classes.ts",
+        "./src/database.ts",
+        "./src/prompt.ts",
+        "./src/gestor.ts"
     ],
     "out": "./docs"
 }
