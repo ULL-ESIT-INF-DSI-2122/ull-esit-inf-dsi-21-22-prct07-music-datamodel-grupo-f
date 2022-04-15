@@ -17,8 +17,8 @@ export class DataBase {
     /**
      * Constructor
      */
-    constructor() {
-        const adapter = new FileSync<Schema>("db.json");
+    constructor(private readonly fileName: string) {
+        const adapter = new FileSync<Schema>(fileName);
         this.db = lowdb(adapter);
         this.initGenres();
         this.initAlbums();

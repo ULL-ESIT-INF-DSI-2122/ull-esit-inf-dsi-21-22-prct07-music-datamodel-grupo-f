@@ -3,7 +3,7 @@ import { expect } from 'chai';
 import { Song, Genre, Artist, Group, Album, Playlist } from '../src/classes';
 import { DataBase} from '../src/database'
 
-let db: DataBase = new DataBase();
+let db: DataBase = new DataBase("db copy.json");
 let UnaNocheEnMedellin: Song = db.getSong("Una noche en Medellín");
 let Salsa: Genre = db.getGenre("Salsa");
 let KISS: Group = db.getGroup("KISS");
