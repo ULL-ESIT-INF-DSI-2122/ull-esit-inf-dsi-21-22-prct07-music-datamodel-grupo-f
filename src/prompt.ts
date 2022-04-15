@@ -59,12 +59,18 @@ enum CommandsVisualizer {
     Quit = "Quit",
 }
 
+/**
+ * Comandos para modificar los atributos de un género
+ */
 enum ModifyGenreCommands {
     ModifyAuthors = "Modify authors of the genre",
     ModifyAlbums = "Modify albums of the genre",
     ModifySongs = "Modify songs of the genre",
 };
 
+/**
+ * Comandos para modificar los atributos de un artista
+ */
 enum ModifyArtistCommands {
     ModifyGroups = "Modify groups of the artist",
     ModifyGenres = "Modify genre of the artist",
@@ -73,6 +79,9 @@ enum ModifyArtistCommands {
     ModifyMonthlyListeners = "Modify monthly listeners of the artist",
 }
 
+/**
+ * Comandos para modificar los atributos de un grupo
+ */
 enum ModifyGroupCommands {
     ModifyArtists = "Modify artists of the group",
     ModifyYearCreation = "Modify the year of creation of the group",
@@ -81,6 +90,9 @@ enum ModifyGroupCommands {
     ModifyMonthlyListeners = "Modify monthly listeners of the group",
 }
 
+/**
+ * Comandos para modificar los atributos de un album
+ */
 enum ModifyAlbumCommands {
     ModifyAuthor = "Modify author of the album",
     ModifyYearPublication= "Modify year of publication of the album",
@@ -88,6 +100,9 @@ enum ModifyAlbumCommands {
     ModifySongs = "Modify songs of the album",
 };
 
+/**
+ * Comandos para modificar los atributos de una canción
+ */
 enum ModifySongCommands {
     ModifyAuthor = "Modify author of the song",
     ModifyDurationSong = "Modify the duration of the song",
@@ -107,6 +122,9 @@ function sleep(ms: number) {
     });
 }
 
+/**
+ * 
+ */
 async function getArray(): Promise<string[]> {
     const answer = await inquirer.prompt({
         type: "input",

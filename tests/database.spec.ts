@@ -18,7 +18,7 @@ let artistTest = new Artist("artistTest", [], [],[], [], 0);
 let albumTest = new Album("albumTest", "", 0, [], []);
 let playlistTest = new Playlist("playlistTest", [], 0, []);
 
-let viewPlayAux: string = "---LIST OF PLAYLISTS---\n" +
+let viewPlaysAux: string = "---LIST OF PLAYLISTS---\n" +
 "\nPlaylist N1\n" +
 "  Genres: [Merengue,Salsa,Reggeaton,Bachata]\n" +
 "  Duration: 0 hours and 28 minutes" +
@@ -28,6 +28,22 @@ let viewPlayAux: string = "---LIST OF PLAYLISTS---\n" +
 "\nplaylistTest\n" +
 "  Genres: []\n" +
 "  Duration: 0 hours and 0 minutes";
+
+let viewPlayAux: string = "[Playlist N1] Duration: 0 hours and 28 minutes\n" +
+"La Morena | Oro Solido | [4 min 48 sec]\n" +
+" | [Merengue] | Reprd. 3789640\n" +
+"La Vaca | Mala Fe | [4 min 15 sec]\n" +
+" | [Merengue] | Reprd. 30911303\n" +
+"Lluvia | Eddie Santiago | [4 min 55 sec]\n" +
+" | [Salsa] | Reprd. 87247709\n" +
+"Una noche en Medellín | Cris MJ | [2 min 33 sec]\n" +
+" | [Reggeaton] | Reprd. 94290145\n" +
+"Obsesion | Aventura | [4 min 13 sec]\n" +
+" | [Bachata] | Reprd. 280599715\n" +
+"EL MAKINON | KAROL G | [3 min 29 sec]\n" +
+" | [Reggeaton] | Reprd. 335382390\n" +
+"Volví | Aventura | [3 min 50 sec]\n" +
+" | [Reggeaton] | Reprd. 433326208\n";
 
 let viewSongAux: string = "name: Touch Too Much\n" +
 "author: AC/DC\n" +
@@ -103,6 +119,11 @@ describe("Tests clase Database - Métodos Sort", () => {
   it('durationSort test', () => {
       db.durationSort(PlaylistN1.name);
       expect(db.getPlaylist(PlaylistN1.name).songs).to.be.eql(["Una noche en Medellín", "EL MAKINON", "Volví", "Obsesion", "La Vaca", "La Morena", "Lluvia"]);
+  });
+
+  it('genreSort test', () => {
+    db.genreSort("Reggeaton", PlaylistN1.name);
+    expect(db.getPlaylist(PlaylistN1.name).songs).to.be.eql(["Una noche en Medellín", "EL MAKINON", "Volví", "Obsesion", "La Vaca", "La Morena", "Lluvia"]);
   });
 
   it('numberOfReproductionSort test', () => {
@@ -294,7 +315,9 @@ describe("Tests clase Database - Métodos Modify", () => {
 
 describe("Tests clase Database - Métodos View", () => {
     it('viewPlaylist test', () => {
-        expect(db.viewPlaylists()).to.be.equal(viewPlayAux);
+        expect(db.viewPlaylists()).to.be.equal(viewPlaysAux);
+        expect(db.viewPlaylist("Playlist N1")).to.be.equal(viewPlayAux)
+        expect(db.viewPlaylist("unexisting Playlist")).to.be.equal("ERROR: Playlist not found");
     });
 
     it('viewSong test', () => {

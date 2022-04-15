@@ -23,6 +23,7 @@ enum CommandsPlaylist {
     AlphabeticalSongNameSort = "Sort by song name",
     AlphabeticalAuthorNameSort = "Sort by author name",
     NumberOfReproductionSort = "Sort by number of reproductions",
+    GenreSort = "Sort by genre",
     Quit = "Quit",
 }
 
@@ -128,6 +129,9 @@ export class Gestor {
                     break;
                 case CommandsPlaylist.NumberOfReproductionSort:
                     await this.promptNumberOfReproductionSort(playlistName);
+                    break;
+                case CommandsPlaylist.GenreSort:
+                    await this.promptGenreSort(playlistName);
                     break;
                 case CommandsPlaylist.Quit:
                     break;

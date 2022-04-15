@@ -217,7 +217,7 @@ export class DataBase {
     viewPlaylist(playlistName: string): string {
         let playlist = this.getPlaylist(playlistName);
         let showSong: string = "";
-        if (playlist !== undefined) {
+        if (this.findPlaylist(playlistName) !== -1) {
             showSong += "[" + playlist.name +"] " + this.getFormattedDurationPlaylist(playlist) + "\n";
             playlist.songs.forEach((song: string) => {
                 let dbsong = this.getSong(song);
@@ -225,8 +225,6 @@ export class DataBase {
                     showSong += dbsong.name + " | " + dbsong.author + " | ";
                     showSong += this.getFormattedDurationSong(dbsong) + "\n";
                     showSong += " | [" + dbsong.genres.toString() + "] | Reprd. " + dbsong.numberReproductions + "\n";
-                } else {
-                    showSong = "ERROR: Song not found";
                 }
             })
         } else {
@@ -291,11 +289,13 @@ export class DataBase {
 
     genreSort(genreName: string, playlistName: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
-        /*this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
+        this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
             let genre1: string = this.db.get("songs").value().at(this.findSong(song1))?.genres[0] as string;
-            let genre2: string = this.db.get("songs").value().at(this.findSong(song2))?.genres[0] as string;;
-            return genre1 === genreName && genre2 === genreName;
-        });*/
+            let genre2: string = this.db.get("songs").value().at(this.findSong(song2))?.genres[0] as string;
+            let n1: number = Number(genre1 === genreName);
+            let n2: number = Number(genre2 === genreName)
+            return n2 - n1;
+        });
         this.db.write();
     }
 
