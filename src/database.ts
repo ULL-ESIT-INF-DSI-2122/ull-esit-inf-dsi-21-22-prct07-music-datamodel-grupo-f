@@ -28,36 +28,60 @@ export class DataBase {
         this.initPlaylists();
     }
 
+    /**
+     * Comprueba si hay un array de géneros
+     * Si no existe lo crea
+     */
     private initGenres() {
         if(!this.db.has("genres").value()) {
             this.db.set("genres", []).write();
         }
     }
 
+    /**
+     * Comprueba si hay un array de albums
+     * Si no existe lo crea
+     */
     private initAlbums() {
         if(!this.db.has("albums").value()) {
             this.db.set("albums", []).write();
         }
     }
 
+    /**
+     * Comprueba si hay un array de canciones
+     * Si no existe lo crea
+     */
     private initSongs() {
         if(!this.db.has("songs").value()) {
             this.db.set("songs", []).write();
         }
     }
 
+    /**
+     * Comprueba si hay un array de artistas
+     * Si no existe lo crea
+     */
     private initArtists() {
         if(!this.db.has("artists").value()) {
             this.db.set("artists", []).write();
         }
     }
 
+    /**
+     * Comprueba si hay un array de grupos
+     * Si no existe lo crea
+     */
     private initGroups() {
         if(!this.db.has("groups").value()) {
             this.db.set("groups", []).write();
         }
     }
 
+    /**
+     * Comprueba si hay un array de playlists
+     * Si no existe lo crea
+     */
     private initPlaylists() {
         if(!this.db.has("playlists").value()) {
             this.db.set("playlists", []).write();
@@ -256,6 +280,11 @@ export class DataBase {
         return out;
     }
     
+    /**
+     * Mete el nombre de una canción en una playlist
+     * @param songName Nombre de la canción
+     * @param playlistName Nombre de la playlist
+     */
     setSongToPlaylist(songName: string, playlistName: string) {
         let indexOfPlaylist = this.db.get("playlists").value().findIndex((playlist: Playlist) => {
             return playlist.name === playlistName;
@@ -265,11 +294,20 @@ export class DataBase {
         this.db.write();
     }
 
+    /**
+     * Elimina una playlist
+     * @param playlistName Nombre de la playlist
+     */
     removePlaylist(playlistName: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").splice(indexOfPlaylist, 1).write();
     }
 
+    /**
+     * Elimina una canción de una playlist
+     * @param playlistName Nombre de la playlist
+     * @param nameSong Nombre de la canción
+     */
     removeSongFromPlaylist(playlistName: string, nameSong: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         let indexSong = this.db.get("playlists").value()[indexOfPlaylist].songs.indexOf(nameSong);
@@ -322,6 +360,10 @@ export class DataBase {
         return showSong;
     }
 
+    /**
+     * Actualiza la duración de una playlist
+     * @param playlistName Nombre de la playlist
+     */
     updateDurationPlaylist(playlistName: string) {
         let indexOfSong: number;
         let newduration = 0;
@@ -492,6 +534,11 @@ export class DataBase {
         this.db.get("albums").splice(indexOfAlbum, 1).write();
     }
 
+    /**
+     * Modifica el autor de un género
+     * @param genreName Nombre del género
+     * @param genreAuthors Autor del género
+     */
     modifyAuthorsGenre(genreName: string, genreAuthors: string[]) {
         this.db.get("genres")
             .find({name: genreName})
@@ -499,6 +546,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los albumes de un género
+     * @param genreName Nombre del género
+     * @param genreAlbums Albumes del género
+     */
     modifyAlbumsGenre(genreName: string, genreAlbums: string[]) {
         this.db.get("genres")
             .find({name: genreName})
@@ -506,6 +558,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica las canciones de un género
+     * @param genreName Nombre del género
+     * @param genreSongs Canciones del género
+     */
     modifySongsGenre(genreName: string, genreSongs: string[]) {
         this.db.get("genres")
             .find({name: genreName})
@@ -513,6 +570,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los grupos del artista
+     * @param artistName Nombre del artista
+     * @param artistGroups Grupos a los que pertenece el artista
+     */
     modifyGroupsArtist(artistName: string, artistGroups: string[]) {
         this.db.get("artists")
             .find({name: artistName})
@@ -520,6 +582,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los géneros del artista
+     * @param artistName Nombre del artista
+     * @param artistGenres Géneros del artista
+     */
     modifyGenresArtist(artistName: string, artistGenres: string[]) {
         this.db.get("artists")
             .find({name: artistName})
@@ -527,6 +594,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los albumes del artista
+     * @param artistName Nombre del artista
+     * @param artistAlbums Albumes del artista
+     */
     modifyAlbumsArtist(artistName: string, artistAlbums: string[]) {
         this.db.get("artists")
             .find({name: artistName})
@@ -534,6 +606,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica las canciones del artista
+     * @param artistName Nombre del artista
+     * @param artistSongs Canciones del artista
+     */
     modifySongsArtist(artistName: string, artistSongs: string[]) {
         this.db.get("artists")
             .find({name: artistName})
@@ -541,6 +618,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los oyentes mensuales del artista
+     * @param artistName Nombre del artista
+     * @param artistMonthlyListeners Oyentes mensuales del artista
+     */
     modifyMonthlyListenersArtist(artistName: string, artistMonthlyListeners: number) {
         this.db.get("artists")
             .find({name: artistName})
@@ -548,6 +630,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los artistas del grupo
+     * @param groupName Nombre del grupo
+     * @param groupArtists Artistas del grupo
+     */
     modifyArtistsGroup(groupName: string, groupArtists: string[]) {
         this.db.get("groups")
             .find({name: groupName})
@@ -555,6 +642,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica el año de creación del grupo
+     * @param groupName Nombre del grupo
+     * @param groupYearCreation Año de creación del grupo
+     */
     modifyYearCreationGroup(groupName: string, groupYearCreation: number) {
         this.db.get("groups")
             .find({name: groupName})
@@ -562,6 +654,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los géneros del grupo
+     * @param groupName Nombre del grupo
+     * @param groupGenres Géneros del grupo
+     */
     modifyGenresGroup(groupName: string, groupGenres: string[]) {
         this.db.get("groups")
             .find({name: groupName})
@@ -569,6 +666,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los albumes del grupo
+     * @param groupName Nombre del grupo
+     * @param groupAlbums Albumes del grupo
+     */
     modifyAlbumsGroup(groupName: string, groupAlbums: string[]) {
         this.db.get("groups")
             .find({name: groupName})
@@ -576,6 +678,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los oyentes mensuales del grupo
+     * @param groupName Nombre del grupo
+     * @param groupMonthlyListeners Oyentes mensuales del grupo
+     */
     modifyMonthlyListenersGroup(groupName: string, groupMonthlyListeners: number) {
         this.db.get("groups")
             .find({name: groupName})
@@ -583,6 +690,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica el autor del album
+     * @param albumName Nombre del album
+     * @param albumAuthor Autor del album
+     */
     modifyAuthorAlbum(albumName: string, albumAuthor: string) {
         this.db.get("albums")
             .find({name: albumName})
@@ -590,6 +702,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica el año de publicación del album
+     * @param albumName Nombre del album
+     * @param albumYearPublication Año de publicación del album
+     */
     modifyYearPublicationAlbum(albumName: string, albumYearPublication: number) {
         this.db.get("albums")
             .find({name: albumName})
@@ -597,6 +714,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los géneros del album
+     * @param albumName Nombre del album
+     * @param albumGenres Géneros del album
+     */
     modifyGenresAlbum(albumName: string, albumGenres: string[]) {
         this.db.get("albums")
             .find({name: albumName})
@@ -604,6 +726,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica las canciones del album
+     * @param albumName Nombre del album
+     * @param albumSongs Canciones del album
+     */
     modifySongsAlbum(albumName: string, albumSongs: string[]) {
         this.db.get("albums")
             .find({name: albumName})
@@ -611,6 +738,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica el autor de la canción
+     * @param songName Nombre de la canción
+     * @param songAuthor Autor de la canción
+     */
     modifyAuthorSong(songName: string, songAuthor: string) {
         this.db.get("songs")
             .find({name: songName})
@@ -618,6 +750,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica la duración de la canción
+     * @param songName Nombre de la canción
+     * @param songDuration Duración de la canción
+     */
     modifyDurationSong(songName: string, songDuration: number) {
         this.db.get("songs")
             .find({name: songName})
@@ -625,6 +762,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica los géneros de la canción
+     * @param songName Nombre de la canción
+     * @param songGenres Géneros de la canción
+     */
     modifyGenresSong(songName: string, songGenres: string[]) {
         this.db.get("songs")
             .find({name: songName})
@@ -632,6 +774,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica el single de la canción
+     * @param songName Nombre de la canción
+     * @param songSingle Single
+     */
     modifySingleSong(songName: string, songSingle: boolean) {
         this.db.get("songs")
             .find({name: songName})
@@ -639,6 +786,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Modifica el número de reproducciones de la canción
+     * @param songName Nombre de la canción
+     * @param songNumberOfReproductions Número de reproducciones de la canción
+     */
     modifyNumberReproductionsSong(songName: string, songNumberOfReproductions: number) {
         this.db.get("songs")
             .find({name: songName})
