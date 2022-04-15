@@ -218,11 +218,20 @@
     },
     {
       "name": "Electrónica",
-      "authors": [],
+      "authors": [
+        "Avicii"
+      ],
       "albums": [
+        "True",
         "The Days/Nights"
       ],
       "songs": [
+        "Wake Me Up",
+        "You Make Me",
+        "Hey Brother",
+        "Addicted To You",
+        "Divine Sorrow",
+        "The Days",
         "The Nights"
       ]
     }
@@ -296,6 +305,20 @@
       ]
     },
     {
+      "name": "True",
+      "author": "Avicii",
+      "yearPublication": 2013,
+      "genres": [
+        "Electrónica"
+      ],
+      "songs": [
+        "Wake Me Up",
+        "Addicted To You",
+        "Hey Brother",
+        "You Make Me"
+      ]
+    },
+    {
       "name": "The Days/Nights",
       "author": "Avicii",
       "yearPublication": 2014,
@@ -303,6 +326,7 @@
         "Electrónica"
       ],
       "songs": [
+        "The Days",
         "The Nights"
       ]
     }
@@ -923,6 +947,66 @@
       "numberReproductions": 438178636
     },
     {
+      "name": "Wake Me Up",
+      "author": "Avicii",
+      "duration": 4.07,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 1546524746
+    },
+    {
+      "name": "You Make Me",
+      "author": "Avicii",
+      "duration": 3.53,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 256059902
+    },
+    {
+      "name": "Hey Brother",
+      "author": "Avicii",
+      "duration": 4.15,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 739355087
+    },
+    {
+      "name": "Addicted To You",
+      "author": "Avicii",
+      "duration": 2.28,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 272797017
+    },
+    {
+      "name": "Divine Sorrow",
+      "author": "Avicii",
+      "duration": 4.39,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": true,
+      "numberReproductions": 8509953
+    },
+    {
+      "name": "The Days",
+      "author": "Avicii",
+      "duration": 4.38,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 285091047
+    },
+    {
       "name": "The Nights",
       "author": "Avicii",
       "duration": 2.56,
@@ -1460,6 +1544,27 @@
       "songs": [
         "Yonaguni",
         "Amorfoda"
+      ]
+    },
+    {
+      "name": "Avicii",
+      "genres": [
+        "Electrónica"
+      ],
+      "albums": [
+        "True",
+        "The Days/Nights"
+      ],
+      "monthlyListeners": 29000598,
+      "groups": [],
+      "songs": [
+        "Wake Me Up",
+        "You Make Me",
+        "Hey Brother",
+        "Addicted To You",
+        "Divine Sorrow",
+        "The Days",
+        "The Nights"
       ]
     }
   ],

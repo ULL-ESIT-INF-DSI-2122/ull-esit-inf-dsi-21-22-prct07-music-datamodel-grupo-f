@@ -386,6 +386,9 @@ export class DataBaseManipulator {
         }
     }
 
+    /**
+     * Menú para visualizar información sobre artistas o grupos de la base de datos
+     */
     async promptVisualizerInformation(): Promise<void> {
         let list: string[][] = [[], []];
         let songs: string[] = [];
@@ -621,7 +624,7 @@ export class DataBaseManipulator {
             message: "Enter name of group:",
         });
         if(this.database.findGroup(groupName["groupName"]) === -1) {  
-            // Introducir anio de creacion          
+            // Introducir año de creacion          
             const yearCreation = await inquirer.prompt({
                 type: "input",
                 name: "year",
@@ -1138,12 +1141,51 @@ export class DataBaseManipulator {
         console.clear();
     
         if(this.database.findGenre(genreName) !== -1) {
+            let genreToRemove = this.database.getGenre(genreName);
             // Eliminar objeto Genero
             this.database.removeGenre(genreName);
             // Eliminar el genero de la lista en Albumes, si se queda sin ninguno, eliminar album
+            for(let albumName of genreToRemove.albums) {
+                let albumToModify = this.database.getAlbum(albumName);
+                let newGenres = albumToModify.genres;
+                removeItemFromArr<string>(newGenres, genreName);
+                this.database.modifyGenresAlbum(albumName, newGenres);
+                if (!albumToModify.genres.length) {
+                    this.funcRemoveAlbum(albumName);
+                }
+            }
             // Eliminar el genero de la lista de Songs, si se queda sin ninguno, eliminar cancion
-            // Eliminar el genero de la lista de Artistas, si se queda sin ninguno, eliminar artista
-            // Eliminar el genero de la lista de Grupos, si se queda sin niguno, eliminar grupo
+            for(let songName of genreToRemove.songs) {
+                let songToModify = this.database.getSong(songName);
+                let newGenres = songToModify.genres;
+                removeItemFromArr<string>(newGenres, genreName);
+                this.database.modifyGenresSong(songName, newGenres);
+                if (!songToModify.genres.length) {
+                    this.funcRemoveSong(songName);
+                }
+            }
+            // Eliminar el genero de la lista de autores, si se queda sin ninguno, eliminar autor
+            for(let authorName of genreToRemove.authors) {
+                if (this.database.findArtist(authorName) != -1) {
+                    let artistToModify = this.database.getArtist(authorName);
+                    let newGenres = artistToModify.genres;
+                    removeItemFromArr<string>(newGenres, genreName);
+                    this.database.modifyGenresArtist(authorName, newGenres);
+                    if (!artistToModify.genres.length) {
+                        this.funcRemoveArtist(authorName);
+                    }
+                } else if (this.database.findGroup(authorName) != -1) {
+                    let groupToModify = this.database.getGroup(authorName);
+                    let newGenres = groupToModify.genres;
+                    removeItemFromArr<string>(newGenres, genreName);
+                    this.database.modifyGenresGroup(authorName, newGenres);
+                    if (!groupToModify.genres.length) {
+                        this.funcRemoveGroup(authorName);
+                    }
+                } else {
+                    await this.showMessage("The author does not exist");
+                }
+            }
         }
         else
             await this.showMessage("The genre does not exist");

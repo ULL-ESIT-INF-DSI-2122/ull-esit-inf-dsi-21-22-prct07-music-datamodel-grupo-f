@@ -7,6 +7,7 @@ José Orlando Nina Orellana - alu0101322308@ull.edu.es
 
 [![Node.js CI](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/actions/workflows/node.js.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/actions/workflows/node.js.yml)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ULL-ESIT-INF-DSI-2122_ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f)
+[![Coverage Status](https://coveralls.io/repos/github/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/badge.svg?branch=main)](https://coveralls.io/github/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f?branch=main)
 
 ## Índice
 - [Creación del directorio de trabajo y tareas previas](#id0)
@@ -20,6 +21,8 @@ José Orlando Nina Orellana - alu0101322308@ull.edu.es
 - [Clase DataBase](#id2)
 - [Clase Gestor](#id3)
 - [Clase DataBaseManipulator](#id4)
+- [Ejemplo de uso Gestor](#id5)
+- [Ejemplo de uso DataBaseManipulator](#id6)
 
 ## Creación del directorio de trabajo y tareas previas<a name="id0"></a>
 Antes de empezar el proyecto es necesario instalar diversos paquetes para tener una estructura de directorios adecuada. Para ello el primer paso es crear el directorio principal:
@@ -422,7 +425,19 @@ abajo a la izquierda y copiaremos el badge.
 
 ## Clases Genre, Album, Song, Author, Group, Artist, Playlist<a name="id1"></a>
 
+La clase `Genre` representa un género musical que tiene como atributos: nombre, autores, albumes y canciones.
 
+La clase `Album` representa un album de canciones que tiene como atributos: nombre, autor, año de publicación, géneros y canciones.
+
+La clase `Song` representa una canción que tiene como atributos: nombre, autor, duración, géneros, número de reproducciones y si es un single o no.
+
+La clase abstracta `author` representa a un autor que tiene como atributos: un nombre, géneros, albumes y oyentes mensuales.
+
+La clase `group` que deriva de `author` representa un grupo que tiene como atributos: un nombre, los artistas que lo componen, el año de creación, los géneros, los albumes y los oyentes mensuales.
+
+La clase `artist` que deriva de `author` representa a un artista que tiene como atributos: un nombre, grupos a los que pertenece, géneros, albumes, cancionesy oyentes mensuales.
+
+La clase `playlist` que representa a una playlist que tiene como atributos: un nombre, una serie de canciones, la duración de la playlist, géneros asociados y una variable `owner` de tipo `Property` que indica si la playlist esta creada por el sistema o por un usuario.
 
 ## Clase DataBase<a name="id2"></a>
 
@@ -446,13 +461,13 @@ Las funciones `modify` se encargarán de modificar un atributo de un objeto reci
 
 ## Clase Gestor<a name="id3"></a>
 
-Declararemos un enumerado, `Commands`, que contendrá todos los comandos que contendrá el menú principal.
+Declararemos un enumerado, `Commands`, que contendrá todos los comandos que contendrá el menú principal como seleccionar una playlist, añadir playlists, eliminar playlists.
 
-Declararemos otro enumarado, `CommandsPlaylist`, que contendrá todos los comandos que hay dentro de una playlist.
+Declararemos otro enumarado, `CommandsPlaylist`, que contendrá todos los comandos que hay dentro de una playlist como añadir o borrar canciones y métodos de ordenación de las playlists.
 
 Crearemos la clase `Gestor` que se encargará de la interfaz del usuario. Tendrá como atributo un objeto de tipo `DataBase`. Esta clase permitirá crear nuevas playlist, navegar por estas, añadir o eliminar canciones, etc.
 
-La función `promptUser` se encarga del menú principal. Mientras el comando sea distinto de `Quit` se seguirá ejecutando. Primero se limpiará la consola y se mostrarán todas las playlists. Con el método `prompt` del modulo inquirer recogeremos la respuesta del usuario por línea de comando. Con el switch filtraremos la respuesta del usuario y ejecutaremos el comando.
+La función `promptUser` se encarga del menú principal. Mientras el comando sea distinto de `Quit` se seguirá ejecutando. Primero se limpiará la consola y se mostrarán todas las playlists con `viewPlaylists`. Con el método `prompt` del modulo inquirer recogeremos la respuesta del usuario por línea de comando. Con el switch filtraremos la respuesta del usuario y ejecutaremos el comando.
 
 La función `promptUserPlaylist` se encarga del menú de una playlist pasada como parámetro. Mientras el comando sea distinto `Quit` en cada iteración se limpiará la consola, se mostrará por pantalla la información general de la playlist con la función `viewPlaylist`, se recogerá el comando con el `prompt` y se ejecutará el comando filtrado con un switch.
 
@@ -478,6 +493,8 @@ La función `promptRemovePlaylist` elimina una playlist. Se limpia la consola, s
 
 ## Clase DataBaseManipulator<a name="id4"></a>
 
+### <u>**Commands**</u>
+
 El enumerado `Commands` define los comandos del menú principal: añadir, eliminar, modificar o visualizar información.
 
 El enumerado `CommandsAdd` define los comandos para añadir géneros, artistas, grupos, canciones o albumes.
@@ -488,6 +505,8 @@ El enumerado `CommandsModify` define los comandos para modificar géneros, artis
 
 El enumerado `CommandsVisualizer` define los comandos para visualizar información asociada a un artista o grupo y poder filtrar dicha información.
 
+### <u>**Getters**</u>
+
 La función `getArray` recoge por línea comando un array de strings usando el `prompt`. Recoge un string completo y luego lo divide por comas convirtiendolo en un array de strings.
 
 La función `getString` recoge por línea comando un string usando el `prompt`.
@@ -495,6 +514,8 @@ La función `getString` recoge por línea comando un string usando el `prompt`.
 La función `getNumber` recoge por línea comando un número usando el `prompt`.
 
 La función `getBoolean` reocge por línea de comando un boolean usando el `prompt`.
+
+### <u>**Prompt**</u>
 
 La función `promptUser` muestra por pantalla en menú principal donde se puede elegir una opción de `Commands`, se filtra la opción con un switch y se ejecuta.
 
@@ -506,6 +527,8 @@ La función `promptVisualizerInformation` muestra por pantalla el menú para vis
 
 La función `funcViewInfo` busca información asociada a un autor o un grupo. Devuelve dos array dentro de un array, el primero contiene las canciones y el segundo los albumes.
 
+### <u>**Sort Methods**</u>
+
 La función `numberReproductionsSort` ordena un array por el número de reproducciones de las canciones.
 
 La función `alphabeticalSort` ordena un array alfabéticamente.
@@ -513,6 +536,8 @@ La función `alphabeticalSort` ordena un array alfabéticamente.
 La función `yearPublicactionSort` ordena un array de albumes por el año de publicación.
 
 La función `singleSort` ordena un array de canciones por el atributo single.
+
+### <u>**Modify Methods**</u>
 
 La función `promptModifyInformation` muestra por pantalla el menú para modificar géneros, artistas, grupos, albumes, canciones. Filtra el comando con switch.
 
@@ -525,3 +550,109 @@ La función `funcModifyGroup` modifica los atributos de un grupo. Limpia la cons
 La función `funcModifyAlbum` modifica los atributos de un album. Limpia la consola, recoge el nombre del album con el `prompt`, muestra toda la información asociada a ese album con `viewAlbum`. Mediante un `prompt` de tipo `list` elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.
 
 La función `funcModifySong` modifica los atributos de una canción. Limpia la consola, recoge el nombre de la canción con el `prompt`, muestra toda la información asociada a esa canción con `viewSong`. Mediante un `prompt` de tipo `list` elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.
+
+## Métodos de inserción de objetos en la base de datos
+
+Hemos optado por crear una jerarquía de dependencias a la hora de insertar un objeto en la playlist. De tal manera que cuando se inserte un objeto nuevo, es posible
+que los demás cambien con dicha inserción.
+
+### <u>**Add Genre**</u>
+Este es el objeto más sencillo de añadir, ya que no depende de ningún otro objeto y se puede instanciar con los atributos vacíos (a excepción del nombre del género).
+Primer se invoca al `prompt` para pedirle al usuario el nombre del género. En caso de que no exista, lo crea y en caso contrario le indica por mensaje que ya existe.
+
+### <u>**Add Artist**</u>
+Primera etapa de inserción de un artista. Todos los datos que se le pidan al usuario se solicitarán haciendo uso del `prompt`. Primero se solicita el <u>nombre</u> del 
+artista, se comprueba que el artista no existe y a continuación se pide el <u>género</u> (Si el género no existe, se crea). Después de esto, se le pregunta al usuario si desea 
+añadir más géneros al artista, en caso afirmativo se repetiría el proceso anterior. El siguiente paso es solicitar al usuario el número de oyentes de dicho artista. 
+Con este último requisito, termina la obtención de datos del artista. 
+
+En la segunda etapa crearemos al artista y procederemos a la expansión de los objetos dependientes. En este caso, únicamente expanderíamos al objeto `Genre`, de tal manera que
+en el array de artistas de los géneros introducidos se añadirá el nuevo artista.
+
+### <u>**Add Group**</u>
+Primera etapa de inserción de un grupo. Todos los datos que se le pidan al usuario se solicitarán haciendo uso del `prompt`. Primero se solicita el 
+<u>nombre</u> del grupo y se comprueba que el grupo no existe. A continuación se pide el <u>año</u> de creación del grupo y los géneros de las canciones 
+que producen (Si el género no existe, se crea). Después de esto, se le pregunta al usuario si desea añadir más géneros al grupo, en caso afirmativo se 
+repetiría el proceso anterior. Lo siguiente que se solicita es el nombre de los <u>artistas</u> del grupo. Si alguno de los artistas introducidos no existe 
+se indicará. Por último se pedirá los <u>oyentes mensuales</u> del grupo.
+
+En la segunda etapa crearemos el grupo y haremos la expansión a los artistas, de tal manera que los objetos `Artist` se les añadirá el grupo al que ahora 
+pertenecen y los géneros del nuevo grupo. También se sumarán los oyentes mensuales del grupo a los oyentes mensuales del artista. Por último haremos 
+expansión a los objetos `Genre`, de tal manera que en el array de grupos de los géneros introducidos se añadirá el nuevo grupo.
+
+### <u>**Add Album**</u>
+Primera etapa de inserción de un álbum. Todos los datos que se le pidan al usuario se solicitarán haciendo uso del `prompt`. Primero se solicita el 
+<u>nombre</u> del álbum y se comprueba que el álbum no existe. Después solicitará al usuario el <u>año</u> de publicación del álbum y el 
+<u>autor</u> del álbum. Si el autor no es ningún artista o grupo registrado se indicará al usuario. Por último, le pide al usuario la cantidad de canciones
+que almacena el álbum y después le pregunta el nombre de las <u>canciones</u>.
+Si alguna de las canciones no existe, se indicará y preguntará de nuevo.
+
+En la segunda etapa creaaremos el álbum y haremos expansión al autor (que puede ser tanto un objeto `Artist` como un objeto `Genre`), de tal manera que 
+en el array de albumes del autor se añadirá el nuevo album. Además se expandirá al objeto `Genre`, de tal manera que al array de álbumes del género introducido
+se le añadirá el nuevo álbum.
+
+### <u>**Add Song**</u>
+Primera etapa de inserción de una canción. Todos los datos que se le pidan al usuario se solicitarán haciendo uso del `prompt`. Primero se solicita el <u>nombre</u> de la canción y se comprueba que no existe. A continuación, se pide introducir el nombre del <u>autor</u>, comprobando si un artista o grupo coincide y por lo tanto existe. Desupués, se solicita la <u>duración</u> de la canción, en su formato decimal, en el que la parte entera corresponde a los minutos y la decimal a los segundos. Tras esto, se solicitan los <u>géneros</u>; la confirmación con yes or no sobre si la canción fue publicada como un <u>single</u>; y el <u>número de reproducciones</u>. 
+
+En la segunda etapa crearemos la canción y haremos la expansión tanto del autor como de los géneros. Para la <u>expansión del autor</u>, se determina si es un artista o un grupo, variando el comportamiendo en ambos casos. Para la <u>expansión en un artista</u>, actualizaremos sus géneros, añadiendo los posibles nuevos géneros de la canción al artista, y al mismo tiempo, actualizar los artistas del género; y le añadiremos el nombre de la nueva canción a su lista de canciones. Por el otro lado, en la <u>expansión de un grupo</u>, solo tendremos que actualizar sus géneros. Por último, en la <u>expansión de géneros</u>, le añadimos a los géneros de la canción, el nombre de la misma en su lista de canciones. 
+
+### <u>**Esquema de inserción**</u>
+En el siguiente diagrama podemos observar las dependencias entre objetos a la hora de insertarlos. Cada objeto es representado por un color, los atributos que contienen una línea
+de color, indican que la inserción del objeto representado por dicho color actualizará el atributo mencionado.
+
+![](https://gyazo.com/81190215e44d53c4bb573e7e15b61dad.png)
+
+## Métodos de eliminación de objetos en la base de datos
+
+La eliminación de objetos sigue el mismo esquema y métodología que la inserción, pero a la inversa. De forma que la eliminación más básica sería la
+de un álbum, en la que solo se elimina extrictamente el nombre del álbum en los objetos en los que aparece. Cuando se va avanzando en la jerarquía hasta la 
+eliminación del género realizando varias expansiones de elimniación de forma que cualquier rastro del género u otro objeto que se quiera eliminar 
+desaparezca completamente de la base de datos.
+
+En el siguiente esquema se puede observar la jerarquía de eliminación, que se asemeja bastante a la de inserción como se ha mencionado anteriormente.
+Las líneas de colores indican que en caso de eliminación del objeto que representa dicho color, el objeto no se eliminaría. En caso de tener una "X" en vez de una línea, el objeto podría ser eliminado.
+
+![](https://gyazo.com/52b399e622a31d18b9a0958f484924b8.png)
+
+## Ejemplo de uso Gestor<a name="id5"></a>
+
+Del menú seleccionaremos la opción `Gestor`.
+
+![](https://gyazo.com/cf7360517d625be5d6fd005a47235cbd.png)
+
+Se abrirá un menú con todas las playlists existentes y con información general.
+
+![](https://gyazo.com/f8d6af50914f4f3fcfbe8e75ced5fd08.png)
+
+Selecionaremos por ejemplo la opción `Select Playlist` y pondremos el nombre de la playlist que queremos seleccionar, por ejemplo la Playlist N1.
+
+![](https://gyazo.com/a84cf04ef2ffb044bf197e99e0b8585e.png)
+
+Se nos abrirá la playlist con toda la información asociada al mismo como duración de la playlist, canciones con sus atributos, etc.
+
+![](https://gyazo.com/f8ffbeb0b97b0f15c99ae977e89016dd.png)
+
+## Ejemplo de uso DataBaseManipulator<a name="id6"></a>
+
+Del menú seleccionaremos la opción `DataBaseManipulator`.
+
+![](https://gyazo.com/cf7360517d625be5d6fd005a47235cbd.png)
+
+Se abrirá un menú con las opciones para manipular la base de datos como añadir nuevos objetos, eliminar objetos existentes, modificar objetos y visualizar objetos.
+
+![](https://gyazo.com/a60df934e1c8e7537e1db43e74c4c515.png)
+
+Y seleccionaremos la opción `Visualize informtation about an author` y nos aparacerá un menú como el siguiente.
+
+![](https://gyazo.com/c3d60ac034943ee2f76a1ec08d9aa4e3.png)
+
+Por ejemplo, si queremos buscar información sobre Bruno Mars seleccionaremos `View info about an author` e introduciremos el nombre.
+
+![](https://gyazo.com/b44d36232f872a5952cd592323313a15.png)
+
+Y nos aparecerá las cacniones de Bruno Mars y los albumes en los que ha participado.
+
+![](https://gyazo.com/167f2d4ed21be6672fdcc54465910b33.png)
+
+También podemos ordenar dicha información, como por ejemplo ordenarlo alfabéticamente con la opción
+

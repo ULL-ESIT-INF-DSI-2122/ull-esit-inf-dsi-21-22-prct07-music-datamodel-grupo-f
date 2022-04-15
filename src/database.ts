@@ -360,6 +360,11 @@ export class DataBase {
         this.db.write();
     }
 
+    /**
+     * Cambia el owner de una plalist
+     * @playlistName Nombre de la playlist
+     * @newowner Nuevo owner de la playlist
+     */
     changeOwnerOfPlaylist(playlistName: string, newowner: Property) {
         this.db.get("playlists")
             .find({name: playlistName})
@@ -439,6 +444,9 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Actuliza los géneros de una playlist
+     */
     updateGenresPlaylist(playlistName: string) {
         let newGenres: string[] = [];
         this.db.get("playlists")
