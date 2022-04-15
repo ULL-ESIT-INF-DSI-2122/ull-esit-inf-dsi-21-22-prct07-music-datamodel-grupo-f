@@ -493,7 +493,7 @@ La función `promptRemovePlaylist` elimina una playlist. Se limpia la consola, s
 
 ## Clase DataBaseManipulator<a name="id4"></a>
 
-### <u>**Commands**</u>
+### **<u>Commands</u>**
 
 El enumerado `Commands` define los comandos del menú principal: añadir, eliminar, modificar o visualizar información.
 
@@ -505,7 +505,7 @@ El enumerado `CommandsModify` define los comandos para modificar géneros, artis
 
 El enumerado `CommandsVisualizer` define los comandos para visualizar información asociada a un artista o grupo y poder filtrar dicha información.
 
-### <u>**Getters**</u>
+### **<u>Getters</u>**
 
 La función `getArray` recoge por línea comando un array de strings usando el `prompt`. Recoge un string completo y luego lo divide por comas convirtiendolo en un array de strings.
 
@@ -515,7 +515,7 @@ La función `getNumber` recoge por línea comando un número usando el `prompt`.
 
 La función `getBoolean` reocge por línea de comando un boolean usando el `prompt`.
 
-### <u>**Prompt**</u>
+### **<u>Prompt</u>**
 
 La función `promptUser` muestra por pantalla en menú principal donde se puede elegir una opción de `Commands`, se filtra la opción con un switch y se ejecuta.
 
@@ -527,7 +527,7 @@ La función `promptVisualizerInformation` muestra por pantalla el menú para vis
 
 La función `funcViewInfo` busca información asociada a un autor o un grupo. Devuelve dos array dentro de un array, el primero contiene las canciones y el segundo los albumes.
 
-### <u>**Sort Methods**</u>
+### **<u>Sort Methods</u>**
 
 La función `numberReproductionsSort` ordena un array por el número de reproducciones de las canciones.
 
@@ -537,7 +537,7 @@ La función `yearPublicactionSort` ordena un array de albumes por el año de pub
 
 La función `singleSort` ordena un array de canciones por el atributo single.
 
-### <u>**Modify Methods**</u>
+### **<u>Modify Methods</u>**
 
 La función `promptModifyInformation` muestra por pantalla el menú para modificar géneros, artistas, grupos, albumes, canciones. Filtra el comando con switch.
 
