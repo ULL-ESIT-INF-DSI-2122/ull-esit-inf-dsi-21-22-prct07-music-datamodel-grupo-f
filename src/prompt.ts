@@ -123,7 +123,8 @@ function sleep(ms: number) {
 }
 
 /**
- * 
+ * Recoge por línea de comando un array de strings
+ * @returns Una promesa de un array de strings
  */
 async function getArray(): Promise<string[]> {
     const answer = await inquirer.prompt({
@@ -136,6 +137,10 @@ async function getArray(): Promise<string[]> {
     return array;
 }
 
+/**
+ * Recoge por línea de comando un string
+ * @returns Una promesa de un string
+ */
 async function getString(): Promise<string> {
     const answer = await inquirer.prompt({
         type: "input",
@@ -147,6 +152,10 @@ async function getString(): Promise<string> {
     return str;
 }
 
+/**
+ * Recoge una línea de comando un número
+ * @returns Una promesa de un número
+ */
 async function getNumber(): Promise<number> {
     const answer = await inquirer.prompt({
         type: "input",
@@ -158,6 +167,10 @@ async function getNumber(): Promise<number> {
     return num;
 }
 
+/**
+ * Recoge una línea de comando un boolean
+ * @returns Una promesa de un boolean
+ */
 async function getBoolean(): Promise<boolean> {
     const answer = await inquirer.prompt({
         type: "input",
@@ -536,28 +549,98 @@ export class DataBaseManipulator {
     }
     
     /**
-     * Añadir una nueva canción, actualizando albumes, autores y generos
+     * Añadir una nueva canción, actualizando autores y generos
      */
      async funcAddSong(): Promise<void> {
         console.clear();
+        let check: boolean = false;
+        let allGenres: string[] = [];
+        let continueMessage: string;
+        let singleValue: boolean;
 
+        // Introducir nombre de la canción
         const songName = await inquirer.prompt({
             type: "input",
             name: "songName",
-            message: "Enter name of song",
-        });
-
-        /*const Artist = await inquirer.prompt({
-            type: "input",
-            name: "Artist",
-            message: "Enter artist of song",
-        });*/
-
-        if(this.database.findSong(songName["songName"]))
-        
+            message: "Enter name of song:",
+        });        
         if(this.database.findSong(songName["songName"]) === -1) {
-            let newSong = new Song(songName["songName"], "", 0, [], true, 0);
+            // Introducir nombre del autor
+            do {
+                var authorName = await inquirer.prompt({
+                    type: "input",
+                    name: "authorName",
+                    message: "Enter name of the author:",
+                });  
+                if ((this.database.findArtist(authorName["authorName"]) !== -1) || 
+                    (this.database.findGroup(authorName["authorName"]) !== -1)) {
+                        check = true;
+                } else {
+                    await this.showMessage("This author doesn`t exists");
+                }
+            } while (!check);
+
+            // Introducir duración de la canción
+            const duration = await inquirer.prompt({
+                type: "input",
+                name: "duration",
+                message: "Enter duration (minutes.seconds):",
+            });  
+
+            // Introducir generos
+            do {
+                var genreName = await inquirer.prompt({
+                    type: "input",
+                    name: "genreName",
+                    message: "Enter name of the genre:",
+                });
+                if (this.database.findGenre(genreName["genreName"]) !== -1) {
+                    allGenres.push(genreName["genreName"]);
+                    const confirmation = await inquirer.prompt({
+                        type: "input",
+                        name: "confirmation",
+                        message: "Add more genres? Yes or No:",
+                    });
+                    continueMessage = confirmation["confirmation"];
+                    continueMessage = continueMessage.toLowerCase();
+                } else {
+                    await this.showMessage("ERROR: This genre doesn't exists");
+                    continueMessage = "no";
+                }
+            } while (continueMessage = "yes");
+
+            // Introducir single
+            const single = await inquirer.prompt({
+                type: "input",
+                name: "single",
+                message: "The song is a single? Yes or No:",
+            });  
+            let singleMessage: string = single["single"];
+            singleMessage = singleMessage.toLowerCase();
+            if (singleMessage === 'yes') {
+                singleValue = true;
+            } else {
+                singleValue = false;
+            }
+
+            // Introducir numero de reproducciones
+            const numRepr = await inquirer.prompt({
+                type: "input",
+                name: "numRepr",
+                message: "Enter the number of reproductions:",
+            });  
+
+            // Creacion
+            let newSong = new Song(songName["songName"], authorName["authorName"], Number(duration["duration"]),
+                allGenres, singleValue, Number(numRepr["numRepr"]));
             this.database.setSong(newSong);
+
+            // Expansion autor
+            if ((this.database.findArtist(authorName["authorName"]) !== -1)) {
+
+            } else if (this.database.findGroup(authorName["authorName"]) !== -1) {
+
+            }
         }
         else
             await this.showMessage("The song already exists");
@@ -583,6 +666,9 @@ export class DataBaseManipulator {
             await this.showMessage("The album already exists");
     }
 
+    /**
+     * Función que elimina un género
+     */
     async funcRemoveGenre(): Promise<void> {
         console.clear();
         
@@ -598,6 +684,9 @@ export class DataBaseManipulator {
             await this.showMessage("The genre does not exist");
     }
 
+    /**
+     * Función que elimina un artista
+     */
     async funcRemoveArtist(): Promise<void> {
         console.clear();
 
@@ -613,6 +702,9 @@ export class DataBaseManipulator {
             await this.showMessage("The artist does not exist");
     }
 
+    /**
+     * Función que elimina un grupo
+     */
     async funcRemoveGroup(): Promise<void> {
         console.clear();
 
@@ -628,6 +720,9 @@ export class DataBaseManipulator {
             await this.showMessage("The group does not exist");
     }
 
+    /**
+     * Función que elimina una canción
+     */
     async funcRemoveSong(): Promise<void> {
         console.clear();
 
@@ -643,6 +738,9 @@ export class DataBaseManipulator {
             await this.showMessage("The song does not exist");
     }
 
+    /**
+     * Función que elimina un album
+     */
     async funcRemoveAlbum(): Promise<void> {
         console.clear();
 
@@ -658,6 +756,9 @@ export class DataBaseManipulator {
             await this.showMessage("The album does not exist");
     }
 
+    /**
+     * Función que modifica los atributos de un género
+     */
     async funcModifyGenre(): Promise<void> {
         console.clear();
 
@@ -689,6 +790,9 @@ export class DataBaseManipulator {
         }
     }
 
+    /**
+     * Función que modifica los atributos de un artista
+     */
     async funcModifyArtist(): Promise<void> {
         console.clear();
 
@@ -726,6 +830,9 @@ export class DataBaseManipulator {
         }
     }
 
+    /**
+     * Función que modifica los atributos de un grupo
+     */
     async funcModifyGroup(): Promise<void> {
         console.clear();
 
@@ -763,6 +870,9 @@ export class DataBaseManipulator {
         }
     }
 
+    /**
+     * Función que modifica los atributos de un album
+     */
     async funcModifyAlbum(): Promise<void> {
         console.clear();
 
@@ -797,6 +907,9 @@ export class DataBaseManipulator {
         }
     }
 
+    /**
+     * Función que modifica los atributos de una canción
+     */
     async funcModifySong(): Promise<void> {
         console.clear();
 

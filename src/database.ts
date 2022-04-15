@@ -14,6 +14,9 @@ interface Schema {
 export class DataBase {
     private db: lowdb.LowdbSync<Schema>;
 
+    /**
+     * Constructor
+     */
     constructor() {
         const adapter = new FileSync<Schema>("db.json");
         this.db = lowdb(adapter);
@@ -61,91 +64,169 @@ export class DataBase {
         }
     }
 
+    /**
+     * Busca un género
+     * @returns Indice del género en la base de datos
+     */
     findGenre(genreName: string): number {
         return this.db.get("genres").value().findIndex((genre: Genre) => {
             return genre.name === genreName;
         });
     }
 
+    /**
+     * Busca una canción
+     * @returns Indice de la canción en la base de datos
+     */
     findSong(songName: string): number {
         return this.db.get("songs").value().findIndex((song: Song) => {
             return song.name === songName;
         });
     }
 
+    /**
+     * Busca un album
+     * @returns Indice del album en la base de datos
+     */
     findAlbum(albumName: string): number {
         return this.db.get("albums").value().findIndex((album: Album) => {
             return album.name === albumName;
         });
     }
 
+    /**
+     * Busca un artista
+     * @returns Indice del artista en la base de datos
+     */
     findArtist(artistName: string): number {
         return this.db.get("artists").value().findIndex((artist: Artist) => {
             return artist.name === artistName;
         });
     }
     
+    /**
+     * Busca un grupo
+     * @returns Indice del grupo en la base de datos
+     */
     findGroup(groupName: string): number {
         return this.db.get("groups").value().findIndex((group: Group) => {
             return group.name === groupName;
         });
     }
 
+    /**
+     * Busca una playlist
+     * @returns Indice de la playlist en la base de datos
+     */
     findPlaylist(playlistName: string): number {
         return this.db.get("playlists").value().findIndex((playlist: Playlist) => {
             return  playlist.name === playlistName;
         });
     }
 
+    /**
+     * Mete un género en la base de datos
+     * @param genre Género a meter
+     */
     setGenre(genre: Genre) {
         this.db.get("genres").push(genre).write();
     }
 
+    /**
+     * Mete una canción en la base de datos
+     * @param song Canción a meter
+     */
     setSong(song: Song) {
         this.db.get("songs").push(song).write();
     }
 
+    /**
+     * Mete un album en la base de datos
+     * @param album Album a meter
+     */
     setAlbum(album: Album) {
         this.db.get("albums").push(album).write();
     }
 
+    /**
+     * Mete un artista en la base de datos
+     * @param artist Artista a meter
+     */
     setArtist(artist: Artist) {
         this.db.get("artists").push(artist).write();
     }
 
+    /**
+     * Mete un grupo en la base de datos
+     * @param group Grupo a meter
+     */
     setGroup(group: Group) {
         this.db.get("groups").push(group).write();
     }
 
+    /**
+     * Mete una playlist en la base de datos
+     * @param platlist Playlist a meter
+     */
     setPlaylist(playlist: Playlist) {
         this.db.get("playlists").push(playlist).write();
     }
 
+    /**
+     * Devuelve un género
+     * @param genreName Nombre del género
+     * @returns Género a devolver
+     */
     getGenre(genreName: string): Genre {
         let indexOfGenre: number = this.findGenre(genreName);
         return this.db.get("genres").value().at(indexOfGenre) as Genre;
     }
 
+    /**
+     * Devuelve una canción
+     * @param songName Nombre de la canción
+     * @returns Canción a devolver
+     */
     getSong(songName: string): Song {
         let indexOfSong: number = this.findSong(songName);
         return this.db.get("songs").value().at(indexOfSong) as Song;
     }
 
+    /**
+     * Devuelve un album
+     * @param albumName Nombre del album
+     * @returns Album a devolver
+     */
     getAlbum(albumName: string): Album {
         let indexOfAlbum: number = this.findAlbum(albumName);
         return this.db.get("albums").value().at(indexOfAlbum) as Album;
     }
 
+    /**
+     * Devuelve un artista
+     * @param artistName Nombre del artista
+     * @returns Artista a devolver
+     */
     getArtist(artistName: string): Artist {
         let indexOfArtist: number = this.findArtist(artistName);
         return this.db.get("artists").value().at(indexOfArtist) as Artist;
     }
 
+    /**
+     * Devuelve un grupo
+     * @param groupName Nombre del grupo
+     * @returns Grupo a devolver
+     */
     getGroup(groupName: string): Group {
         let indexOfGroup: number = this.findGroup(groupName);
         return this.db.get("groups").value().at(indexOfGroup) as Group;
     }
 
+    /**
+     * Devuelve una playlist
+     * @param playlistName Nombre de la playlist
+     * @returns Playlist a devolver
+     */
     getPlaylist(playlistName: string): Playlist {
         let indexOfPlaylist: number = this.findPlaylist(playlistName);
         return this.db.get("playlists").value().at(indexOfPlaylist) as Playlist;
@@ -203,6 +284,10 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Función que devulve información de las playlists
+     * @returns Información de las playlists
+     */
     viewPlaylists(): string {
         let show: string = "";
         show += "---LIST OF PLAYLISTS---\n";
@@ -214,6 +299,10 @@ export class DataBase {
         return show;
     }
 
+    /**
+     * Función que devulve información de una playlist
+     * @returns Información de la playlist
+     */
     viewPlaylist(playlistName: string): string {
         let playlist = this.getPlaylist(playlistName);
         let showSong: string = "";
@@ -287,6 +376,11 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Ordena las canciones de una playlist por género
+     * @param genreName Nombre del género
+     * @param playlistName Nombre de la playlist
+     */
     genreSort(genreName: string, playlistName: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
@@ -299,6 +393,10 @@ export class DataBase {
         this.db.write();
     }
 
+    /**
+     * Ordena las canciones de una playlist alfabeticamente por su nombre
+     * @param playlistName Nombre de la playlist
+     */
     alphabeticalSongNameSort(playlistName: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
@@ -307,6 +405,10 @@ export class DataBase {
         this.db.write();
     }
 
+    /**
+     * Ordena las canciones de una playlist alfabeticamente por el nombre del autor
+     * @param playlistName Nombre de la playlist
+     */
     alphabeticalAuthorNameSort(playlistName: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
@@ -317,6 +419,10 @@ export class DataBase {
         this.db.write();
     }
 
+    /**
+     * Ordena las canciones de una playlist alfabeticamente por su duración
+     * @param playlistName Nombre de la playlist
+     */
     durationSort(playlistName: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
@@ -327,6 +433,10 @@ export class DataBase {
         this.db.write();
     }
 
+    /**
+     * Ordena las canciones de una playlist alfabeticamente por sus reproducciones
+     * @param playlistName Nombre de la playlist
+     */
     numberOfReproductionSort(playlistName: string) {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
@@ -337,26 +447,46 @@ export class DataBase {
         this.db.write();
     }
 
+    /**
+     * Elimina un género
+     * @param genreName Nombre del género
+     */
     removeGenre(genreName: string) {
         let indexOfGenre: number = this.findGenre(genreName);
         this.db.get("genres").splice(indexOfGenre, 1).write();
     }
 
+    /**
+     * Elimina un artista
+     * @param artistName Nombre del artista
+     */
     removeArtist(artistName: string) {
         let indexOfArtist: number = this.findArtist(artistName);
         this.db.get("artists").splice(indexOfArtist, 1).write();
     }
 
+    /**
+     * Elimina un grupo
+     * @param groupName Nombre del grupo
+     */
     removeGroup(groupName: string) {
         let indexOfGroup: number = this.findGroup(groupName);
         this.db.get("groups").splice(indexOfGroup, 1).write();
     }
 
+    /**
+     * Elimina una canción
+     * @param songName Nombre de la canción
+     */
     removeSong(songName: string) {
         let indexOfSong: number = this.findSong(songName);
         this.db.get("songs").splice(indexOfSong, 1).write();
     }
 
+    /**
+     * Elimina un album
+     * @param albumName Nombre de la album
+     */
     removeAlbum(albumName: string) {
         let indexOfAlbum: number = this.findAlbum(albumName);
         this.db.get("albums").splice(indexOfAlbum, 1).write();
@@ -516,6 +646,10 @@ export class DataBase {
             .write();
     }
 
+    /**
+     * Función que devulve información de una canción
+     * @returns Información de la canción
+     */
     viewSong(songName: string): string {
         let show: string = "";
         let song = this.getSong(songName);
@@ -529,6 +663,10 @@ export class DataBase {
         return show;
     }
 
+    /**
+     * Función que devulve información de un género
+     * @returns Información del género
+     */
     viewGenre(genreName: string): string {
         let show: string = "";
         let genre = this.getGenre(genreName);
@@ -539,6 +677,10 @@ export class DataBase {
         return show;
     }
 
+    /**
+     * Función que devulve información de un album
+     * @returns Información del album
+     */
     viewAlbum(albumName: string): string {
         let show: string = "";
         let album = this.getAlbum(albumName);
@@ -550,6 +692,10 @@ export class DataBase {
         return show;
     }
 
+    /**
+     * Función que devulve información de un grupo
+     * @returns Información del grupo
+     */
     viewGroup(groupName: string): string {
         let show: string = "";
         let group = this.getGroup(groupName);
@@ -562,6 +708,10 @@ export class DataBase {
         return show;
     }
 
+    /**
+     * Función que devulve información de un artista
+     * @returns Información del artista
+     */
     viewArtist(artistName: string): string {
         let show: string = "";
         let artist = this.getArtist(artistName);
