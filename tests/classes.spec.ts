@@ -1,7 +1,6 @@
 import 'mocha';
 import { expect } from 'chai';
-import { Song, Genre, Artist, Group, Album, Playlist, Property } from '../src/classes';
-import { DataBase} from '../src/database'
+import { Song, Genre, Artist, Group, Album, Playlist } from '../src/classes';
 
 let UnaNocheEnMedellin: Song = new Song("Una noche en Medellín", "Cris MJ", 2.33, ["Reggeaton"], true, 94290145);
 let Salsa: Genre = new Genre("Salsa", ["Frankie Ruiz", "Lalo Rodriguez", "Eddie Santiago"], [], ["Tu Con EL", "Lluvia", "Ven Devórame Otra Vez"]);

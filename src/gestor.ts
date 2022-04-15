@@ -67,7 +67,7 @@ export class Gestor {
     
         while(answers["command"] != Commands.Quit) {
             console.clear();
-            this.database.viewPlaylists();
+            console.log(this.database.viewPlaylists());
             answers = await inquirer.prompt({
                 type: "list",
                 name: "command",
@@ -97,6 +97,8 @@ export class Gestor {
      * @param playlistName Nombre de la playlist a gestionar
      */
     async promptUserPlaylist(playlistName: string): Promise<void> {
+        console.clear();
+
         let answers = {
             commandPlaylist: CommandsPlaylist.AddSong,
         }

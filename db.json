@@ -1517,5 +1517,26 @@
       "yearCreation": 2010
     }
   ],
-  "playlists": []
+  "playlists": [
+    {
+      "name": "Playlist N1",
+      "songs": [
+        "Buleria",
+        "Llamado De Emergencia",
+        "Gasolina",
+        "MONEY",
+        "Volví",
+        "Con Calma"
+      ],
+      "duration": 0.21,
+      "genres": [
+        "Reggeaton",
+        "K-pop",
+        "Pop",
+        "Flamenco",
+        "Bachata"
+      ],
+      "owner": "user"
+    }
+  ]
 }

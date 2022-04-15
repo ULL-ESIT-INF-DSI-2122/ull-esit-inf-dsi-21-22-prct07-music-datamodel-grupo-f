@@ -303,13 +303,13 @@ export class DataBase {
      * @returns Objeto album deseado
      */
     getAlbumWithSong(songName: string): (Album|undefined) {
-        this.db.get("albums")
-            .value().forEach((album: Album) => {
-                if(album.songs.includes(songName)) {
-                    return album;
-                }
-            });
+        let result = this.db.get("albums")
+            .find(item => item.songs.includes(songName) === true)
+            .value();
         
+        if (result !== undefined) {
+            return result;
+        }                 
         return undefined;
     }
     
@@ -488,7 +488,7 @@ export class DataBase {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
             let author1: string = this.db.get("songs").value().at(this.findSong(song1))?.author as string;
-            let author2: string = this.db.get("songs").value().at(this.findSong(song2))?.author as string;;
+            let author2: string = this.db.get("songs").value().at(this.findSong(song2))?.author as string;
             return author1.normalize().localeCompare(author2.normalize());
         });
         this.db.write();
@@ -502,7 +502,7 @@ export class DataBase {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
             let duration1: number = this.db.get("songs").value().at(this.findSong(song1))?.duration as number;
-            let duration2: number = this.db.get("songs").value().at(this.findSong(song2))?.duration as number;;
+            let duration2: number = this.db.get("songs").value().at(this.findSong(song2))?.duration as number;
             return duration1 - duration2;
         });
         this.db.write();
@@ -516,7 +516,7 @@ export class DataBase {
         let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
         this.db.get("playlists").value().at(indexOfPlaylist)?.songs.sort((song1: string, song2: string) => {
             let reproductions1: number = this.db.get("songs").value().at(this.findSong(song1))?.numberReproductions as number;
-            let reproductions2: number = this.db.get("songs").value().at(this.findSong(song2))?.numberReproductions as number;;
+            let reproductions2: number = this.db.get("songs").value().at(this.findSong(song2))?.numberReproductions as number;
             return reproductions1 - reproductions2;
         });
         this.db.write();
