@@ -302,15 +302,27 @@ export class DataBase {
      * @param songName Nombre de la cancion
      * @returns Objeto album deseado
      */
-    getAlbumWithSong(songName: string): (Album|undefined) {
+    getAlbumWithSong(songName: string): string {
         let result = this.db.get("albums")
-            .find(item => item.songs.includes(songName) === true)
+            .filter(item => item.songs.includes(songName) === true)
             .value();
         
-        if (result !== undefined) {
-            return result;
-        }                 
-        return undefined;
+        if(result.length > 0)
+            return result[0].name;
+        else
+            return "";
+    }
+
+    /**
+     * Devuelve un array con todas las canciones de un autor
+     * @param authorName Nombre del autor
+     * @returns Array de objetos de canciones
+     */
+    getSongsOfAuthor(authorName: string): string[] {
+        let songs: Song[] = this.db.get("songs")
+                .filter(item => item.author === authorName)
+                .value();            
+        return songs.map(a => a.name);
     }
     
     /**

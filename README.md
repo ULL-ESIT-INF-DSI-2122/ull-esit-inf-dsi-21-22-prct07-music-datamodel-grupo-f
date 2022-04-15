@@ -478,6 +478,44 @@ La función `promptRemovePlaylist` elimina una playlist. Se limpia la consola, s
 
 ## Clase DataBaseManipulator<a name="id4"></a>
 
+El enumerado `Commands` define los comandos del menú principal: añadir, eliminar, modificar o visualizar información.
+
+El enumerado `CommandsAdd` define los comandos para añadir géneros, artistas, grupos, canciones o albumes.
+
+El enumerado `CommandsRemove` define los comandos para eliminar géneros, artistas, grupos, canciones o albumes.
+
+El enumerado `CommandsModify` define los comandos para modificar géneros, artistas, grupos, canciones o albumes.
+
+El enumerado `CommandsVisualizer` define los comandos para visualizar información asociada a un artista o grupo y poder filtrar dicha información.
+
+La función `getArray` recoge por línea comando un array de strings usando el `prompt`. Recoge un string completo y luego lo divide por comas convirtiendolo en un array de strings.
+
+La función `getString` recoge por línea comando un string usando el `prompt`.
+
+La función `getNumber` recoge por línea comando un número usando el `prompt`.
+
+La función `getBoolean` reocge por línea de comando un boolean usando el `prompt`.
+
+La función `promptUser` muestra por pantalla en menú principal donde se puede elegir una opción de `Commands`, se filtra la opción con un switch y se ejecuta.
+
+La función `promptAddInformation` muetra por pantalla las opciones del `CommandsAdd`, se filtra la opción elegida con un switch y se ejecuta dicho comando.
+
+La función `promptRemoveInformation` muestra por pantlla las opciones del `CommandsRemove`, se filtra la opción elegida con un switch y se ejecuta el comando. 
+
+La función `promptVisualizerInformation` muestra por pantalla el menú para visualizar información asociada a un artista o grupo. Selecciona un opción del prompt de tipo `list` y lo filtra con un switch.
+
+La función `funcViewInfo` busca información asociada a un autor o un grupo. Devuelve dos array dentro de un array, el primero contiene las canciones y el segundo los albumes.
+
+La función `numberReproductionsSort` ordena un array por el número de reproducciones de las canciones.
+
+La función `alphabeticalSort` ordena un array alfabéticamente.
+
+La función `yearPublicactionSort` ordena un array de albumes por el año de publicación.
+
+La función `singleSort` ordena un array de canciones por el atributo single.
+
+La función `promptModifyInformation` muestra por pantalla el menú para modificar géneros, artistas, grupos, albumes, canciones. Filtra el comando con switch.
+
 La función `funcModifyGenre` modifica los atributos de un género. Limpia la consola, recoge el nombre del género con el `prompt`, muestra toda la información asociada a ese género con `viewGenre`. Mediante un `prompt` de tipo `list` elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.
 
 La función `funcModifyArtist` modifica los atributos de un artista. Limpia la consola, recoge el nombre del artista con el `prompt`, muestra toda la información asociada a ese artista con `viewArtist`. Mediante un `prompt` de tipo `list` elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.

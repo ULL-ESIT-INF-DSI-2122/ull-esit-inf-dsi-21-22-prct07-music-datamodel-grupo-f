@@ -57,6 +57,7 @@ enum CommandsVisualizer {
     AlphabeticalSongNameSort = "Sort by song name",
     AlphabeticalAlbumNameSort = "Sort by album name",
     NumberOfReproductionSort = "Sort by number of reproductions",
+    YearOfPublicationSort = "Sort by year of publication",
     SingelSort = "Sort by single of a song",
     Quit = "Quit",
 }
@@ -143,7 +144,7 @@ async function getArray(): Promise<string[]> {
     const answer = await inquirer.prompt({
         type: "input",
         name: "array",
-        message: "Enter",
+        message: "Enter separate by commas",
     })
 
     let array: string[] = String(answer["array"]).split(",");
@@ -390,7 +391,7 @@ export class DataBaseManipulator {
         let songs: string[] = [];
         let albums: string[] = [];
         let answers = {
-            command: CommandsVisualizer.Quit,
+            command: CommandsVisualizer.AlphabeticalAlbumNameSort,
         }
     
         while(answers["command"] != CommandsVisualizer.Quit) {
@@ -432,6 +433,9 @@ export class DataBaseManipulator {
                 case CommandsVisualizer.SingelSort:
                     this.singleSort(songs);
                     break;
+                case CommandsVisualizer.YearOfPublicationSort:
+                    this.yearPublicactionSort(albums);
+                    break;
             }
         }
     }
@@ -470,6 +474,10 @@ export class DataBaseManipulator {
         return list;
     }
 
+    /**
+     * Ordena un array de canciones por el número de reproducciones
+     * @param list Array a ordenar
+     */
     numberReproductionsSort(list: string[]) {
         list.sort((song1: string, song2: string) => {
             let reproductions1: number = this.database.getSong(song1).numberReproductions as number;
@@ -478,12 +486,20 @@ export class DataBaseManipulator {
         });
     }
 
+    /**
+     * Ordena un array alfabéticamente
+     * @param list Array a ordenar
+     */
     alphabeticalSort(list: string[]) {
         list.sort((element1: string, element2: string) => {
             return element1.normalize().localeCompare(element2.normalize());
         });
     }
 
+    /**
+     * Ordena un array de albumes por el año de publicación
+     * @param list Array a ordenar
+     */
     yearPublicactionSort(list: string[]) {
         list.sort((album1: string, album2: string) => {
             let yearPublicaction1: number = this.database.getAlbum(album1).yearPublication as number;
@@ -492,6 +508,10 @@ export class DataBaseManipulator {
         });
     }
 
+    /**
+     * Ordena un array de canciones por el atributo single
+     * @param list Array a ordenar
+     */
     singleSort(list: string[]) {
         list.sort((song1: string, song2: string) => {
             let bool1 = this.database.getSong(song1).single;
@@ -1012,8 +1032,9 @@ export class DataBaseManipulator {
                 removeItemFromArr<string>(genreToModify.songs, songName);
             }
             // Eliminar de la lista de albumes asociados, eliminar album si se queda vacia
-            let albumToModify = this.database.getAlbumWithSong(songName);
-            if (albumToModify != undefined) {
+            let albumName = this.database.getAlbumWithSong(songName);
+            if (albumName != "") {
+                let albumToModify = this.database.getAlbum(albumName);
                 removeItemFromArr<string>(albumToModify.songs, songName);
                 if (!albumToModify.songs.length) {
                     this.funcRemoveAlbum(albumToModify.name);
@@ -1036,39 +1057,96 @@ export class DataBaseManipulator {
     }    
 
     /**
-     * Función que elimina un género
-     */
-    async funcRemoveGenre(genreName: string): Promise<void> {
+    * Función que elimina un grupo
+    */
+    async funcRemoveGroup(groupName: string): Promise<void> {
         console.clear();
-    
-        if(this.database.findGenre(genreName) !== -1) 
-            this.database.removeGenre(genreName);
+
+        if(this.database.findGroup(groupName) !== -1) {
+            let groupToRemove = this.database.getGroup(groupName);
+            // Eliminar grupo de la lista de géneros asociados
+            for (let genre of groupToRemove.genres) {
+                let genreToModify = this.database.getGenre(genre);
+                removeItemFromArr<string>(genreToModify.authors, groupName);
+            }
+            // Eliminar todos los albumes asociados
+            for (let albumToDelete of groupToRemove.albums) {
+                this.funcRemoveAlbum(albumToDelete);
+            }
+            // Eliminar todas las canciones asociadas
+            let songsArray = this.database.getSongsOfAuthor(groupName);
+            for (let songToDelete of songsArray) {
+                this.funcRemoveSong(songToDelete);
+            }
+            // Eliminar grupo de la lista del artista y restarle oyentes
+            for (let artistName of groupToRemove.artists) {
+                let artistToModify = this.database.getArtist(artistName);
+                let newGroups = artistToModify.groups;
+                removeItemFromArr<string>(newGroups, groupName);
+                this.database.modifyGroupsArtist(artistName, newGroups);
+                this.database.modifyMonthlyListenersArtist(artistName, (artistToModify.monthlyListeners - groupToRemove.monthlyListeners));
+            }
+            // Eliminar objeto del grupo
+            this.database.removeGroup(groupName);
+        }
         else
-            await this.showMessage("The genre does not exist");
-    }
+            await this.showMessage("The group does not exist");
+    }    
 
     /**
      * Función que elimina un artista
      */
-    async funcRemoveArtist(artistName: string): Promise<void> {
+     async funcRemoveArtist(artistName: string): Promise<void> {
         console.clear();
 
-        if(this.database.findArtist(artistName) !== -1)
+        if(this.database.findArtist(artistName) !== -1) {
+            let artistToRemove = this.database.getArtist(artistName);
+            // Eliminar artista de la lista de generos asociados
+            for (let genre of artistToRemove.genres) {
+                let genreToModify = this.database.getGenre(genre);
+                removeItemFromArr<string>(genreToModify.authors, artistName);
+            }
+            // Eliminar todos los albumes del artista
+            artistToRemove.albums.forEach((albumToRemove) => {
+                this.funcRemoveAlbum(albumToRemove);
+            });
+            // Eliminar todas las canciones del artista
+            artistToRemove.songs.forEach((songToRemove) => {
+                this.funcRemoveSong(songToRemove);
+            });        
+            // Eliminar el Objeto artista
             this.database.removeArtist(artistName);
+            // Eliminar al artista de sus grupos, y eliminar el grupo si se queda sin componentes
+            for (let groupName of artistToRemove.groups) {
+                let groupToModify = this.database.getGroup(groupName);
+                let newArtists = groupToModify.artists;
+                removeItemFromArr<string>(newArtists, artistName);
+                this.database.modifyArtistsGroup(groupName, newArtists);
+                if (!groupToModify.artists.length) {
+                    this.funcRemoveGroup(groupName);
+                }
+            }
+        }
         else
             await this.showMessage("The artist does not exist");
     }
 
     /**
-     * Función que elimina un grupo
+     * Función que elimina un género
      */
-    async funcRemoveGroup(groupName: string): Promise<void> {
+    async funcRemoveGenre(genreName: string): Promise<void> {
         console.clear();
-
-        if(this.database.findGroup(groupName) !== -1)
-            this.database.removeGroup(groupName);
+    
+        if(this.database.findGenre(genreName) !== -1) {
+            // Eliminar objeto Genero
+            this.database.removeGenre(genreName);
+            // Eliminar el genero de la lista en Albumes, si se queda sin ninguno, eliminar album
+            // Eliminar el genero de la lista de Songs, si se queda sin ninguno, eliminar cancion
+            // Eliminar el genero de la lista de Artistas, si se queda sin ninguno, eliminar artista
+            // Eliminar el genero de la lista de Grupos, si se queda sin niguno, eliminar grupo
+        }
         else
-            await this.showMessage("The group does not exist");
+            await this.showMessage("The genre does not exist");
     }
 
     /**

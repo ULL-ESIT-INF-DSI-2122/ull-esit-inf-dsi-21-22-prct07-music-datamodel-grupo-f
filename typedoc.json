@@ -3,7 +3,8 @@
         "./src/index",
         "./src/classes",
         "./src/database",
-        "./src/prompt"
+        "./src/prompt",
+        "./src/gestor"
     ],
     "out": "./docs"
 }

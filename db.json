@@ -215,6 +215,25 @@
       "songs": [
         "Volví"
       ]
+    },
+    {
+      "name": "Electrónica",
+      "authors": [
+        "Avicii"
+      ],
+      "albums": [
+        "True",
+        "The Days/Nights"
+      ],
+      "songs": [
+        "Wake Me Up",
+        "You Make Me",
+        "Hey Brother",
+        "Addicted To You",
+        "Divine Sorrow",
+        "The Days",
+        "The Nights"
+      ]
     }
   ],
   "albums": [
@@ -283,6 +302,32 @@
         "Rap God",
         "Berzerk",
         "Survival"
+      ]
+    },
+    {
+      "name": "True",
+      "author": "Avicii",
+      "yearPublication": 2013,
+      "genres": [
+        "Electrónica"
+      ],
+      "songs": [
+        "Wake Me Up",
+        "Addicted To You",
+        "Hey Brother",
+        "You Make Me"
+      ]
+    },
+    {
+      "name": "The Days/Nights",
+      "author": "Avicii",
+      "yearPublication": 2014,
+      "genres": [
+        "Electrónica"
+      ],
+      "songs": [
+        "The Days",
+        "The Nights"
       ]
     }
   ],
@@ -900,6 +945,76 @@
       ],
       "single": false,
       "numberReproductions": 438178636
+    },
+    {
+      "name": "Wake Me Up",
+      "author": "Avicii",
+      "duration": 4.07,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 1546524746
+    },
+    {
+      "name": "You Make Me",
+      "author": "Avicii",
+      "duration": 3.53,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 256059902
+    },
+    {
+      "name": "Hey Brother",
+      "author": "Avicii",
+      "duration": 4.15,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 739355087
+    },
+    {
+      "name": "Addicted To You",
+      "author": "Avicii",
+      "duration": 2.28,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 272797017
+    },
+    {
+      "name": "Divine Sorrow",
+      "author": "Avicii",
+      "duration": 4.39,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": true,
+      "numberReproductions": 8509953
+    },
+    {
+      "name": "The Days",
+      "author": "Avicii",
+      "duration": 4.38,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 285091047
+    },
+    {
+      "name": "The Nights",
+      "author": "Avicii",
+      "duration": 2.56,
+      "genres": [
+        "Electrónica"
+      ],
+      "single": false,
+      "numberReproductions": 1039304515
     }
   ],
   "artists": [
@@ -1430,6 +1545,27 @@
         "Yonaguni",
         "Amorfoda"
       ]
+    },
+    {
+      "name": "Avicii",
+      "genres": [
+        "Electrónica"
+      ],
+      "albums": [
+        "True",
+        "The Days/Nights"
+      ],
+      "monthlyListeners": 29000598,
+      "groups": [],
+      "songs": [
+        "Wake Me Up",
+        "You Make Me",
+        "Hey Brother",
+        "Addicted To You",
+        "Divine Sorrow",
+        "The Days",
+        "The Nights"
+      ]
     }
   ],
   "groups": [
@@ -1535,6 +1671,80 @@
         "Pop",
         "Flamenco",
         "Bachata"
+      ],
+      "owner": "user"
+    },
+    {
+      "name": "Fiesta",
+      "songs": [
+        "Gasolina",
+        "Con Calma",
+        "Ella Me Levantó",
+        "Llamado De Emergencia",
+        "¿Que Tengo Que Hacer?",
+        "Singapour",
+        "Tusa",
+        "EL MAKINON",
+        "Punto G",
+        "Loco",
+        "Volví",
+        "La mamá de la Mamá",
+        "Acuetate",
+        "Singapour",
+        "4K"
+      ],
+      "duration": 0.52,
+      "genres": [
+        "Reggeaton",
+        "Dembow",
+        "Bachata"
+      ],
+      "owner": "user"
+    },
+    {
+      "name": "Clásicos",
+      "songs": [
+        "All The Things You Are",
+        "Fly Me To The Moon",
+        "Imagine",
+        "My Way",
+        "That's Life",
+        "Theme From New York, New York",
+        "We Are The Champions",
+        "We Will Rock You",
+        "What A Wonderful World",
+        "Lazy song"
+      ],
+      "duration": 0.26,
+      "genres": [
+        "Jazz",
+        "Rock"
+      ],
+      "owner": "user"
+    },
+    {
+      "name": "Éxitos Pop",
+      "songs": [
+        "24K Magic",
+        "34+35",
+        "7 rings",
+        "Count On Me",
+        "Finesse",
+        "I Don't Wanna Live Forever",
+        "Just The Way You Are",
+        "LALISA",
+        "Lazy song",
+        "Marry You",
+        "One Thing",
+        "That's What I Like",
+        "Versace On The Floor",
+        "Watermelon Sugar",
+        "What Makes You Beautiful"
+      ],
+      "duration": 0.52,
+      "genres": [
+        "Pop",
+        "K-pop"
       ],
       "owner": "user"
     }

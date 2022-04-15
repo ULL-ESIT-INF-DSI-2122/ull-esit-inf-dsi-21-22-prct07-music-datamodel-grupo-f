@@ -3,7 +3,7 @@ import { DataBase } from './database';
 import { DataBaseManipulator } from './prompt'
 import inquirer from 'inquirer';
 
-let db: DataBase = new DataBase("db.json");
+let db: DataBase = new DataBase("db copy.json");
 let app1: DataBaseManipulator = new DataBaseManipulator(db);
 let app2: Gestor = new Gestor(db);
 

@@ -20,14 +20,20 @@ let playlistTest = new Playlist("playlistTest", [], 0, []);
 
 let viewPlaysAux: string = "---LIST OF PLAYLISTS---\n" +
 "\nPlaylist N1\n" +
-"  Genres: [Merengue,Salsa,Reggeaton,Bachata]\n" +
-"  Duration: 0 hours and 28 minutes" +
-"\nT1\n" +
-"  Genres: [Reggeaton,Bachata,Merengue,Salsa]\n" +
-"  Duration: 0 hours and 20 minutes" +
-"\nplaylistTest\n" +
+"  Genres: [Reggeaton,K-pop,Pop,Flamenco,Bachata]\n" +
+"  Duration: 0 hours and 21 minutes\n" +
+"Fiesta\n" +
+"  Genres: [Reggeaton,Dembow,Bachata]\n" +
+"  Duration: 0 hours and 52 minutes\n" +
+"Clásicos\n" +
+"  Genres: [Jazz,Rock]\n" +
+"  Duration: 0 hours and 26 minutes\n" +
+"Éxitos Pop\n" +
+"  Genres: [Pop,K-pop]\n" +
+"  Duration: 0 hours and 52 minutes\n" +
+"playlistTest\n" +
 "  Genres: []\n" +
-"  Duration: 0 hours and 0 minutes";
+"  Duration: 0 hours and 4 minutes";
 
 let viewPlayAux: string = "[Playlist N1] Duration: 0 hours and 21 minutes\n" +
 "Buleria | David Bisbal | [4 min 11 sec]\n" +
@@ -154,6 +160,15 @@ describe("Tests clase Database - Métodos Getter", () => {
 
   it('getPlaylist test', () => {
     expect(db.getPlaylist(PlaylistN1.name)).to.be.eql(PlaylistN1);
+  });
+
+  it('getAlbumWithSong test', () => {
+    expect(db.getAlbumWithSong("The Days")).to.be.eql("The Days/Nights");
+    expect(db.getAlbumWithSong("Unexisting Playlist")).to.be.equal("");
+  });
+
+  it('getSongsOfAuthor test', () => {
+    expect(db.getSongsOfAuthor("Harry Styles")).to.be.eql(["Watermelon Sugar"]);
   });
 })
 
@@ -309,11 +324,17 @@ describe("Tests clase Database - Métodos Modify", () => {
     db.changeOwnerOfPlaylist("Playlist N1", "user")
     expect(db.getPlaylist("Playlist N1").owner).to.be.equal("user");
   });
+
+  it('updateDurationPlaylist test', () => {
+    db.setSongToPlaylist(LazySong.name, playlistTest.name);
+    db.updateDurationPlaylist(playlistTest.name);
+    expect(playlistTest.duration).to.be.equal(0.04);
+  });
 });
 
 describe("Tests clase Database - Métodos View", () => {
   it('viewPlaylist test', () => {
-    //expect(db.viewPlaylists()).to.be.equal(viewPlaysAux);
+    expect(db.viewPlaylists()).to.be.equal(viewPlaysAux);
     expect(db.viewPlaylist("Playlist N1")).to.be.equal(viewPlayAux)
     expect(db.viewPlaylist("unexisting Playlist")).to.be.equal("ERROR: Playlist not found");
   });
@@ -367,7 +388,7 @@ describe("Tests clase Database - Métodos Remove", () => {
 
   it('removeSongFromPlaylist test', () => {
     db.removeSongFromPlaylist(playlistTest.name, "cancion845");
-    expect(db.getPlaylist(playlistTest.name).songs).to.be.eql([]);
+    expect(db.getPlaylist(playlistTest.name).songs).to.be.eql(["Lazy song"]);
   });
 
   it('removePlaylist test', () => {
