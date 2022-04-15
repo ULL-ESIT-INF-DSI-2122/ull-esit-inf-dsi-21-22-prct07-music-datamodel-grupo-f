@@ -155,7 +155,7 @@ export class Gestor {
             message: "Enter name of the song:",
         });
     
-        if(this.database.findSong(nameSong["nameSong"]) != -1) {
+        if(this.database.findSong(nameSong["nameSong"]) !== -1) {
             this.database.setSongToPlaylist(nameSong["nameSong"], playlistName);
             this.database.updateDurationPlaylist(playlistName);
             this.database.updateGenresPlaylist(playlistName);

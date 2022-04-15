@@ -3,11 +3,47 @@
     {
       "name": "Pop",
       "authors": [
-        "Bruno Mars"
+        "Bruno Mars",
+        "David Bisbal",
+        "The Beatles",
+        "John Lennon",
+        "Paul McCartney",
+        "George Harrison",
+        "Ringo Starr",
+        "Ariana Grande",
+        "Niall Horan",
+        "Liam Payne",
+        "Harry Styles",
+        "Zayn Malik",
+        "One Direction",
+        "Lisa"
       ],
-      "albums": [],
+      "albums": [
+        "Up All Night",
+        "Doo-Wops & Hooligans",
+        "24K Magic"
+      ],
       "songs": [
-        "Lazy song"
+        "Lazy song",
+        "Ave María",
+        "Buleria",
+        "Diez Mil Maneras",
+        "What Makes You Beautiful",
+        "One Thing",
+        "More Than This",
+        "Up All Night",
+        "Marry You",
+        "Just The Way You Are",
+        "Count On Me",
+        "24K Magic",
+        "That's What I Like",
+        "Versace On The Floor",
+        "Finesse",
+        "I Don't Wanna Live Forever",
+        "Watermelon Sugar",
+        "34+35",
+        "7 rings",
+        "LALISA"
       ]
     },
     {
@@ -17,23 +53,168 @@
         "Brian May",
         "Roger Taylor",
         "John Deacon",
-        "Queen"
+        "Queen",
+        "John Lennon",
+        "Paul McCartney",
+        "George Harrison",
+        "Ringo Starr",
+        "The Beatles"
       ],
       "albums": [
         "News Of The World"
       ],
       "songs": [
         "We Will Rock You",
-        "We Are The Champions"
+        "We Are The Champions",
+        "Living On My Own",
+        "FourFiveSeconds",
+        "Say Say Say",
+        "Imagine",
+        "Woman"
       ]
     },
     {
       "name": "Jazz",
       "authors": [
-        "Frank Sinatra"
+        "Frank Sinatra",
+        "Charlie Parker",
+        "Louis Amstrong"
       ],
       "albums": [],
-      "songs": []
+      "songs": [
+        "Fly Me To The Moon",
+        "That's Life",
+        "My Way",
+        "Theme From New York, New York",
+        "All The Things You Are",
+        "What A Wonderful World"
+      ]
+    },
+    {
+      "name": "Salsa",
+      "authors": [
+        "Frankie Ruiz",
+        "Lalo Rodríguez",
+        "Eddie Santiago"
+      ],
+      "albums": [],
+      "songs": [
+        "Tú Con Él",
+        "Ven Devórame Otra Vez",
+        "Que Locura Enamorarme De Ti"
+      ]
+    },
+    {
+      "name": "Reggeaton",
+      "authors": [
+        "Karol G",
+        "Aventura",
+        "Daddy Yankee",
+        "El Alfa",
+        "Chimbala"
+      ],
+      "albums": [],
+      "songs": [
+        "Gasolina",
+        "Con Calma",
+        "Ella Me Levantó",
+        "Llamado De Emergencia",
+        "¿Que Tengo Que Hacer?",
+        "Singapour",
+        "Tusa",
+        "EL MAKINON",
+        "Punto G",
+        "Loco",
+        "Volví"
+      ]
+    },
+    {
+      "name": "Dembow",
+      "authors": [
+        "El Alfa",
+        "Chimbala"
+      ],
+      "albums": [],
+      "songs": [
+        "La mamá de la Mamá",
+        "Acuetate",
+        "Singapour",
+        "4K"
+      ]
+    },
+    {
+      "name": "K-pop",
+      "authors": [
+        "Jin",
+        "Suga",
+        "J-Hope",
+        "RM",
+        "Jimin",
+        "V",
+        "Jungkook",
+        "BTS",
+        "Jisoo",
+        "Jennie",
+        "Rosé",
+        "Lisa",
+        "Blackpink"
+      ],
+      "albums": [],
+      "songs": [
+        "LALISA",
+        "MONEY"
+      ]
+    },
+    {
+      "name": "Rap",
+      "authors": [
+        "Eminem"
+      ],
+      "albums": [
+        "The Marshall Mathers LP2"
+      ],
+      "songs": [
+        "Rap God",
+        "Berzerk",
+        "Survival"
+      ]
+    },
+    {
+      "name": "Flamenco",
+      "authors": [
+        "David Bisbal"
+      ],
+      "albums": [],
+      "songs": [
+        "Buleria",
+        "Bésame",
+        "Cuentas Claras",
+        "Esta ausencia",
+        "Desnúdate Mujer"
+      ]
+    },
+    {
+      "name": "Trap",
+      "authors": [
+        "El Alfa",
+        "Bad Bunny"
+      ],
+      "albums": [],
+      "songs": [
+        "La Romana",
+        "Yonaguni",
+        "Amorfoda"
+      ]
+    },
+    {
+      "name": "Bachata",
+      "authors": [
+        "Aventura"
+      ],
+      "albums": [],
+      "songs": [
+        "Volví"
+      ]
     }
   ],
   "albums": [
@@ -47,6 +228,61 @@
       "songs": [
         "We Are The Champions",
         "We Will Rock You"
+      ]
+    },
+    {
+      "name": "Up All Night",
+      "author": "One Direction",
+      "yearPublication": 2012,
+      "genres": [
+        "Pop"
+      ],
+      "songs": [
+        "What Makes You Beautiful",
+        "One Thing",
+        "More Than This",
+        "Up All Night"
+      ]
+    },
+    {
+      "name": "Doo-Wops & Hooligans",
+      "author": "Bruno Mars",
+      "yearPublication": 2010,
+      "genres": [
+        "Pop"
+      ],
+      "songs": [
+        "Lazy song",
+        "Marry You",
+        "Just The Way You Are",
+        "Count On Me"
+      ]
+    },
+    {
+      "name": "24K Magic",
+      "author": "Bruno Mars",
+      "yearPublication": 2016,
+      "genres": [
+        "Pop"
+      ],
+      "songs": [
+        "24K Magic",
+        "That's What I Like",
+        "Versace On The Floor",
+        "Finesse"
+      ]
+    },
+    {
+      "name": "The Marshall Mathers LP2",
+      "author": "Eminem",
+      "yearPublication": 2013,
+      "genres": [
+        "Rap"
+      ],
+      "songs": [
+        "Rap God",
+        "Berzerk",
+        "Survival"
       ]
     }
   ],
@@ -69,7 +305,7 @@
         "Rock"
       ],
       "single": false,
-      "numberReproductions": 7777
+      "numberReproductions": 850788708
     },
     {
       "name": "We Are The Champions",
@@ -79,7 +315,591 @@
         "Rock"
       ],
       "single": false,
-      "numberReproductions": 2222
+      "numberReproductions": 492189797
+    },
+    {
+      "name": "Living On My Own",
+      "author": "Freedie Mercury",
+      "duration": 3.37,
+      "genres": [
+        "Rock"
+      ],
+      "single": true,
+      "numberReproductions": 49599780
+    },
+    {
+      "name": "Fly Me To The Moon",
+      "author": "Frank Sinatra",
+      "duration": 2.27,
+      "genres": [
+        "Jazz"
+      ],
+      "single": true,
+      "numberReproductions": 440753146
+    },
+    {
+      "name": "That's Life",
+      "author": "Frank Sinatra",
+      "duration": 3.07,
+      "genres": [
+        "Jazz"
+      ],
+      "single": true,
+      "numberReproductions": 176750487
+    },
+    {
+      "name": "My Way",
+      "author": "Frank Sinatra",
+      "duration": 4.36,
+      "genres": [
+        "Jazz"
+      ],
+      "single": true,
+      "numberReproductions": 277602409
+    },
+    {
+      "name": "Theme From New York, New York",
+      "author": "Frank Sinatra",
+      "duration": 3.24,
+      "genres": [
+        "Jazz"
+      ],
+      "single": true,
+      "numberReproductions": 123150792
+    },
+    {
+      "name": "Ave María",
+      "author": "David Bisbal",
+      "duration": 3.29,
+      "genres": [
+        "Pop"
+      ],
+      "single": true,
+      "numberReproductions": 45831273
+    },
+    {
+      "name": "Buleria",
+      "author": "David Bisbal",
+      "duration": 4.11,
+      "genres": [
+        "Pop",
+        "Flamenco"
+      ],
+      "single": true,
+      "numberReproductions": 17876247
+    },
+    {
+      "name": "Diez Mil Maneras",
+      "author": "David Bisbal",
+      "duration": 3.33,
+      "genres": [
+        "Pop"
+      ],
+      "single": true,
+      "numberReproductions": 87495950
+    },
+    {
+      "name": "Tú Con Él",
+      "author": "Frankie Ruiz",
+      "duration": 5.02,
+      "genres": [
+        "Salsa"
+      ],
+      "single": true,
+      "numberReproductions": 101090235
+    },
+    {
+      "name": "Ven Devórame Otra Vez",
+      "author": "Lalo Rodríguez",
+      "duration": 5.14,
+      "genres": [
+        "Salsa"
+      ],
+      "single": true,
+      "numberReproductions": 112653260
+    },
+    {
+      "name": "Que Locura Enamorarme De Ti",
+      "author": "Eddie Santiago",
+      "duration": 5.1,
+      "genres": [
+        "Salsa"
+      ],
+      "single": true,
+      "numberReproductions": 139619024
+    },
+    {
+      "name": "Gasolina",
+      "author": "Daddy Yankee",
+      "duration": 3.12,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 402472777
+    },
+    {
+      "name": "Con Calma",
+      "author": "Daddy Yankee",
+      "duration": 3.13,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 1071537617
+    },
+    {
+      "name": "Ella Me Levantó",
+      "author": "Daddy Yankee",
+      "duration": 3.29,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 144656329
+    },
+    {
+      "name": "Llamado De Emergencia",
+      "author": "Daddy Yankee",
+      "duration": 3.59,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 139069000
+    },
+    {
+      "name": "¿Que Tengo Que Hacer?",
+      "author": "Daddy Yankee",
+      "duration": 3.38,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 79770957
+    },
+    {
+      "name": "What Makes You Beautiful",
+      "author": "One Direction",
+      "duration": 3.19,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 675098582
+    },
+    {
+      "name": "One Thing",
+      "author": "One Direction",
+      "duration": 3.17,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 230441115
+    },
+    {
+      "name": "More Than This",
+      "author": "One Direction",
+      "duration": 3.49,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 125239630
+    },
+    {
+      "name": "Up All Night",
+      "author": "One Direction",
+      "duration": 3.14,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 94225626
+    },
+    {
+      "name": "Marry You",
+      "author": "Bruno Mars",
+      "duration": 3.5,
+      "genres": [
+        "Pop"
+      ],
+      "single": true,
+      "numberReproductions": 581462216
+    },
+    {
+      "name": "Just The Way You Are",
+      "author": "Bruno Mars",
+      "duration": 3.4,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 1231207913
+    },
+    {
+      "name": "Count On Me",
+      "author": "Bruno Mars",
+      "duration": 3.17,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 419169784
+    },
+    {
+      "name": "24K Magic",
+      "author": "Bruno Mars",
+      "duration": 3.45,
+      "genres": [
+        "Pop"
+      ],
+      "single": true,
+      "numberReproductions": 1080959094
+    },
+    {
+      "name": "That's What I Like",
+      "author": "Bruno Mars",
+      "duration": 3.26,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 1389335029
+    },
+    {
+      "name": "Versace On The Floor",
+      "author": "Bruno Mars",
+      "duration": 4.21,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 553278820
+    },
+    {
+      "name": "Finesse",
+      "author": "Bruno Mars",
+      "duration": 4.21,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 172610864
+    },
+    {
+      "name": "Rap God",
+      "author": "Eminem",
+      "duration": 6.03,
+      "genres": [
+        "Rap"
+      ],
+      "single": false,
+      "numberReproductions": 822016140
+    },
+    {
+      "name": "Berzerk",
+      "author": "Eminem",
+      "duration": 3.58,
+      "genres": [
+        "Rap"
+      ],
+      "single": false,
+      "numberReproductions": 251906925
+    },
+    {
+      "name": "Survival",
+      "author": "Eminem",
+      "duration": 4.32,
+      "genres": [
+        "Rap"
+      ],
+      "single": false,
+      "numberReproductions": 214651826
+    },
+    {
+      "name": "La mamá de la Mamá",
+      "author": "El Alfa",
+      "duration": 3.39,
+      "genres": [
+        "Dembow"
+      ],
+      "single": true,
+      "numberReproductions": 113161424
+    },
+    {
+      "name": "La Romana",
+      "author": "El Alfa",
+      "duration": 5,
+      "genres": [
+        "Trap"
+      ],
+      "single": true,
+      "numberReproductions": 255647696
+    },
+    {
+      "name": "Acuetate",
+      "author": "El Alfa",
+      "duration": 4.08,
+      "genres": [
+        "Dembow"
+      ],
+      "single": true,
+      "numberReproductions": 9036251
+    },
+    {
+      "name": "Singapour",
+      "author": "El Alfa",
+      "duration": 2.58,
+      "genres": [
+        "Dembow",
+        "Reggeaton"
+      ],
+      "single": false,
+      "numberReproductions": 129587956
+    },
+    {
+      "name": "4K",
+      "author": "El Alfa",
+      "duration": 3.22,
+      "genres": [
+        "Dembow"
+      ],
+      "single": false,
+      "numberReproductions": 121353639
+    },
+    {
+      "name": "Bésame",
+      "author": "David Bisbal",
+      "duration": 3.2,
+      "genres": [
+        "Flamenco"
+      ],
+      "single": false,
+      "numberReproductions": 64889123
+    },
+    {
+      "name": "Cuentas Claras",
+      "author": "David Bisbal",
+      "duration": 3,
+      "genres": [
+        "Flamenco"
+      ],
+      "single": false,
+      "numberReproductions": 2135026
+    },
+    {
+      "name": "Esta ausencia",
+      "author": "David Bisbal",
+      "duration": 4.35,
+      "genres": [
+        "Flamenco"
+      ],
+      "single": false,
+      "numberReproductions": 17602943
+    },
+    {
+      "name": "Desnúdate Mujer",
+      "author": "David Bisbal",
+      "duration": 4.39,
+      "genres": [
+        "Flamenco"
+      ],
+      "single": false,
+      "numberReproductions": 8159026
+    },
+    {
+      "name": "Yonaguni",
+      "author": "Bad Bunny",
+      "duration": 3.26,
+      "genres": [
+        "Trap"
+      ],
+      "single": false,
+      "numberReproductions": 813696871
+    },
+    {
+      "name": "Amorfoda",
+      "author": "Bad Bunny",
+      "duration": 2.33,
+      "genres": [
+        "Trap"
+      ],
+      "single": true,
+      "numberReproductions": 452675669
+    },
+    {
+      "name": "Tusa",
+      "author": "Karol G",
+      "duration": 3.21,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": false,
+      "numberReproductions": 1194146621
+    },
+    {
+      "name": "EL MAKINON",
+      "author": "Karol G",
+      "duration": 3.29,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 337378418
+    },
+    {
+      "name": "Punto G",
+      "author": "Karol G",
+      "duration": 3.01,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 132475390
+    },
+    {
+      "name": "All The Things You Are",
+      "author": "Charlie Parker",
+      "duration": 2.49,
+      "genres": [
+        "Jazz"
+      ],
+      "single": false,
+      "numberReproductions": 21038962
+    },
+    {
+      "name": "What A Wonderful World",
+      "author": "Louis Amstrong",
+      "duration": 2.17,
+      "genres": [
+        "Jazz"
+      ],
+      "single": true,
+      "numberReproductions": 355786822
+    },
+    {
+      "name": "I Don't Wanna Live Forever",
+      "author": "Zayn Malik",
+      "duration": 4.07,
+      "genres": [
+        "Pop"
+      ],
+      "single": true,
+      "numberReproductions": 1230698829
+    },
+    {
+      "name": "Watermelon Sugar",
+      "author": "Harry Styles",
+      "duration": 2.54,
+      "genres": [
+        "Pop"
+      ],
+      "single": true,
+      "numberReproductions": 1694942359
+    },
+    {
+      "name": "34+35",
+      "author": "Ariana Grande",
+      "duration": 2.53,
+      "genres": [
+        "Pop"
+      ],
+      "single": false,
+      "numberReproductions": 671929174
+    },
+    {
+      "name": "7 rings",
+      "author": "Ariana Grande",
+      "duration": 2.58,
+      "genres": [
+        "Pop"
+      ],
+      "single": true,
+      "numberReproductions": 1701612041
+    },
+    {
+      "name": "FourFiveSeconds",
+      "author": "Paul McCartney",
+      "duration": 3.08,
+      "genres": [
+        "Rock"
+      ],
+      "single": true,
+      "numberReproductions": 817228283
+    },
+    {
+      "name": "Say Say Say",
+      "author": "Paul McCartney",
+      "duration": 3.55,
+      "genres": [
+        "Rock"
+      ],
+      "single": true,
+      "numberReproductions": 68667521
+    },
+    {
+      "name": "Imagine",
+      "author": "John Lennon",
+      "duration": 3.07,
+      "genres": [
+        "Rock"
+      ],
+      "single": false,
+      "numberReproductions": 438913503
+    },
+    {
+      "name": "Woman",
+      "author": "John Lennon",
+      "duration": 3.32,
+      "genres": [
+        "Rock"
+      ],
+      "single": true,
+      "numberReproductions": 180250894
+    },
+    {
+      "name": "LALISA",
+      "author": "Lisa",
+      "duration": 3.2,
+      "genres": [
+        "K-pop",
+        "Pop"
+      ],
+      "single": true,
+      "numberReproductions": 195537802
+    },
+    {
+      "name": "MONEY",
+      "author": "Lisa",
+      "duration": 2.48,
+      "genres": [
+        "K-pop"
+      ],
+      "single": true,
+      "numberReproductions": 430976789
+    },
+    {
+      "name": "Loco",
+      "author": "Chimbala",
+      "duration": 3.51,
+      "genres": [
+        "Reggeaton"
+      ],
+      "single": true,
+      "numberReproductions": 249758705
+    },
+    {
+      "name": "Volví",
+      "author": "Aventura",
+      "duration": 3.5,
+      "genres": [
+        "Reggeaton",
+        "Bachata"
+      ],
+      "single": false,
+      "numberReproductions": 438178636
     }
   ],
   "artists": [
@@ -88,11 +908,21 @@
       "genres": [
         "Pop"
       ],
-      "albums": [],
-      "monthlyListeners": 2222,
+      "albums": [
+        "Doo-Wops & Hooligans",
+        "24K Magic"
+      ],
+      "monthlyListeners": 52959426,
       "groups": [],
       "songs": [
-        "Lazy song"
+        "Lazy song",
+        "Marry You",
+        "Just The Way You Are",
+        "Count On Me",
+        "24K Magic",
+        "That's What I Like",
+        "Versace On The Floor",
+        "Finesse"
       ]
     },
     {
@@ -101,11 +931,13 @@
         "Rock"
       ],
       "albums": [],
-      "monthlyListeners": 3333,
+      "monthlyListeners": 41830192,
       "groups": [
         "Queen"
       ],
-      "songs": []
+      "songs": [
+        "Living On My Own"
+      ]
     },
     {
       "name": "Brian May",
@@ -113,7 +945,7 @@
         "Rock"
       ],
       "albums": [],
-      "monthlyListeners": 3333,
+      "monthlyListeners": 38885439,
       "groups": [
         "Queen"
       ],
@@ -125,7 +957,7 @@
         "Rock"
       ],
       "albums": [],
-      "monthlyListeners": 1111,
+      "monthlyListeners": 38675312,
       "groups": [
         "Queen"
       ],
@@ -137,7 +969,7 @@
         "Rock"
       ],
       "albums": [],
-      "monthlyListeners": 3333,
+      "monthlyListeners": 38679234,
       "groups": [
         "Queen"
       ],
@@ -149,9 +981,455 @@
         "Jazz"
       ],
       "albums": [],
-      "monthlyListeners": 5555,
+      "monthlyListeners": 10938478,
       "groups": [],
+      "songs": [
+        "Fly Me To The Moon",
+        "That's Life",
+        "My Way",
+        "Theme From New York, New York"
+      ]
+    },
+    {
+      "name": "David Bisbal",
+      "genres": [
+        "Pop",
+        "Flamenco"
+      ],
+      "albums": [],
+      "monthlyListeners": 7567560,
+      "groups": [],
+      "songs": [
+        "Ave María",
+        "Buleria",
+        "Diez Mil Maneras",
+        "Bésame",
+        "Cuentas Claras",
+        "Esta ausencia",
+        "Desnúdate Mujer"
+      ]
+    },
+    {
+      "name": "Frankie Ruiz",
+      "genres": [
+        "Salsa"
+      ],
+      "albums": [],
+      "monthlyListeners": 3593599,
+      "groups": [],
+      "songs": [
+        "Tú Con Él"
+      ]
+    },
+    {
+      "name": "Lalo Rodríguez",
+      "genres": [
+        "Salsa"
+      ],
+      "albums": [],
+      "monthlyListeners": 1850225,
+      "groups": [],
+      "songs": [
+        "Ven Devórame Otra Vez"
+      ]
+    },
+    {
+      "name": "Eddie Santiago",
+      "genres": [
+        "Salsa"
+      ],
+      "albums": [],
+      "monthlyListeners": 3654542,
+      "groups": [],
+      "songs": [
+        "Que Locura Enamorarme De Ti"
+      ]
+    },
+    {
+      "name": "Karol G",
+      "genres": [
+        "Reggeaton"
+      ],
+      "albums": [],
+      "monthlyListeners": 39258376,
+      "groups": [],
+      "songs": [
+        "Tusa",
+        "EL MAKINON",
+        "Punto G"
+      ]
+    },
+    {
+      "name": "Aventura",
+      "genres": [
+        "Reggeaton",
+        "Bachata"
+      ],
+      "albums": [],
+      "monthlyListeners": 16704462,
+      "groups": [],
+      "songs": [
+        "Volví"
+      ]
+    },
+    {
+      "name": "El Alfa",
+      "genres": [
+        "Dembow",
+        "Trap",
+        "Reggeaton"
+      ],
+      "albums": [],
+      "monthlyListeners": 15824273,
+      "groups": [],
+      "songs": [
+        "La mamá de la Mamá",
+        "La Romana",
+        "Acuetate",
+        "Singapour",
+        "4K"
+      ]
+    },
+    {
+      "name": "Chimbala",
+      "genres": [
+        "Dembow",
+        "Reggeaton"
+      ],
+      "albums": [],
+      "monthlyListeners": 6801706,
+      "groups": [],
+      "songs": [
+        "Loco"
+      ]
+    },
+    {
+      "name": "Jin",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 39665082,
+      "groups": [
+        "BTS"
+      ],
       "songs": []
+    },
+    {
+      "name": "Suga",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 41703332,
+      "groups": [
+        "BTS"
+      ],
+      "songs": []
+    },
+    {
+      "name": "J-Hope",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 39876959,
+      "groups": [
+        "BTS"
+      ],
+      "songs": []
+    },
+    {
+      "name": "RM",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 39911148,
+      "groups": [
+        "BTS"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Jimin",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 37706990,
+      "groups": [
+        "BTS"
+      ],
+      "songs": []
+    },
+    {
+      "name": "V",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 41652206,
+      "groups": [
+        "BTS"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Jungkook",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 40925927,
+      "groups": [
+        "BTS"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Jisoo",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 13797827,
+      "groups": [
+        "Blackpink"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Jennie",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 16758327,
+      "groups": [
+        "Blackpink"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Rosé",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 17101438,
+      "groups": [
+        "Blackpink"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Lisa",
+      "genres": [
+        "K-pop",
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 27038566,
+      "groups": [
+        "Blackpink"
+      ],
+      "songs": [
+        "LALISA",
+        "MONEY"
+      ]
+    },
+    {
+      "name": "John Lennon",
+      "genres": [
+        "Rock",
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 33939146,
+      "groups": [
+        "The Beatles"
+      ],
+      "songs": [
+        "Imagine",
+        "Woman"
+      ]
+    },
+    {
+      "name": "Paul McCartney",
+      "genres": [
+        "Rock",
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 35725891,
+      "groups": [
+        "The Beatles"
+      ],
+      "songs": [
+        "FourFiveSeconds",
+        "Say Say Say"
+      ]
+    },
+    {
+      "name": "George Harrison",
+      "genres": [
+        "Rock",
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 31962000,
+      "groups": [
+        "The Beatles"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Ringo Starr",
+      "genres": [
+        "Rock",
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 26552840,
+      "groups": [
+        "The Beatles"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Ariana Grande",
+      "genres": [
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 53820847,
+      "groups": [],
+      "songs": [
+        "34+35",
+        "7 rings"
+      ]
+    },
+    {
+      "name": "Charlie Parker",
+      "genres": [
+        "Jazz"
+      ],
+      "albums": [],
+      "monthlyListeners": 608840,
+      "groups": [],
+      "songs": [
+        "All The Things You Are"
+      ]
+    },
+    {
+      "name": "Louis Amstrong",
+      "genres": [
+        "Jazz"
+      ],
+      "albums": [],
+      "monthlyListeners": 6894477,
+      "groups": [],
+      "songs": [
+        "What A Wonderful World"
+      ]
+    },
+    {
+      "name": "Eminem",
+      "genres": [
+        "Rap"
+      ],
+      "albums": [
+        "The Marshall Mathers LP2"
+      ],
+      "monthlyListeners": 52673522,
+      "groups": [],
+      "songs": [
+        "Rap God",
+        "Berzerk",
+        "Survival"
+      ]
+    },
+    {
+      "name": "Niall Horan",
+      "genres": [
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 43200961,
+      "groups": [
+        "One Direction"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Liam Payne",
+      "genres": [
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 34672439,
+      "groups": [
+        "One Direction"
+      ],
+      "songs": []
+    },
+    {
+      "name": "Harry Styles",
+      "genres": [
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 75715332,
+      "groups": [
+        "One Direction"
+      ],
+      "songs": [
+        "Watermelon Sugar"
+      ]
+    },
+    {
+      "name": "Zayn Malik",
+      "genres": [
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 48616927,
+      "groups": [
+        "One Direction"
+      ],
+      "songs": [
+        "I Don't Wanna Live Forever"
+      ]
+    },
+    {
+      "name": "Daddy Yankee",
+      "genres": [
+        "Reggeaton"
+      ],
+      "albums": [],
+      "monthlyListeners": 43855958,
+      "groups": [],
+      "songs": [
+        "Gasolina",
+        "Con Calma",
+        "Ella Me Levantó",
+        "Llamado De Emergencia",
+        "¿Que Tengo Que Hacer?"
+      ]
+    },
+    {
+      "name": "Bad Bunny",
+      "genres": [
+        "Trap"
+      ],
+      "albums": [],
+      "monthlyListeners": 48009228,
+      "groups": [],
+      "songs": [
+        "Yonaguni",
+        "Amorfoda"
+      ]
     }
   ],
   "groups": [
@@ -163,7 +1441,7 @@
       "albums": [
         "News Of The World"
       ],
-      "monthlyListeners": 1111,
+      "monthlyListeners": 38496411,
       "artists": [
         "Freedie Mercury",
         "John Deacon",
@@ -171,6 +1449,72 @@
         "Roger Taylor"
       ],
       "yearCreation": 1970
+    },
+    {
+      "name": "BTS",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 37706990,
+      "artists": [
+        "Jin",
+        "Suga",
+        "J-Hope",
+        "RM",
+        "Jimin",
+        "V",
+        "Jungkook"
+      ],
+      "yearCreation": 2013
+    },
+    {
+      "name": "Blackpink",
+      "genres": [
+        "K-pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 13782820,
+      "artists": [
+        "Jisoo",
+        "Jennie",
+        "Rosé",
+        "Lisa"
+      ],
+      "yearCreation": 2016
+    },
+    {
+      "name": "The Beatles",
+      "genres": [
+        "Rock",
+        "Pop"
+      ],
+      "albums": [],
+      "monthlyListeners": 25240950,
+      "artists": [
+        "John Lennon",
+        "Paul McCartney",
+        "George Harrison",
+        "Ringo Starr"
+      ],
+      "yearCreation": 1960
+    },
+    {
+      "name": "One Direction",
+      "genres": [
+        "Pop"
+      ],
+      "albums": [
+        "Up All Night"
+      ],
+      "monthlyListeners": 28259221,
+      "artists": [
+        "Harry Styles",
+        "Niall Horan",
+        "Liam Payne",
+        "Zayn Malik"
+      ],
+      "yearCreation": 2010
     }
   ],
   "playlists": []

@@ -53,6 +53,11 @@ enum CommandsModify {
  * Comandos para visualizar, ordenar y filtrar información
  */
 enum CommandsVisualizer {
+    //ViewGenres = "View all genres",
+    //ViewSongs = "View all songs",
+    //viewAlbums = "View all albums",
+    //viewArtists = "View all artists",
+    //ViewGroups = "View all groups",
     AlphabeticalSongNameSort = "Sort by song name",
     AlphabeticalAlbumNameSort = "Sort by album name",
     NumberOfReproductionSort = "Sort by number of reproductions",
@@ -120,6 +125,17 @@ function sleep(ms: number) {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
     });
+}
+
+/**
+ * Elimina un elemento de un array
+ */
+function removeItemFromArr<type> (arr:type[], item:type) {
+    var i = arr.indexOf( item );
+ 
+    if ( i !== -1 ) {
+        arr.splice( i, 1 );
+    }
 }
 
 /**
@@ -230,6 +246,9 @@ export class DataBaseManipulator {
         }
     } 
     
+    /**
+     * Menú para añadir información a la base de datos
+     */
     async promptAddInformation(): Promise<void> {
         let answers = {
             command: CommandsAdd.AddGenre,
@@ -266,6 +285,9 @@ export class DataBaseManipulator {
         }
     }
 
+    /**
+     * Menú para eliminar información de la base de datos
+     */
     async promptRemoveInformation(): Promise<void> {
         let answers = {
             command: CommandsRemove.RemoveGenre,
@@ -302,6 +324,9 @@ export class DataBaseManipulator {
         }
     }
 
+    /**
+     * Menú para modificar información de la base de datos
+     */
     async promptModifyInformation(): Promise<void> {
         let answers = {
             command: CommandsModify.ModifyGenre,
@@ -334,6 +359,44 @@ export class DataBaseManipulator {
                 case CommandsModify.ModifyAlbum:
                     await this.funcModifyAlbum();
                     break;
+            }
+        }
+    }
+
+    async promptVisualizerInformation(): Promise<void> {
+        let answers = {
+            command: CommandsVisualizer.Quit,
+        }
+    
+        while(answers["command"] != CommandsVisualizer.Quit) {
+            console.clear();
+            console.log("--- DATABASE MANIPULATOR ---");
+            console.log("--- Visualizer Information ---");
+            answers = await inquirer.prompt({
+                type: "list",
+                name: "command",
+                message: "Choose option",
+                choices: Object.values(CommandsModify)
+            });
+    
+            switch(answers["command"]) {
+                /*case CommandsVisualizer.ViewGenres:
+                    await ;
+                    break;
+                case CommandsVisualizer.ViewSongs:
+                    await ;
+                    break;
+                case CommandsVisualizer.viewAlbums:
+                    await ;
+                    break;
+                case CommandsVisualizer.viewArtists:
+                    await ;
+                    break;
+                case CommandsVisualizer.ViewGroups:
+                    await ;
+                    break;
+                case CommandsVisualizer.Quit:
+                    break;*/
             }
         }
     }
@@ -801,6 +864,75 @@ export class DataBaseManipulator {
     }
 
     /**
+     * Función que elimina un album
+     */
+    async funcRemoveAlbum(): Promise<void> {
+        console.clear();
+
+        const albumName = await inquirer.prompt({
+            type: "input",
+            name: "albumName",
+            message: "Enter name of the album:",
+        });
+        
+        if(this.database.findAlbum(albumName["albumName"]) !== -1) {
+            let albumToRemove = this.database.getAlbum(albumName["albumName"]);
+            // Eliminar album de la lista en Generos asociados
+            for (let genre of albumToRemove.genres) {
+                let genreToModify = this.database.getGenre(genre);
+                removeItemFromArr<string>(genreToModify.albums, albumName["albumName"]);
+            }
+            // Eliminar objeto Album de la base de datos
+            this.database.removeAlbum(albumName["albumName"]);
+            // Eliminar de la lista de autor asociados
+            if (this.database.findArtist(albumToRemove.author) !== -1) {
+                let artistToModify = this.database.getArtist(albumToRemove.author);
+                removeItemFromArr<string>(artistToModify.albums, albumName["albumName"]);
+            } else if (this.database.findGroup(albumToRemove.author) !== -1) {
+                let groupToModify = this.database.getGroup(albumToRemove.author);
+                removeItemFromArr<string>(groupToModify.albums, albumName["albumName"]);
+            } else {
+                await this.showMessage("The author doesn't exists");
+            }
+        }
+        else
+            await this.showMessage("The album does not exist");
+    }
+
+    /**
+     * Función que elimina una canción
+     */
+     async funcRemoveSong(): Promise<void> {
+        console.clear();
+
+        const songName = await inquirer.prompt({
+            type: "input",
+            name: "songName",
+            message: "Enter name of song",
+        });
+        
+        if(this.database.findSong(songName["songName"]) !== -1) {
+            let songToRemove = this.database.getSong(songName["songName"]);
+            // Eliminar de la lista de géneros asociados
+            for (let genre of songToRemove.genres) {
+                let genreToModify = this.database.getGenre(genre);
+                removeItemFromArr<string>(genreToModify.songs, songName["songName"]);
+            }
+            // Eliminar de la lista de albumes asociados, eliminar album si se queda vacia
+            //this.database.get("album").
+            // Eliminar objeto Song de la base de datos
+            this.database.removeSong(songName["songName"]);
+            // Eliminar de la lista de artista asociado
+            if (this.database.findArtist(songToRemove.author) !== -1) {
+                let artistToModify = this.database.getArtist(songToRemove.author);
+                removeItemFromArr<string>(artistToModify.songs, songName["songName"]);
+            }
+        }
+        else
+            await this.showMessage("The song does not exist");
+    }    
+
+    /**
      * Función que elimina un género
      */
     async funcRemoveGenre(): Promise<void> {
@@ -852,42 +984,6 @@ export class DataBaseManipulator {
             this.database.removeGroup(groupName["groupName"]);
         else
             await this.showMessage("The group does not exist");
-    }
-
-    /**
-     * Función que elimina una canción
-     */
-    async funcRemoveSong(): Promise<void> {
-        console.clear();
-
-        const songName = await inquirer.prompt({
-            type: "input",
-            name: "songName",
-            message: "Enter name of song",
-        });
-        
-        if(this.database.findSong(songName["songName"]) !== -1)
-            this.database.removeSong(songName["songName"]);
-        else
-            await this.showMessage("The song does not exist");
-    }
-
-    /**
-     * Función que elimina un album
-     */
-    async funcRemoveAlbum(): Promise<void> {
-        console.clear();
-
-        const albumName = await inquirer.prompt({
-            type: "input",
-            name: "albumName",
-            message: "Enter name of song",
-        });
-        
-        if(this.database.findAlbum(albumName["albumName"]) !== -1)
-            this.database.removeAlbum(albumName["albumName"]);
-        else
-            await this.showMessage("The album does not exist");
     }
 
     /**

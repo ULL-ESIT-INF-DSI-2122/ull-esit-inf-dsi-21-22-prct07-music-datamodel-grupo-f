@@ -16,7 +16,10 @@ José Orlando Nina Orellana - alu0101322308@ull.edu.es
 - [Cubrimiento de código utilizando Instanbul y Coveralls](#id0.4)
 - [Integración continua de código fuente TypeScript a través de GitHub Action](#id0.5)
 - [Calidad y seguridad del código fuente mediante Sonar Cloud](#id0.6)
-- [Ejercicio 1](#id1)
+- [Clases Genre, Album, Song, Author, Group, Artist, Playlist](#id1)
+- [Clase DataBase](#id2)
+- [Clase Gestor](#id3)
+- [Clase DataBaseManipulator](#id4)
 
 ## Creación del directorio de trabajo y tareas previas<a name="id0"></a>
 Antes de empezar el proyecto es necesario instalar diversos paquetes para tener una estructura de directorios adecuada. Para ello el primer paso es crear el directorio principal:
@@ -417,242 +420,70 @@ sonar.javascript.lcov.reportPath=coverage/lcov.info
 Y ya estaría configurada la `Gihub Actions` de `Sonar Cloud`. Por último, para añadir el badge a la documentación del proyecto, nos dirigiremos al apartado de información
 abajo a la izquierda y copiaremos el badge.
 
-## Ejercicio 1<a name="id1"></a>
+## Clases Genre, Album, Song, Author, Group, Artist, Playlist<a name="id1"></a>
 
-Declararemos una interfaz que tendrá la base datos. La base de datos contendrá un array de géneros, albumes, canciones, artistas, grupos y playlists.
 
-```typescript
-interface Schema {
-    genres: Genre[],
-    albums: Album[],
-    songs: Song[],
-    artists: Artist[],
-    groups: Group[],
-    playlists: Playlist[],
-};
-```
 
-Crearemos la clase `DataBase` que se encargara de manipular la base de datos. En el constructor abriremos un JSON o crearemos si es que no esta creado un fichero llamado db.json. Y con las funciones init comprobaremos si cada uno de los arrays esta en el fichero y si no esta lo crearemos.
+## Clase DataBase<a name="id2"></a>
 
-```typescript
-constructor() {
-        const adapter = new FileSync<Schema>("db.json");
-        this.db = lowdb(adapter);
-        this.initGenres();
-        this.initAlbums();
-        this.initSongs();
-        this.initArtists();
-        this.initGroups();
-        this.initPlaylists();
-    }
-```
+Declararemos una interfaz `Schema` que tendrá la base datos. La base de datos contendrá un array de géneros, albumes, canciones, artistas, grupos y playlists.
 
-La función `setPlaylist` añade una playlist a la base de datos recibiendo como parámetro un objeto de tipo `Playlist`.
+Crearemos la clase `DataBase` que se encargara de manipular la base de datos. En el constructor abriremos un JSON o crearemos si es que no esta creado un fichero con el nombre pasado como parámetro. Y con las funciones init comprobaremos si cada uno de los arrays esta en el fichero y si no esta lo crearemos.
 
-```typescript
-setPlaylist(playlist: Playlist) {
-  this.db.get("playlists").push(playlist).write();
-}
-```
+Las funciones `find` se encargarán de buscar en la base de datos el índice del objeto dentro de array de la base de datos. Si no lo encuentra devuelve un -1, en caso contrario devuelve otro número.
 
-La función `removePlaylist` elimina una playlist de la base de datos recibiendo como parámetro el nombre de la playlist. Primero se busca el índice de la playlist y se guarda en la variable `indexOfPlaylist`. Y ya con el índice se usa el método `splice` para elimar la playlist.
+Las funciones `set` se encargán de meter un objeto nuevo en la base de datos. Reciben como parámetro el objeto a meter, hacen un `push` en el array correspondiente y hacen un `write` para guardar los cambios.
 
-```typescript
-removePlaylist(playlistName: string) {
-  let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
-  this.db.get("playlists").splice(indexOfPlaylist, 1).write();
-}
-```
+Las funciones `get` se encargán de devolver un objeto de la base de datos recibiendo como parámetro el nombre del objeto. Primero se buscará el índice en el array haciendo uso del `find` y con ese índice se puede devolver el valor de objeto con un `at`.
 
-La función `removeSongFromPlaylist` elimina una canción de una playlist, recibiendo como parámetros el nombre de la canción y de la playlist. Se busca primero el índice de la playlist y se guarda en la variable `indexOfPlaylist`. Luego se busca el índice de la canción dentro de la playlist y se guarda en la variable `indexOfSong`. Por último se elimina la canción usando el método `splice`.
+Las funciones `remove` se encargán de eliminar un objeto de la base de datos recibiendo como parámetro el nombre del objeto. Primero se buscará el índice en el array haciendo uso del `find` y con ese índice se puede eliminar ese objeto haciendo uso del `splice` y un `write` para guardar los cambios.
 
-```typescript
-removeSongFromPlaylist(playlistName: string, nameSong: string) {
-  let indexOfPlaylist: number = Number(this.db.get("playlists").findIndex(playlist => playlist.name === playlistName));
-  let indexOfSong = this.db.get("playlists").value()[indexOfPlaylist].songs.indexOf(nameSong);
-  this.db.get("playlists").value().at(indexOfPlaylist)?.songs.splice(indexSong, 1);
-  this.db.write();
-}
-```
+Las funciones `view` se encargá de recoger toda la información un objeto en un string y devolverlo.
 
-La función `viewPlaylist` recorre todos las playlists que están en la base de datos e imprime sus nombre por consola.
+Las funciones `sort` se encargán de ordenar un array de canciones de una playlist recibiendo como parámetro el nombre del playlist. Buscará el índice de la playlist en la base de datos y luego la ordenerá con el `sort`.
 
-```typescript
-viewPlaylists() {
-        this.db.get("playlists").value().forEach((playlist: Playlist) => {
-            console.log(playlist.name);
-        })
-    }
-```
+Las funciones `modify` se encargarán de modificar un atributo de un objeto recibiendo como parámetro el nombre del objeto y el nuevo atributo. Se buscará primero el objeto con `find` y se cambiará el atributo con el `assign` y por último se hará un `write` para guardar los cambios.
+
+## Clase Gestor<a name="id3"></a>
 
 Declararemos un enumerado, `Commands`, que contendrá todos los comandos que contendrá el menú principal.
 
-```typescript
-enum Commands {
-  SelectPlatlist = "Select playlist",
-  AddPlaylist = "Add playlist",
-  RemovePlaylist = "Remove playlist",
-  Quit = "Quit",
-}
-```
-
 Declararemos otro enumarado, `CommandsPlaylist`, que contendrá todos los comandos que hay dentro de una playlist.
 
-```typescript
-enum CommandsPlaylist {
-  AddSong = "Add song to a playlist",
-  RemoveSong = "Remove song from a playlist",
-  Quit = "Quit",
-}
-```
-
-Crearemos la clase `Gestor` que se encargará de la interfaz del usuario. Tendrá como atributo un objeto de tipo `DataBase`.
+Crearemos la clase `Gestor` que se encargará de la interfaz del usuario. Tendrá como atributo un objeto de tipo `DataBase`. Esta clase permitirá crear nuevas playlist, navegar por estas, añadir o eliminar canciones, etc.
 
 La función `promptUser` se encarga del menú principal. Mientras el comando sea distinto de `Quit` se seguirá ejecutando. Primero se limpiará la consola y se mostrarán todas las playlists. Con el método `prompt` del modulo inquirer recogeremos la respuesta del usuario por línea de comando. Con el switch filtraremos la respuesta del usuario y ejecutaremos el comando.
 
-```typescript
-async promptUser(): Promise<void> {
-  let answers = {
-  command: Commands.SelectPlatlist,
-  }
-    
-  while(answers["command"] != Commands.Quit)
-  {
-    console.clear();
-    this.database.viewPlaylists();
-    answers = await inquirer.prompt({
-      type: "list",
-      name: "command",
-      message: "Choose option",
-      choices: Object.values(Commands)
-    });
-    
-    switch(answers["command"]) {
-      case Commands.SelectPlatlist:
-        await this.promptSelectPlaylist();
-        break;
-      case Commands.AddPlaylist:
-        await this.promptAddPlaylist();
-        break;
-      case Commands.RemovePlaylist:
-        await this.promptRemovePlaylist();
-        break;
-    }
-  }
-}
-```
+La función `promptUserPlaylist` se encarga del menú de una playlist pasada como parámetro. Mientras el comando sea distinto `Quit` en cada iteración se limpiará la consola, se mostrará por pantalla la información general de la playlist con la función `viewPlaylist`, se recogerá el comando con el `prompt` y se ejecutará el comando filtrado con un switch.
 
-La función `promptUserPlaylist` se encarga del menú de una playlist pasada como parámetro. Mientras el comando sea distinto `Quit` en cada iteración se limpiará la consola, se mostrará por pantalla la información general de la playlist con la función `viewPlaylist`, ser recogerá el comando con el `prompt` y se ejecutará el comando filtrado con un switch.
+La función `promptAddSong` se encarga del añadir una canción a una playlist recibiendo como parámetro el nombre de la playlist. Se limpiará la consola, se recogerá el nombre de la canción con el `prompt`, se comprueba si la canción existe en la base de datos haciendo uso del `findSong`. Si `findSong` devuelve un -1 significa que la canción no existe por lo que mostramos un mensaje de error indicando que no existe. Si devuelve distinto de -1 añadimos la canción haciendo uso de `setSongToPlaylist` y actulizamos la duración de la playlist con `updateDurationPlaylist`. 
 
-```typescript
-async promptUserPlaylist(playlistName: string): Promise<void> {
-  let answers = {
-  commandPlaylist: CommandsPlaylist.AddSong,
-  }
-    
-  while(answers["commandPlaylist"] != CommandsPlaylist.Quit) {
-    console.clear();
-    this.database.viewPlaylist(playlistName);
-    const answers = await inquirer.prompt({
-      type: "list",
-      name: "commandPlaylist",
-      message: "Choose option",
-      choices: Object.values(CommandsPlaylist)
-    });
-    
-    switch(answers["commandPlaylist"]) {
-      case CommandsPlaylist.AddSong:
-        await this.promptAddSong(playlistName);
-        break;
-      case CommandsPlaylist.RemoveSong:
-        await this.promptRemoveSong(playlistName);
-        break;
-      case CommandsPlaylist.Quit:
-        break;
-    }
-    
-    if(answers["commandPlaylist"] === CommandsPlaylist.Quit)
-      break;
-  }
-}
-```
+La función `promptRemoveSong` se encarga de eliminar una canción de una playlist recibiendo como parámetro el nombre de la playlist. Limpiará la consola, recogerá el nombre de la canción haciendo uso de `prompt` y eliminará la canción haciendo uso de `removeSongFromPlaylist` y actulizando la duración de la playlist con `updateDurationPlaylist`. 
 
-```typescript
-async promptAddSong(playlistName: string): Promise<void> {
-  console.clear();
-        
-  const nameSong = await inquirer.prompt({
-    type: "input",
-    name: "nameSong",
-    message: "Enter name of the song:",
-  });
-    
-  if(this.database.findSong(nameSong["nameSong"]) != -1)
-  {
-    this.database.setSongToPlaylist(nameSong["nameSong"], playlistName);
-    this.database.updateDurationPlaylist(playlistName);
-  }
-  else
-    console.log("The song doesnt exists");
-}
-```
+La función `promptGenreSort` ordena una playlist según la duración de la canción recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola y usa `genreSort` para ordenar la función.
 
-```typescript
-async promptRemoveSong(playlistName: string): Promise<void> {
-  console.clear();
-        
-  const nameSong = await inquirer.prompt({
-    type: "input",
-    name: "nameSong",
-    message: "Enter name of the song:",
-  });
-    
-  this.database.removeSongFromPlaylist(playlistName, nameSong["nameSong"]);
-  this.database.updateDurationPlaylist(playlistName);
-}
-```
+La función `promptDurationSort` ordena una playlist según un género recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola, lee por línea de comando el nombre del género y usa `genreSort` para ordenar la playlist.
 
-```typescript
-async promptSelectPlaylist(): Promise<void> {
-  console.clear();
-    
-  const playlistName = await inquirer.prompt({
-  type: "input",
-  name: "playlistName",
-  message: "Enter name of the playlist: ",
-  });
-    
-  await this.promptUserPlaylist(playlistName["playlistName"]);
-}
-```
+La función `promptAlphabeticalSongNameSort` ordena una playlist alfabéticamente según el nombre de la canción recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola y usa `alphabeticalSongNameSort` para ordenar la playlist.
 
-La función `promptAddPlaylist` añade una nueva playlist a la base de datos. Primeramente limpia la consola, recoge por línea de comando el nombre de la nueva playlist, crea un nuevo objeto `Playlist` con solo el nombre como atributo y se inserta el objeto a la base de datos con la función `setPlaylist`.
+La función `promptAlphabeticalAuthorNameSort` ordena una playlist alfabéticamente según el nombre del autor recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola y usa `alphabeticalAuthorNameSort` para ordenar la playlist.
 
-```typescript
-async promptAddPlaylist(): Promise<void> {
-  console.clear();
-        
-  const playlistName = await inquirer.prompt({
-  type: "input",
-  name: "playlistName",
-  message: "Enter name of the playlist: ",
-  });
-    
-  let newPlaylist = new Playlist (playlistName["playlistName"], [], 0, [])
-  this.database.setPlaylist(newPlaylist);
-}
-```
+La función `promptNumberOfReproductionSort` ordena una playlist según el número de reproducciones recibiendo como parámetro el nombre de la playlist a ordenar. Limpia la consola y usa `numberOfReproductionSort` para ordenar la playlist.
 
-```typescript
-async promptRemovePlaylist(): Promise<void> {
-  console.clear();
-        
-  const playlistName = await inquirer.prompt({
-    type: "input",
-    name: "playlistName",
-    message: "Enter name of the playlist: ",
-  });
-    
-  this.database.removePlaylist(playlistName["playlistName"]);
-}
-```
+La función `promptSelectPlaylist` se encarga de abrir el menú de una playlist. Limpia la consola, lee por línea de comando el nombre de la playlist con `prompt` y abre el menú de la playlist con `promptUserPlaylist`.
+
+La función `promptAddPlaylistFromScratch` añade una nueva playlist a la base de datos. Primeramente limpia la consola, recoge por línea de comando el nombre de la nueva playlist, comprueba si existe otra playlist con ese nombre usando el `findPlaylist`. En caso que no exista crea un nuevo objeto `Playlist` con solo el nombre como atributo y se inserta el objeto a la base de datos con la función `setPlaylist`.
+
+La función `promptRemovePlaylist` elimina una playlist. Se limpia la consola, se recoge el nombre de la playlist con `prompt`. Se comprueba si la playlist existe, si no existe se muestra un mensaje indicando el error. Si existe se comprueba si la playlist es del sistema, si es del sistema se indica que no se puede borrar, en caso de que no sea del sistema se borra la playlist.
+
+## Clase DataBaseManipulator<a name="id4"></a>
+
+La función `funcModifyGenre` modifica los atributos de un género. Limpia la consola, recoge el nombre del género con el `prompt`, muestra toda la información asociada a ese género con `viewGenre`. Mediante un `prompt` de tipo `list` elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.
+
+La función `funcModifyArtist` modifica los atributos de un artista. Limpia la consola, recoge el nombre del artista con el `prompt`, muestra toda la información asociada a ese artista con `viewArtist`. Mediante un `prompt` de tipo `list` elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.
+
+La función `funcModifyGroup` modifica los atributos de un grupo. Limpia la consola, recoge el nombre del grupo con el `prompt`, muestra toda la información asociada a ese grupo con `viewGroup`. Mediante un `prompt` de tipo `list` elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.
+
+La función `funcModifyAlbum` modifica los atributos de un album. Limpia la consola, recoge el nombre del album con el `prompt`, muestra toda la información asociada a ese album con `viewAlbum`. Mediante un `prompt` de tipo `list` elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.
+
+La función `funcModifySong` modifica los atributos de una canción. Limpia la consola, recoge el nombre de la canción con el `prompt`, muestra toda la información asociada a esa canción con `viewSong`. Mediante un `prompt` de tipo `list` elegimos el atributo que queremos modificar, con el switch filtramos y modificamos el atributo.

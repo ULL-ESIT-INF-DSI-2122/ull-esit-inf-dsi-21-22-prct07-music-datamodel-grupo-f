@@ -2,6 +2,9 @@ import { Genre, Album, Song, Artist, Group, Playlist, Property } from './classes
 import lowdb from 'lowdb';
 import FileSync from 'lowdb/adapters/FileSync';
 
+/**
+ * Interfaz que define la estructura de la base de datos
+ */
 interface Schema {
     genres: Genre[],
     albums: Album[],
@@ -11,11 +14,15 @@ interface Schema {
     playlists: Playlist[],
 };
 
+/**
+ * Clase que gestiona la base de datos
+ */
 export class DataBase {
     private db: lowdb.LowdbSync<Schema>;
 
     /**
      * Constructor
+     * @fileName Nombre del archivo
      */
     constructor(private readonly fileName: string) {
         const adapter = new FileSync<Schema>(fileName);
@@ -256,6 +263,11 @@ export class DataBase {
         return this.db.get("playlists").value().at(indexOfPlaylist) as Playlist;
     }
 
+    /**
+     * Devuelve la duración de una playlist formateada
+     * @param playlist Objeto Playlist
+     * @returns String con la salida formateada
+     */
     getFormattedDurationPlaylist(playlist: Playlist): string {
         let out: string = "";
         if (playlist !== undefined) {
@@ -268,6 +280,11 @@ export class DataBase {
         return out;
     }
 
+    /**
+     * Devuelve la duración de una canción formateada
+     * @param song Objeto song
+     * @returns String con la salida formateada
+     */
     getFormattedDurationSong(song: Song): string {
         let out: string = "";
         if (song !== undefined) {
@@ -278,6 +295,22 @@ export class DataBase {
             out = "ERROR: The song was not located to calculate its duration";
         }
         return out;
+    }
+
+    /**
+     * Devuelve el album que contiene la canción introducida
+     * @param songName Nombre de la cancion
+     * @returns Objeto album deseado
+     */
+    getAlbumWithSong(songName: string): (Album|undefined) {
+        this.db.get("albums")
+            .value().forEach((album: Album) => {
+                if(album.songs.includes(songName)) {
+                    return album;
+                }
+            });
+        
+        return undefined;
     }
     
     /**
