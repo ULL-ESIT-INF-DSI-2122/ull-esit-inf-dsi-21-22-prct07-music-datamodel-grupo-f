@@ -2,7 +2,7 @@
 **Asignatura:** Desarrollo de sistemas informáticos  
 **Nombres y correos:**  
 Leonardo Alfonso Cruz Rodríguez - alu0101233093@ull.edu.es  
-Eduardo González Pérez - alu0101319001@ull.edu.es
+Eduardo González Pérez - alu0101319001@ull.edu.es  
 José Orlando Nina Orellana - alu0101322308@ull.edu.es 
 
 [![Node.js CI](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/actions/workflows/node.js.yml/badge.svg)](https://github.com/ULL-ESIT-INF-DSI-2122/ull-esit-inf-dsi-21-22-prct07-music-datamodel-grupo-f/actions/workflows/node.js.yml)

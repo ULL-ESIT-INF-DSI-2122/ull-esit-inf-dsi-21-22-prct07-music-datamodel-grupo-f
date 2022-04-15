@@ -191,7 +191,7 @@ export class DataBaseManipulator {
      */
     async showMessage(message: string) {
         console.log(message);
-        await sleep(4500);
+        await sleep(2000);
     }
 
     /**
@@ -364,13 +364,13 @@ export class DataBaseManipulator {
     async funcAddArtist(): Promise<void> {
         console.clear();
         let allGenres: string[] = [];
-        let continueMessage: string;
+        let continueMessage: string = '';
 
         // Introducir nombre del artista
         const artistName = await inquirer.prompt({
             type: "input",
             name: "artistName",
-            message: "Enter name of artist",
+            message: "Enter name of artist:",
         });
 
         if(this.database.findArtist(artistName["artistName"]) === -1) {
@@ -381,20 +381,19 @@ export class DataBaseManipulator {
                     name: "genreName",
                     message: "Enter name of the genre:",
                 });
-                if (this.database.findGenre(genreName["genreName"]) !== -1) {
-                    allGenres.push(genreName["genreName"]);
-                    const confirmation = await inquirer.prompt({
-                        type: "input",
-                        name: "confirmation",
-                        message: "Add more genres? Yes or No:",
-                    });
-                    continueMessage = confirmation["confirmation"];
-                    continueMessage = continueMessage.toLowerCase();
-                } else {
-                    await this.showMessage("ERROR: This genre doesn't exists");
-                    continueMessage = "no";
-                }
-            } while (continueMessage = "yes");
+                if (this.database.findGenre(genreName["genreName"]) === -1) {
+                    let newGenre = new Genre(genreName["genreName"], [], [], []);
+                    this.database.setGenre(newGenre);
+                } 
+                allGenres.push(genreName["genreName"]);
+                const confirmation = await inquirer.prompt({
+                    type: "input",
+                    name: "confirmation",
+                    message: "Add more genres? Yes or No:",
+                });
+                continueMessage = confirmation["confirmation"];
+                continueMessage = continueMessage.toLowerCase();
+            } while (continueMessage == "yes");
             
             // Introducir numero de oyenetes
             const listeners = await inquirer.prompt({
@@ -452,20 +451,19 @@ export class DataBaseManipulator {
                     name: "genreName",
                     message: "Enter name of the genre:",
                 });
-                if (this.database.findGenre(genreName["genreName"]) !== -1) {
-                    allGenres.push(genreName["genreName"]);
-                    const confirmation = await inquirer.prompt({
-                        type: "input",
-                        name: "confirmation",
-                        message: "Add more genres? Yes or No:",
-                    });
-                    continueMessage = confirmation["confirmation"];
-                    continueMessage = continueMessage.toLowerCase();
-                } else {
-                    await this.showMessage("ERROR: This genre doesn't exists");
-                    continueMessage = "no";
-                }
-            } while (continueMessage = "yes");
+                if (this.database.findGenre(genreName["genreName"]) === -1) {
+                    let newGenre = new Genre(genreName["genreName"], [], [], []);
+                    this.database.setGenre(newGenre);
+                } 
+                allGenres.push(genreName["genreName"]);
+                const confirmation = await inquirer.prompt({
+                    type: "input",
+                    name: "confirmation",
+                    message: "Add more genres? Yes or No:",
+                });
+                continueMessage = confirmation["confirmation"];
+                continueMessage = continueMessage.toLowerCase();
+            } while (continueMessage == "yes");
 
             // Introducir artistas
             do {
@@ -487,7 +485,7 @@ export class DataBaseManipulator {
                     await this.showMessage("ERROR: This artist doesn't exists");
                     continueMessage = "no";
                 }
-            } while (continueMessage = "yes");
+            } while (continueMessage == "yes");
 
             // Introducir oyentes
             const listeners = await inquirer.prompt({
@@ -523,6 +521,8 @@ export class DataBaseManipulator {
                     updateListeners += Number(listeners["listeners"]);
                     // Modificar oyentes del artista
                     this.database.modifyMonthlyListenersArtist(artist, updateListeners);                    
+                } else {
+                    await this.showMessage("ERROR: The artis doesn`t exist");
                 }
             }
             // Expansion de los generos
@@ -594,20 +594,20 @@ export class DataBaseManipulator {
                     name: "genreName",
                     message: "Enter name of the genre:",
                 });
-                if (this.database.findGenre(genreName["genreName"]) !== -1) {
-                    allGenres.push(genreName["genreName"]);
-                    const confirmation = await inquirer.prompt({
-                        type: "input",
-                        name: "confirmation",
-                        message: "Add more genres? Yes or No:",
-                    });
-                    continueMessage = confirmation["confirmation"];
-                    continueMessage = continueMessage.toLowerCase();
-                } else {
-                    await this.showMessage("ERROR: This genre doesn't exists");
-                    continueMessage = "no";
-                }
-            } while (continueMessage = "yes");
+                if (this.database.findGenre(genreName["genreName"]) === -1) {
+                    let newGenre = new Genre(genreName["genreName"], [], [], []);
+                    this.database.setGenre(newGenre);
+                } 
+                allGenres.push(genreName["genreName"]);
+                const confirmation = await inquirer.prompt({
+                    type: "input",
+                    name: "confirmation",
+                    message: "Add more genres? Yes or No:",
+                });
+                continueMessage = confirmation["confirmation"];
+                continueMessage = continueMessage.toLowerCase();
+            } while (continueMessage == "yes");
+
 
             // Introducir single
             const single = await inquirer.prompt({
@@ -637,9 +637,63 @@ export class DataBaseManipulator {
 
             // Expansion autor
             if ((this.database.findArtist(authorName["authorName"]) !== -1)) {
+                // Actualizar un artista
+                let artistToModify = this.database.getArtist(authorName["authorName"]);
+                if (artistToModify !== undefined) {
+                    // Tomar generos antiguos y actualizarlo
+                    let newGenres = artistToModify.genres;
+                    for (let toAdd of allGenres) {
+                        if (!newGenres.includes(toAdd)) {
+                            newGenres.push(toAdd);
+                            // Actualizar los artistas del genero, no repetidos
+                            let getGenre = this.database.getGenre(toAdd);
+                            if (getGenre !== undefined) {
+                                let newAuthors = getGenre.authors;
+                                if (!newAuthors.includes(authorName["authorName"])) {
+                                    newAuthors.push(authorName["authorName"]);
+                                    // Modificar autores del genero
+                                    this.database.modifyAuthorsGenre(toAdd, newAuthors);
+                                }
+                            } else {
+                                await this.showMessage("ERROR: Genre not found in artist expansion");
+                            }
+                        }
+                    }
+                    // Modificar generos del artista
+                    this.database.modifyGenresArtist(authorName["authorName"], newGenres);
 
+                    // Actualizar lista de canciones del artista
+                    let newSongs = artistToModify.songs;
+                    newSongs.push(songName["songName"]);
+                    this.database.modifySongsArtist(authorName["authorName"], newSongs);
+                } else {
+                    await this.showMessage("ERROR: The artist doesn`t exist");
+                }
             } else if (this.database.findGroup(authorName["authorName"]) !== -1) {
+                // Actualizar un grupo
+                let groupToModify = this.database.getGroup(authorName["authorName"]);
+                if (groupToModify !== undefined) {
+                    // Tomar generos antiguos y actualizarlos
+                    let newGenres = groupToModify.genres;
+                    for (let toAdd of allGenres) {
+                        if (!newGenres.includes(toAdd))
+                            newGenres.push(toAdd);
+                    }
+                    // Modificar generos del grupo
+                    this.database.modifyGenresGroup(authorName["authorName"], newGenres);                    
+                } else {
+                    await this.showMessage("ERROR: The group doesn`t exist");
+                }
+            } else {
+                await this.showMessage("ERROR: The author doesn`t exists");
+            }
 
+            // Expansion generos
+            for (let genre of allGenres) {
+                let genreToModify = this.database.getGenre(genre);
+                let newSongs = genreToModify.songs;
+                newSongs.push(songName["songName"]);
+                this.database.modifySongsGenre(genre, newSongs);
             }
         }
         else
@@ -651,19 +705,99 @@ export class DataBaseManipulator {
      */
     async funcAddAlbum(): Promise<void> {
         console.clear();
+        let name: string;
+        let songs: string[] = [];
+        let genres: string[] = [];
+        let autor: string;
+        let year: number;
 
+        // Introducir nombre del album
         const albumName = await inquirer.prompt({
             type: "input",
             name: "albumName",
-            message: "Enter name of song",
+            message: "Enter the name of album:"
         });
-        
-        if(this.database.findAlbum(albumName["albumName"]) === -1) {
-            let newAlbum = new Album(albumName["albumName"], "", 0, [], []);
-            this.database.setAlbum(newAlbum);
-        }
-        else
+        name = String(albumName["albumName"]);
+        if(this.database.findAlbum(name) != -1){
             await this.showMessage("The album already exists");
+            return;
+        }
+
+        // Introducir el año de publicacion
+        const albumYear = await inquirer.prompt({
+            type: "input",
+            name: "albumYear",
+            message: "Enter the year when the album was published:"
+        });
+        year = Number(albumYear["albumYear"]);
+
+        // Introducir autor del album
+        do{
+            const albumAutor = await inquirer.prompt({
+                type: "input",
+                name: "albumAutor",
+                message: "Enter the autor of album:"
+            });
+            autor = String(albumAutor["albumAutor"]);
+            if (this.database.findArtist(autor) == -1 && this.database.findGroup(autor) == -1)
+                await this.showMessage("ERROR: This autor doesn't exists");
+        }while(this.database.findArtist(autor) == -1 && this.database.findGroup(autor) == -1);
+
+        // Introducir canciones
+        var songsNumber = await inquirer.prompt({
+            type: "input",
+            name: "songsNumber",
+            message: "Enter the amount of songs included in the album:"
+        });
+
+        for(let i = 0; i < Number(songsNumber["songsNumber"]); i++){
+            do{
+                var songName = await inquirer.prompt({
+                    type: "input",
+                    name: "songName",
+                    message: "Enter the name of the song:"
+                });
+                if (this.database.findSong(songName["songName"]) !== -1)
+                    songs.push(songName["songName"]);
+                else
+                    await this.showMessage("ERROR: This song doesn't exists");
+            }while(this.database.findSong(songName["songName"]) === -1);
+        }
+        
+        // Creacion
+        let newAlbum = new Album(name, autor, year, genres, songs);
+        this.database.setAlbum(newAlbum);
+
+        // Expansion del autor
+        if ((this.database.findArtist(autor) !== -1)) {
+            // Actualizar un artista - Añadir nuevo album
+            let artistToModify = this.database.getArtist(autor);
+            let newAlbum = artistToModify.albums;
+            newAlbum.push(name);
+            this.database.modifyAlbumsArtist(autor, newAlbum);
+        } else if (this.database.findGroup(autor) !== -1) {
+            // Actualizar un grupo - Añadir nuevo album
+            let groupToModify = this.database.getGroup(autor);
+            let newAlbum = groupToModify.albums;
+            newAlbum.push(name);
+            this.database.modifyAlbumsGroup(autor, newAlbum);                   
+        } else {
+            await this.showMessage("ERROR: The author doesn`t exists");
+        }
+        // Expansion del genero
+        for (let songIndx of songs) {
+            let songConsult = this.database.getSong(songIndx);
+            for (let songGenres of songConsult.genres) {
+                if (!genres.includes(songGenres))
+                    genres.push(songGenres);
+            }
+        }
+        for (let genreName of genres) {
+            let genreToModify = this.database.getGenre(genreName);
+            let newAlbum = genreToModify.albums;
+            newAlbum.push(name);
+            this.database.modifyAlbumsGenre(genreName, newAlbum);
+        }
     }
 
     /**
